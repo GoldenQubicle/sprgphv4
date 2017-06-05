@@ -1,8 +1,8 @@
-class Spiro extends Layer {
+class Spiro extends Layer implements IDisplay {
 
 
   Spiro() {
-    super(7, 50000);
+    super(13, 50000);
   }
 
   void display() {

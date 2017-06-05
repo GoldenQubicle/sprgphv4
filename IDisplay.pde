@@ -1,6 +1,6 @@
 interface IDisplay{
   
  void display();
- PVector grinding(float theta);
+ //PVector grinding(float theta);
   
 }

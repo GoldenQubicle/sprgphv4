@@ -1,4 +1,4 @@
-class Layer {
+class Layer implements IDisplay {
 
   PVector xyz = new PVector();
   ArrayList<PVector> gears = new ArrayList<PVector>();
@@ -10,7 +10,6 @@ class Layer {
 
   Layer(int gN, float density) {
 
-
     Density = density;
     lx = 1;
     ly = 1;
@@ -21,8 +20,14 @@ class Layer {
 
     for (int i = 0; i <= gN; i++) {
       gears.add(i, new PVector());
-      radii.add(i, new PVector(random(5,50), random(5,50), 0));
-      petals.set(i,int(random(3,18)));
+      radii.add(i, new PVector(random(5, 50), random(5, 50), 0));
+      petals.set(i, int(random(3, 25)));
     }
   }
+
+
+  void display() {
+  rect(10,10, width/2, height/2);
+  }
+  
 }

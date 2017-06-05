@@ -1,4 +1,4 @@
-class Spiro extends Layer implements IDisplay {
+class Spiro extends Layer {
 
 
   Spiro() {

@@ -1,4 +1,4 @@
-class Layer {
+class Layer implements IDisplay {
 
   PVector xyz = new PVector();
   ArrayList<PVector> gears = new ArrayList<PVector>();
@@ -24,5 +24,9 @@ class Layer {
       radii.add(i, new PVector(random(5,50), random(5,50), 0));
       petals.set(i,int(random(3,18)));
     }
+  }
+  
+  void display(){
+    
   }
 }

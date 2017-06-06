@@ -1,5 +1,9 @@
 /*
 
+gears per 3 in group?
+anyway, use accordion multi to organize
+also, controlkey! whaaat
+
  ----
  also, the layer class will obviously have to handle setup of gears in gui as well
  and than maybe have the IDisplay interface also have a grinding() method to implement
@@ -10,9 +14,9 @@ import controlP5.*;
 
 GUI gui;
 Spiro spiro = new Spiro();
-ArrayList<Layer> layerActive =  new ArrayList();
-int Width = 513;
-int Height = 513;
+ArrayList<Layer> layers =  new ArrayList();
+int Width = 512;
+int Height = 512;
 
 void settings() {
   size(Width, Height, P3D);
@@ -23,14 +27,14 @@ void setup() {
   colorMode(RGB);
   surface.setTitle("Preview");
   surface.setResizable(true);
-  layerActive.add(spiro);
+  layers.add(spiro);
   gui = new GUI(this);
 }
 
 void draw() {
   background(128);
   translate(width/2, height/2);
-  for(Layer layers : layerActive){
-    layers.display();
+  for(Layer myLayer : layers){
+    myLayer.display();
   }
 }

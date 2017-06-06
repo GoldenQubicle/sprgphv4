@@ -2,7 +2,7 @@ class Spiro extends Layer {
 
 
   Spiro() {
-    super(13, 50000);
+    super(11, 50000);
   }
 
   void display() {

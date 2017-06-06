@@ -1,15 +1,12 @@
 /*
+add 'set to zero' & text input fields per gear group
+add sidemenu with reset all gear (includes petals). Also add/minus gear buttons => the behavirou of which should probably be handled in a controller class
 
-gears per 3 in group?
-anyway, use accordion multi to organize
-also, controlkey! whaaat
 
- ----
- also, the layer class will obviously have to handle setup of gears in gui as well
- and than maybe have the IDisplay interface also have a grinding() method to implement
- that way, the layer class simply holds all the variables, the interface provides methods, and derived classes are fun! 
+cp5 controlkey! whaaat
   
  */
+ 
 import controlP5.*;
 
 GUI gui;
@@ -18,12 +15,14 @@ ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
 int Height = 512;
 
-void settings() {
+void settings()
+{
   size(Width, Height, P3D);
   smooth(8);
 }
 
-void setup() {
+void setup() 
+{
   colorMode(RGB);
   surface.setTitle("Preview");
   surface.setResizable(true);
@@ -31,10 +30,12 @@ void setup() {
   gui = new GUI(this);
 }
 
-void draw() {
+void draw() 
+{
   background(128);
   translate(width/2, height/2);
-  for(Layer myLayer : layers){
+  for(Layer myLayer : layers)
+  {
     myLayer.display();
   }
 }

@@ -21,9 +21,13 @@ class GUI extends PApplet
   public void setup()
   {
     cp5 = new ControlP5(this);
-    gearControls = cp5.addAccordion("GC").setPosition(5, 5).setWidth(730).setCollapseMode(Accordion.SINGLE);
+    gearControls = cp5.addAccordion("GC")
+      .setPosition(5, 5)
+      .setWidth(730)
+      .setCollapseMode(Accordion.MULTI);
+
     gearGroups(layerSelected);
-  }
+ }
 
   void gearGroups(int ls)
   {
@@ -39,22 +43,54 @@ class GUI extends PApplet
       {                
         row+=1;
         col = 0;        
-        cp5.addGroup("row " + row).setBackgroundHeight(rowHeight).setBackgroundColor(color(255, 50));
+        cp5.addGroup("row " + row)
+          .setBackgroundHeight(rowHeight)
+          .setBackgroundColor(color(255, 50));
       }
 
-      // setting up new group per gear vector and adding it to the row group
-      cp5.addGroup("gear " + gears).setPosition(10+col*(size2d+30), 15).setSize(size2d+20, size2d+75).setGroup(cp5.get(Group.class, "row " + row))
-        .setCaptionLabel("gear " + (gears+1)).setBackgroundColor(color(255, 75)).disableCollapse();
+      //  for now we ALWAYS create vector controls - hence the add & delete buttons are created as well below
+      //  specifically, create one new gear group per vector and add it to the proper row group
+      //  then call the gearSlider2D method to create the controls and add it to gear group 
 
-      // actual gear controls created below. 
-      // in the future I probably want to check layer type, and call methods accordingly
-      // for now dont forget to set the group for control by adding; .setGroup( "gear " + gear) ; also pass down the gear int
+      cp5.addGroup("gear " + gears)
+        .setPosition(10+col*(size2d+30), 15)
+        .setSize(size2d+20, size2d+75)
+        .setGroup(cp5.get(Group.class, "row " + row))
+        .setCaptionLabel("gear " + (gears+1))
+        .setBackgroundColor(color(255, 75))
+        .disableCollapse();
+
       gearSlider2D(gears);
-      gearPetals(gears);
 
-      // adding rows to accordion menu
+      // here we check the layer type and can create additional controls based off that
+      // dont forget to set the control group by adding; .setGroup( "gear " + gear) ; also pass down the gear int    
+      if (layers.get(layerSelected).getType() == "SPIRO")
+      {
+        gearPetals(gears);
+      }
+
+      // finally add the rows groups to accordion menu
       gearControls.addItem(cp5.get(Group.class, "row " + row));
     }
+    gearAddDeleteReset();
+  }
+
+  void gearAddDeleteReset() 
+  {
+    cp5.addGroup("gears global controls")
+    .setBackgroundColor(color(255, 75));
+  
+    cp5.addButton("gear +")
+      .setPosition(5, 5)
+      .setSize(50, 10)
+      .activateBy(ControlP5.PRESSED)
+      .setGroup("gears global controls");
+    cp5.addButton("gear -")
+      .setPosition(60, 5)
+      .setSize(50, 10)
+      .activateBy(ControlP5.PRESSED)
+      .setGroup("gears global controls");
+    gearControls.addItem(cp5.get(Group.class, "gears global controls"));
   }
 
   void gearPetals(int gear)
@@ -62,9 +98,9 @@ class GUI extends PApplet
     cp5.addSlider("petals " + gear)
       .setGroup( "gear " + gear)
       .setId(gear)
-      .setPosition(13, 200)
+      .setPosition(10, 200)
       .setSize(size2d, 8)
-      .setValue(layers.get(layerSelected).petals.get(gear))
+      .setValue(layers.get(layerSelected).getPetals(gear))
       .onChange(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
@@ -72,7 +108,8 @@ class GUI extends PApplet
         if (theEvent.getAction()==ControlP5.ACTION_BROADCAST) 
         {
           int gear = theEvent.getController().getId();
-          layers.get(layerSelected).petals.set(gear, int(theEvent.getController().getValue()));
+          int petal = int(theEvent.getController().getValue());
+          layers.get(layerSelected).setPetals(gear, petal);
         }
       }
     }
@@ -87,7 +124,7 @@ class GUI extends PApplet
       .setId(gear)
       .setPosition(10, 5)
       .setSize(size2d, size2d)
-      .setValue(layers.get(layerSelected).radii.get(gear).x, layers.get(layerSelected).radii.get(gear).y)
+      .setValue(layers.get(layerSelected).getRadius(gear).x, layers.get(layerSelected).getRadius(gear).y)
       .setMinMax(-100, -100, 100, 100)
       .onChange(new CallbackListener()
     {
@@ -96,8 +133,8 @@ class GUI extends PApplet
         if (theEvent.getAction()==ControlP5.ACTION_BROADCAST)
         {
           int gear = theEvent.getController().getId();
-          layers.get(layerSelected).radii.get(gear).x = theEvent.getController().getArrayValue(0);
-          layers.get(layerSelected).radii.get(gear).y = theEvent.getController().getArrayValue(1);
+          PVector xy = new PVector(theEvent.getController().getArrayValue(0), theEvent.getController().getArrayValue(1));
+          layers.get(layerSelected).setRadius(gear, xy);
         }
       }
     }
@@ -108,4 +145,4 @@ class GUI extends PApplet
   {
     background(100);
   }
-}
+} 

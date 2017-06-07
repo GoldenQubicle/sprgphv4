@@ -2,7 +2,6 @@
 add 'set to zero' & text input fields per gear group
 add sidemenu with reset all gear (includes petals). Also add/minus gear buttons => the behavirou of which should probably be handled in a controller class
 
-
 cp5 controlkey! whaaat
   
  */

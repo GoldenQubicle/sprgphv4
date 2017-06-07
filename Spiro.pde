@@ -3,7 +3,7 @@ class Spiro extends Layer
 
   Spiro() 
   {
-    super(9, 25000);
+    super(2, 25000, 0);
     fill = true;
     stroke = false;
   }
@@ -11,7 +11,7 @@ class Spiro extends Layer
   void display() 
   {
     displayStyle();  
-    for (int t = 0; t < Density; t++)
+    for (int t = 0; t < density; t++)
     {   
       xyz = grinding(t);
       ellipse(xyz.x, xyz.y, lineX, lineY);
@@ -23,10 +23,10 @@ class Spiro extends Layer
     PVector loc = new PVector();
     for (int i = 0; i < gears.size(); i++) 
     {
-      theta = (TAU/Density)*t;      
+      theta = (TAU/density)*t;      
       float ratio = 1/float(petals.get(i)-1);
-      gears.get(i).x = cos(theta/ratio)*radii.get(i).x; 
-      gears.get(i).y = sin(theta/ratio)*radii.get(i).y;
+      gears.get(i).x = cos(theta/ratio)*radius.get(i).x; 
+      gears.get(i).y = sin(theta/ratio)*radius.get(i).y;
       loc.add(gears.get(i));
     }
     return loc;

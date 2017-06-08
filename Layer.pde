@@ -15,7 +15,7 @@ class Layer
   private Layer(int gN, float d, int t)
   {
     type = types.get(t);
-    
+
     numberOfGears = gN;
     density = d;
     lineX = 1;
@@ -30,9 +30,16 @@ class Layer
       gears.add(i, new PVector());
       radius.add(i, new PVector(random(5, 25), random(5, 25)));
       petals.set(i, int(random(3, 11)));
+
     }
   }
 
+  void newVectors()
+  {
+    gears.add(new PVector());
+    radius.add(new PVector(random(5, 25), random(5, 25)));
+    petals.append(int(random(3, 11)));
+  }
 
 
   String getType()
@@ -67,7 +74,7 @@ class Layer
 
   void setNumberOfGears(int gear)
   {
-    numberOfGears+=gear;
+    numberOfGears=gear;
   }
 
   void displayStyle() 

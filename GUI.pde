@@ -20,10 +20,8 @@ class GUI extends PApplet
   public void setup()
   {
     cp5 = new ControlP5(this);
-    vc = new GUI_vector_controls(cp5); 
-
- }
-
+    vc = new GUI_vector_controls(cp5);
+  }
 
   public void draw() 
   {

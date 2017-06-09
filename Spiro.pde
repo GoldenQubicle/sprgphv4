@@ -1,6 +1,5 @@
 class Spiro extends Layer 
 {
-
   Spiro() 
   {
     super(2, 25000, 0);
@@ -21,7 +20,7 @@ class Spiro extends Layer
   PVector grinding(float t)
   {
     PVector loc = new PVector();
-    if (Lock != true)
+    if (lock != true)
     {
       for (int i = 0; i < getNumberOfGears(); i++) 
       {

@@ -31,7 +31,7 @@ class Layer
     }
   }
 
-  void newVectors()
+  void addVectors()
   {
     gears.add(new PVector());
     radius.add(new PVector(random(5, 25), random(5, 25)));

@@ -8,14 +8,12 @@ class Layer
   color cFill, cStroke;
   float density, lineX, lineY, strokeWidth, theta;  
   boolean stroke, fill;
-  StringList types = new StringList("SPIRO", "TEST");
   String type;
 
 
   private Layer(int gN, float d, int t)
   {
-    type = types.get(t);
-
+    type = layerTypes.get(t);
     numberOfGears = gN;
     density = d;
     lineX = 1;

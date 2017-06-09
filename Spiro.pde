@@ -3,7 +3,7 @@ class Spiro extends Layer
 
   Spiro() 
   {
-    super(3, 25000, 0);
+    super(2, 25000, 0);
     fill = true;
     stroke = false;
   }

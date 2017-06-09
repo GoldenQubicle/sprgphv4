@@ -1,6 +1,6 @@
 /*
 add 'set to zero' & text input fields per gear group
- add sidemenu with reset all gear (includes petals). Also add/minus gear buttons => the behavirou of which should probably be handled in a controller class
+
  
  cp5 controlkey! whaaat
  
@@ -17,11 +17,12 @@ also, need to check when there's an empty row, and if yes, delte that from accor
 import controlP5.*;
 
 GUI gui;
-Spiro spiro = new Spiro();
+StringList layerTypes = new StringList("SPIRO", "TEST");
 ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
 int Height = 512;
 boolean Lock = false;
+Spiro spiro = new Spiro();
 
 void settings()
 {
@@ -30,8 +31,7 @@ void settings()
 }
 
 void setup() 
-{
-  colorMode(RGB);
+{ colorMode(RGB);
   surface.setTitle("Preview");
   surface.setResizable(true);
   layers.add(spiro);
@@ -46,10 +46,7 @@ void draw()
   for (Layer myLayer : layers)
   {
     myLayer.display();
-  }  
-  
-  
-  
+  }    
 }
 
 void layerLock(boolean lock)

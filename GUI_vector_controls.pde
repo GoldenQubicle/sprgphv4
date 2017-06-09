@@ -4,7 +4,8 @@ class GUI_vector_controls
   Accordion gearControls;
   int row = -1;
   int col = -1;
-  int rowHeight = gui.size2d + 100;
+  int size2d = 150;
+  int rowHeight = size2d + 100;
 
   GUI_vector_controls(ControlP5 cp5)
   {    
@@ -53,14 +54,14 @@ class GUI_vector_controls
 
   void gearSingleGroup(int gears) {
     vc.addGroup("gear " + gears)
-      .setPosition(10+col*(gui.size2d+30), 15)
-      .setSize(gui.size2d+20, gui.size2d+75)
+      .setPosition(10+col*(size2d+30), 15)
+      .setSize(size2d+20, size2d+75)
       .setGroup(vc.get(Group.class, "row " + row))
       .setCaptionLabel("gear " + (gears+1))
       .setBackgroundColor(color(255, 75))
       .disableCollapse();
 
-    // add the slider2d by detault for vectors
+    // slider2d is default for vectors
     gearSlider2D(gears); 
     // for addition controls we first check the layer type
     gearCheckLayerType(gears);
@@ -68,7 +69,8 @@ class GUI_vector_controls
 
   void gearCheckLayerType(int gears)
   {
-    // additional vector controls to gear groups to be added here 
+    // additional vector controls to gear groups to be added here
+
     String type = layers.get(gui.layerSelected).getType();
 
     switch(type) 
@@ -117,17 +119,36 @@ class GUI_vector_controls
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        layerLock(Lock);
-        col-=1;
-        int delGear = layers.get(gui.layerSelected).getNumberOfGears()-1;
-        layers.get(gui.layerSelected).setNumberOfGears(delGear);
-        layers.get(gui.layerSelected).deleteVectors(delGear); 
-        gearRemoveGroup(delGear);
-        layerLock(Lock);
+        if (layers.get(gui.layerSelected).getNumberOfGears() > 0)
+        {
+          layerLock(Lock);
+          //col-=1;
+          int delGear = layers.get(gui.layerSelected).getNumberOfGears()-1;
+          layers.get(gui.layerSelected).setNumberOfGears(delGear);
+          layers.get(gui.layerSelected).deleteVectors(delGear); 
+          //gearRemoveGroup(delGear);
+          gearRemoveColRow(delGear);
+          layerLock(Lock);
+        }
       }
     }
     );
     ;
+  }
+
+  void gearRemoveColRow(int del)
+  {
+    gearRemoveGroup(del);
+    if (col == 0)
+    {
+      col = 3;
+      gearControls.removeItem(gui.cp5.get(Group.class, "row " + row));
+      gui.cp5.get(Group.class, "row " + row).remove();
+      row-=1;
+    } else 
+    {
+      col-=1;
+    }
   }
 
   void gearRemoveGroup(int del)
@@ -142,7 +163,7 @@ class GUI_vector_controls
       .setGroup( "gear " + gear)
       .setId(gear)
       .setPosition(10, 200)
-      .setSize(gui.size2d, 8)
+      .setSize(size2d, 8)
       .setValue(layers.get(gui.layerSelected).getPetals(gear))
       .setCaptionLabel("petals")
       .onChange(new CallbackListener() 
@@ -167,7 +188,7 @@ class GUI_vector_controls
       .setGroup( "gear " + gear)
       .setId(gear)
       .setPosition(10, 5)
-      .setSize(gui.size2d, gui.size2d)
+      .setSize(size2d, size2d)
       .setValue(layers.get(gui.layerSelected).getRadius(gear).x, layers.get(gui.layerSelected).getRadius(gear).y)
       .setMinMax(-100, -100, 100, 100)
       .setCaptionLabel("radius x y ")

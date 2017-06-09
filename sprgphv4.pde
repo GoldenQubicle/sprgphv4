@@ -6,15 +6,8 @@ add 'set to zero' & text input fields per gear group
  
  ===========================
  
- aaaarrgghhh dynamic adding / deleting vectors almost there, need to seperate each gui method
- i.e. 
- add row group to accordion - done
- add four gear groups to row group - done
- add actual controls to gear group - erg
- 
- finally, want to have this setup such that, the callback to add/delete also of course takes into account the layer type!
- i.e. it needs to call a generic function
-  
+so need to check on delete: vector index cannot go below zero - prolly do this in layer?
+also, need to check when there's an empty row, and if yes, delte that from accordion
  
  
  
@@ -54,6 +47,8 @@ void draw()
   {
     myLayer.display();
   }  
+  
+  
   
 }
 

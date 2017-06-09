@@ -30,7 +30,6 @@ class Layer
       gears.add(i, new PVector());
       radius.add(i, new PVector(random(5, 25), random(5, 25)));
       petals.set(i, int(random(3, 11)));
-
     }
   }
 
@@ -41,6 +40,12 @@ class Layer
     petals.append(int(random(3, 11)));
   }
 
+  void deleteVectors(int del)
+  {
+    gears.remove(del);
+    radius.remove(del);
+    petals.remove(del);
+  }
 
   String getType()
   {

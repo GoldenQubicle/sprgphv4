@@ -26,15 +26,14 @@ class GUI_vector_controls
    slider2d control is added by default
    additional controls can be added per layerType
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-   
+
   void addControlsToGroup(int gear)
   {
-    String type = layers.get(gui.layerSelected).getType();
+    String type = getLayerType();
 
     slider2D(gear);   
 
     switch(type) 
-
     {
     case "SPIRO" :
 
@@ -59,7 +58,7 @@ class GUI_vector_controls
       .setId(gear)
       .setPosition(10, 5)
       .setSize(size2d, size2d)
-      .setValue(layers.get(gui.layerSelected).getRadius(gear).x, layers.get(gui.layerSelected).getRadius(gear).y)
+      .setValue(layers.get(gui.layerSelected).getVectors(gear).x, layers.get(gui.layerSelected).getVectors(gear).y)
       .setMinMax(-100, -100, 100, 100)
       .setCaptionLabel("radius x y ")
       .onChange(new CallbackListener()
@@ -70,7 +69,7 @@ class GUI_vector_controls
         {
           int gear = theEvent.getController().getId();
           PVector xy = new PVector(theEvent.getController().getArrayValue(0), theEvent.getController().getArrayValue(1));
-          layers.get(gui.layerSelected).setRadius(gear, xy);
+          layers.get(gui.layerSelected).setVectors(gear, xy);
         }
       }
     }
@@ -124,8 +123,8 @@ class GUI_vector_controls
       public void controlEvent(CallbackEvent theEvent) 
       {
         layer(lock);
-        int newGear = layers.get(gui.layerSelected).getNumberOfGears()+1;
-        layers.get(gui.layerSelected).setNumberOfGears(newGear);
+        int newGear = layers.get(gui.layerSelected).getNumberOfVectors()+1;
+        layers.get(gui.layerSelected).setNumberOfVectors(newGear);
         layers.get(gui.layerSelected).addVectors();        
         setColsRows(newGear-1); 
         layer(lock);
@@ -142,11 +141,11 @@ class GUI_vector_controls
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        if (layers.get(gui.layerSelected).getNumberOfGears() > 0)
+        if (layers.get(gui.layerSelected).getNumberOfVectors() > 0)
         {
           layer(lock);
-          int delGear = layers.get(gui.layerSelected).getNumberOfGears()-1;
-          layers.get(gui.layerSelected).setNumberOfGears(delGear);
+          int delGear = layers.get(gui.layerSelected).getNumberOfVectors()-1;
+          layers.get(gui.layerSelected).setNumberOfVectors(delGear);
           layers.get(gui.layerSelected).deleteVectors(delGear); 
           removeRows(delGear);
           layer(lock);
@@ -165,7 +164,7 @@ class GUI_vector_controls
 
   void setGrid()
   {
-    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfGears(); i++)
+    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfVectors(); i++)
     {
       setColsRows(i);
     }

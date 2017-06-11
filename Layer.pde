@@ -1,20 +1,17 @@
 class Layer 
 {
   PVector xyz = new PVector();
-  ArrayList<PVector> gears = new ArrayList<PVector>();
-  ArrayList<PVector> radius = new ArrayList<PVector>();
-  IntList petals = new IntList();
-  int numberOfGears;
+  ArrayList<PVector> vectors = new ArrayList<PVector>();
+  int numberOfVectors;
   color cFill, cStroke;
   float density, lineX, lineY, strokeWidth, theta;  
   boolean stroke, fill;
   String type;
 
-
-  private Layer(int gN, float d, int t)
+  private Layer(int vN, float d, int t)
   {
     type = layerTypes.get(t);
-    numberOfGears = gN;
+    numberOfVectors = vN;
     density = d;
     lineX = 1;
     lineY = 1;
@@ -23,62 +20,44 @@ class Layer
     cFill = color(random(155, 255), random(155, 255), random(155, 255));
     cStroke = color(random(155, 255), random(155, 255), random(155, 255));
 
-    for (int i = 0; i < numberOfGears; i++) 
+    for (int i = 0; i < numberOfVectors; i++) 
     {
-      gears.add(i, new PVector());
-      radius.add(i, new PVector(random(5, 25), random(5, 25)));
-      petals.set(i, int(random(3, 11)));
+      vectors.add(i, new PVector(random(5, 25), random(5, 25)));
     }
   }
 
-  void addVectors()
-  {
-    gears.add(new PVector());
-    radius.add(new PVector(random(5, 25), random(5, 25)));
-    petals.append(int(random(3, 11)));
-  }
-
-  void deleteVectors(int del)
-  {
-    gears.remove(del);
-    radius.remove(del);
-    petals.remove(del);
-  }
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   D E F A U L T   M E T H O D S
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   String getType()
   {
     return type;
   }
 
-  float getPetals(int gear)
+  PVector getVectors(int gear)
   {
-    return petals.get(gear);
+    return vectors.get(gear);
   }
 
-  void setPetals(int gear, int petal)
+  void setVectors(int gear, PVector xy)
   {
-    petals.set(gear, petal);
+    vectors.set(gear, xy);
   }
 
-  PVector getRadius(int gear)
+  int getNumberOfVectors() 
   {
-    return radius.get(gear);
+    return numberOfVectors;
   }
 
-  void setRadius(int gear, PVector xy)
+  void setNumberOfVectors(int gear)
   {
-    radius.set(gear, xy);
+    numberOfVectors=gear;
   }
 
-  int getNumberOfGears() 
-  {
-    return numberOfGears;
-  }
-
-  void setNumberOfGears(int gear)
-  {
-    numberOfGears=gear;
-  }
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   D I S P L A Y   M E T H O D S
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void displayStyle() 
   {
@@ -123,8 +102,30 @@ class Layer
     }
   }
 
-  // layer needs to have display method in order for derived classes to override it =) 
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+   O V E R R I D E   M E T H O D S    
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
   void display() 
+  {
+  }
+
+  void addVectors()
+  {
+    vectors.add(new PVector(random(5, 25), random(5, 25)));
+  }
+
+  void deleteVectors(int del)
+  {
+    vectors.remove(del);
+  }
+
+  float getPetals(int gear)
+  {
+    return 0.0;
+  }
+
+  void setPetals(int gear, int petal)
   {
   }
 }

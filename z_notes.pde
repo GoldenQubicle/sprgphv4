@@ -1,5 +1,11 @@
 /*
 
+BUGS: if add / delete vectors is clicked too fast, null pointer exception can still occur - somehow has to do actually with the layerlock, 
+since that prevents the grinding methods from accessing the vectors, however,
+that also means nothing gets returned;
+so, what I need to do, is prevent the mainloop from progressing, could maybe use noLoop()? so it freezes the display methods
+
+
 GENERAL: have UI feedback which controller is active, or edit mode currently active 
 
 for the time being the focus should be on animation & serialisation because they are intertwined.

@@ -23,6 +23,7 @@ void setup()
   layers.add(spiro);
   layers.add(line);
   gui = new GUI(this);
+ 
 }
 
 void draw() 
@@ -30,10 +31,11 @@ void draw()
   background(128);
   translate(width/2, height/2);
 
-  for (Layer myLayer : layers)
-  {
-    myLayer.display();
-  }
+    for (Layer myLayer : layers)
+    {
+      myLayer.display();
+    }
+
 }
 
 void layer(boolean locked)

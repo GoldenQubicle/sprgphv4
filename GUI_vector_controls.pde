@@ -16,6 +16,7 @@ class GUI_vector_controls
       .setWidth(730)
       .setCollapseMode(Accordion.SINGLE);
 
+
     buttonsAddDelete();
     setGrid();
   }
@@ -109,10 +110,10 @@ class GUI_vector_controls
     );
     vc.getController("petals " + gear).getCaptionLabel().align(CENTER, CENTER);
   }
-  
+
   void connectors(int gear)
   {  
-   Lines line = (Lines)layers.get(gui.layerSelected);
+    Lines line = (Lines)layers.get(gui.layerSelected);
     vc.addSlider("connect " + gear)
       .setGroup( "gear " + gear)
       .setId(gear)
@@ -147,8 +148,8 @@ class GUI_vector_controls
     vc.addGroup("gears global controls")
       .setBackgroundColor(color(255, 75))
       .disableCollapse()
-      .setPosition(740, 15)
-      .setSize(105, 50);
+      .setPosition(gui.rPaneXpos, 15)
+      .setSize(gui.rPaneWidth, 50);    
 
     vc.addButton("gear +")
       .setPosition(0, 5)
@@ -178,13 +179,13 @@ class GUI_vector_controls
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        if (layers.get(gui.layerSelected).getNumberOfVectors() > 0)
+        if (layers.get(gui.layerSelected).getNumberOfVectors() > 1)
         {
           layer(lock);
           int delGear = layers.get(gui.layerSelected).getNumberOfVectors()-1;
           layers.get(gui.layerSelected).setNumberOfVectors(delGear);
           layers.get(gui.layerSelected).deleteVectors(delGear); 
-          removeRows(delGear);
+          removeColsRows(delGear);
           layer(lock);
         }
       }
@@ -192,6 +193,8 @@ class GUI_vector_controls
     );
     ;
   }
+
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G R I D  H A N D L E R S
@@ -204,6 +207,14 @@ class GUI_vector_controls
     for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfVectors(); i++)
     {
       setColsRows(i);
+    }
+  }
+
+  void delGrid()
+  {
+    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfVectors(); i++)
+    {
+      removeColsRows(i);
     }
   }
 
@@ -230,10 +241,10 @@ class GUI_vector_controls
     vc.addGroup("row " + row)
       .setBackgroundHeight(rowHeight)
       .setBackgroundColor(color(255, 50));
-    gearControls.addItem(vc.get(Group.class, "row " + row));
+    gearControls.addItem(vc.get(Group.class, "row " + row)).open(row);
   }
 
-  void removeRows(int del)
+  void removeColsRows(int del)
   {
     removeSingleGroup(del);
     if (col == 0)

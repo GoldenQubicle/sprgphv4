@@ -28,7 +28,7 @@ class Spiro extends Layer
    D E F A U L T   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void display() 
+  void display()  //<>//
   {
     displayStyle();  
 

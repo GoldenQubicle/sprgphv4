@@ -1,12 +1,13 @@
 import controlP5.*;
 
 GUI gui;
-StringList layerTypes = new StringList("SPIRO", "EXP");
+StringList layerTypes = new StringList("SPIRO", "LINES");
 ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
 int Height = 512;
 boolean lock = false;
-Spiro spiro = new Spiro();
+Spiro spiro = new Spiro(0);
+Lines line = new Lines();
 
 void settings()
 {
@@ -20,6 +21,7 @@ void setup()
   surface.setTitle("Preview");
   surface.setResizable(true);
   layers.add(spiro);
+  layers.add(line);
   gui = new GUI(this);
 }
 

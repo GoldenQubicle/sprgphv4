@@ -4,9 +4,10 @@ class Layer
   ArrayList<PVector> vectors = new ArrayList<PVector>();
   int numberOfVectors;
   color cFill, cStroke;
-  float density, lineX, lineY, strokeWidth, theta;  
+  float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
   String type;
+  StringList vectorProperties = new StringList("x", "y");
 
   private Layer(int vN, float d, int t)
   {
@@ -16,15 +17,11 @@ class Layer
     lineX = 1;
     lineY = 1;
     strokeWidth = 1;
-
     cFill = color(random(155, 255), random(155, 255), random(155, 255));
     cStroke = color(random(155, 255), random(155, 255), random(155, 255));
-
-    for (int i = 0; i < numberOfVectors; i++) 
-    {
-      vectors.add(i, new PVector(random(5, 25), random(5, 25)));
-    }
+    
   }
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D E F A U L T   M E T H O D S
@@ -33,6 +30,11 @@ class Layer
   String getType()
   {
     return type;
+  }
+
+  StringList getVectorProperties()
+  {
+    return vectorProperties;
   }
 
   PVector getVectors(int gear)
@@ -50,10 +52,30 @@ class Layer
     return numberOfVectors;
   }
 
-  void setNumberOfVectors(int gear)
+  void setNumberOfVectors(int vectors)
   {
-    numberOfVectors=gear;
+    numberOfVectors=vectors;
   }
+
+
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+   O V E R R I D E   M E T H O D S    
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+  void display() 
+  {
+  }
+
+  void addVectors()
+  {
+    vectors.add(new PVector(random(5, 25), random(5, 25)));
+  }
+
+  void deleteVectors(int del)
+  {
+    vectors.remove(del);
+  }
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D I S P L A Y   M E T H O D S
@@ -100,32 +122,5 @@ class Layer
     {
       stroke(cStroke);
     }
-  }
-
-  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-   O V E R R I D E   M E T H O D S    
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-  void display() 
-  {
-  }
-
-  void addVectors()
-  {
-    vectors.add(new PVector(random(5, 25), random(5, 25)));
-  }
-
-  void deleteVectors(int del)
-  {
-    vectors.remove(del);
-  }
-
-  float getPetals(int gear)
-  {
-    return 0.0;
-  }
-
-  void setPetals(int gear, int petal)
-  {
   }
 }

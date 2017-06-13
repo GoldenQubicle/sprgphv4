@@ -29,15 +29,22 @@ class GUI_vector_controls
 
   void addControlsToGroup(int gear)
   {
-    String type = getLayerType();
-
     slider2D(gear);   
 
-    switch(type) 
+    switch(getLayerType()) 
     {
-    case "SPIRO" :
+
+    case "SPIRO":
 
       petals(gear);
+
+      break;
+
+    case "LINES":
+
+      petals(gear);
+      connectors(gear);
+
       break;
     }
   }
@@ -77,29 +84,59 @@ class GUI_vector_controls
   }
 
   void petals(int gear)
-  {
+  {  
+    Spiro spiro = (Spiro)layers.get(gui.layerSelected);    
     vc.addSlider("petals " + gear)
       .setGroup( "gear " + gear)
       .setId(gear)
       .setPosition(10, 200)
       .setSize(size2d, 8)
-      .setValue(layers.get(gui.layerSelected).getPetals(gear))
+      .setValue(spiro.getPetals(gear))
       .setCaptionLabel("petals")
       .onChange(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
         if (theEvent.getAction()==ControlP5.ACTION_BROADCAST) 
-        {
+        {    
+          Spiro spiro = (Spiro)layers.get(gui.layerSelected);
           int gear = theEvent.getController().getId();
           int petal = int(theEvent.getController().getValue());
-          layers.get(gui.layerSelected).setPetals(gear, petal);
+          spiro.setPetals(gear, petal);
         }
       }
     }
     );
     vc.getController("petals " + gear).getCaptionLabel().align(CENTER, CENTER);
   }
+  
+  void connectors(int gear)
+  {  
+   Lines line = (Lines)layers.get(gui.layerSelected);
+    vc.addSlider("connect " + gear)
+      .setGroup( "gear " + gear)
+      .setId(gear)
+      .setPosition(10, 185)
+      .setSize(size2d, 8)
+      .setValue(line.getConnect(gear))
+      .setCaptionLabel("connections")
+      .onChange(new CallbackListener() 
+    {
+      public void controlEvent(CallbackEvent theEvent) 
+      {
+        if (theEvent.getAction()==ControlP5.ACTION_BROADCAST) 
+        {    
+          Lines line = (Lines)layers.get(gui.layerSelected);
+          int gear = theEvent.getController().getId();
+          int connect = int(theEvent.getController().getValue());
+          line.setConnect(gear, connect);
+        }
+      }
+    }
+    );
+    vc.getController("connect " + gear).getCaptionLabel().align(CENTER, CENTER);
+  }
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G L O B A L  V E C T O R  C O N T R O L S

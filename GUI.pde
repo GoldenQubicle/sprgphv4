@@ -52,9 +52,11 @@ class GUI extends PApplet
         theEvent.getController().bringToFront();
         if (layerSelected != theEvent.getController().getValue())
         {
+          layer(lock);
           vc.delGrid();
           layerSelected = int(theEvent.getController().getValue());
           vc.setGrid();
+          layer(lock);
         }
       }
     }

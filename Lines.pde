@@ -7,23 +7,23 @@ class Lines extends Spiro
   Lines()
   {       
     super(1);
-    
+
     fill = false;
     stroke = true;
-    
+
     for (int i = 0; i < numberOfVectors; i++) 
     {
       addVectors();
     }
-    
-    vectorProperties.append("connect");    
+
+    vectorProperties.append("connect");
   }
 
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D E F A U L T   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-   
+
   void display() 
   {
     displayStyle();  
@@ -34,12 +34,13 @@ class Lines extends Spiro
       {
         theta = (TAU/getPetals(i))*j;      
         phi = (TAU/getPetals(i))*(j+getConnect(i));          
-        ratio = 1/float(petals.get(i)-1);
+        if (lock != true)
+        {
+          xyz =  grinding()[0];
+          xy2 =  grinding()[1];
 
-        xyz =  grinding()[0];
-        xy2 =  grinding()[1];
-
-        line(xyz.x, xyz.y, xy2.x, xy2.y);
+          line(xyz.x, xyz.y, xy2.x, xy2.y);
+        }
       }
     }
   }
@@ -50,18 +51,20 @@ class Lines extends Spiro
     PVector loc = new PVector();
     PVector loc2 = new PVector();
 
-    if (lock != true)
+    //if (lock != true)
+    //{
+    for (int i = 0; i < getNumberOfVectors(); i++) 
     {
-      for (int i = 0; i < getNumberOfVectors(); i++) 
-      {
-        radius.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
-        radius.get(i).y = sin(theta/ratio)*vectors.get(i).y;
-        radius2.get(i).x = cos(phi/ratio)*vectors.get(i).x;
-        radius2.get(i).y = sin(phi/ratio)*vectors.get(i).y;
-        location[0] = loc.add(radius.get(i));
-        location[1] = loc2.add(radius2.get(i));
-      }
+              ratio = 1/(getPetals(i)-1);
+
+      radius.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
+      radius.get(i).y = sin(theta/ratio)*vectors.get(i).y;
+      radius2.get(i).x = cos(phi/ratio)*vectors.get(i).x;
+      radius2.get(i).y = sin(phi/ratio)*vectors.get(i).y;
+      location[0] = loc.add(radius.get(i));
+      location[1] = loc2.add(radius2.get(i));
     }
+    //}
     return location;
   }
 
@@ -86,7 +89,7 @@ class Lines extends Spiro
   void addVectors()
   {
     super.addVectors();
-    connect.append(int(random(3,10)));
+    connect.append(int(random(3, 10)));
     radius2.add(new PVector());
   }
 

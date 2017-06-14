@@ -212,7 +212,8 @@ class GUI_vector_controls
 
   void delGrid()
   {
-    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfVectors(); i++)
+    println(layers.get(gui.layerSelected).getNumberOfVectors());
+    for (int i = layers.get(gui.layerSelected).getNumberOfVectors()-1; i >= 0; i--)
     {
       removeColsRows(i);
     }
@@ -236,6 +237,21 @@ class GUI_vector_controls
     addSingleGroup(gear);
   }
 
+  void removeColsRows(int del)
+  {
+    removeSingleGroup(del);
+    
+    if (col == 0)
+    {
+      col = 3;
+      removeRows();
+      row-=1;
+    } else 
+    {
+      col-=1;
+    }
+  }
+
   void addRows() 
   {
     vc.addGroup("row " + row)
@@ -244,19 +260,10 @@ class GUI_vector_controls
     gearControls.addItem(vc.get(Group.class, "row " + row)).open(row);
   }
 
-  void removeColsRows(int del)
+  void removeRows()
   {
-    removeSingleGroup(del);
-    if (col == 0)
-    {
-      col = 3;
-      gearControls.removeItem(gui.cp5.get(Group.class, "row " + row));
-      gui.cp5.get(Group.class, "row " + row).remove();
-      row-=1;
-    } else 
-    {
-      col-=1;
-    }
+    gearControls.removeItem(gui.cp5.get(Group.class, "row " + row));
+    gui.cp5.get(Group.class, "row " + row).remove();
   }
 
   void addSingleGroup(int gears) 
@@ -274,6 +281,7 @@ class GUI_vector_controls
 
   void removeSingleGroup(int del)
   {
+    println(del);
     gearControls.removeItem(gui.cp5.get(Group.class, "gear " + del));
     gui.cp5.get(Group.class, "gear " + del).remove();
   }

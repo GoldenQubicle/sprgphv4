@@ -20,22 +20,21 @@ void setup()
   colorMode(RGB);
   surface.setTitle("Preview");
   surface.setResizable(true);
-  layers.add(spiro);
+  //layers.add(spiro);
   layers.add(line);
   gui = new GUI(this);
- 
 }
 
 void draw() 
 {
   background(128);
   translate(width/2, height/2);
-
+ 
     for (Layer myLayer : layers)
     {
       myLayer.display();
     }
-
+  
 }
 
 void layer(boolean locked)

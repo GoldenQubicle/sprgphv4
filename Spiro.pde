@@ -1,4 +1,4 @@
-class Spiro extends Layer 
+class Spiro extends Layer  //<>//
 {
   ArrayList<PVector> radius = new ArrayList<PVector>();
   IntList petals = new IntList();
@@ -19,7 +19,7 @@ class Spiro extends Layer
         addVectors();
       }
     }
-    
+
     vectorProperties.append("petals");
   }
 
@@ -28,14 +28,17 @@ class Spiro extends Layer
    D E F A U L T   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void display()  //<>//
+  void display() 
   {
     displayStyle();  
 
     for (int t = 0; t < density; t++)
     {   
-      xyz = grinding(t)[0];
-      ellipse(xyz.x, xyz.y, lineX, lineY);
+      if (lock != true)
+      {
+        xyz = grinding(t)[0];
+        ellipse(xyz.x, xyz.y, lineX, lineY);
+      }
     }
   }
 
@@ -43,17 +46,16 @@ class Spiro extends Layer
   {
     PVector [] location = new PVector[1];
     PVector loc = new PVector();
-    if (lock != true)
+
+    for (int i = 0; i < getNumberOfVectors(); i++) 
     {
-      for (int i = 0; i < getNumberOfVectors(); i++) 
-      {
-        theta = (TAU/density)*t;      
-        ratio = 1/float(petals.get(i)-1);
-        radius.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
-        radius.get(i).y = sin(theta/ratio)*vectors.get(i).y;
-        location[0] = loc.add(radius.get(i));
-      }
+      theta = (TAU/density)*t;      
+      ratio = 1/(getPetals(i)-1);
+      radius.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
+      radius.get(i).y = sin(theta/ratio)*vectors.get(i).y;
+      location[0] = loc.add(radius.get(i));
     }
+
     return location;
   }
 

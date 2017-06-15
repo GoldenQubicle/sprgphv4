@@ -1,7 +1,7 @@
 class Lines extends Spiro
 { 
   IntList connect = new IntList();
-  ArrayList<PVector> radius2 = new ArrayList<PVector>();
+  ArrayList<PVector> circ2 = new ArrayList<PVector>();
   PVector xy2 = new PVector();
 
   Lines()
@@ -11,12 +11,12 @@ class Lines extends Spiro
     fill = false;
     stroke = true;
 
-    for (int i = 0; i < numberOfVectors; i++) 
-    {
-      addVectors();
-    }
+    properties.append("connect");
 
-    vectorProperties.append("connect");
+    for (int i = 0; i < numberOfGears; i++) 
+    {
+      addProperties();
+    }
   }
 
 
@@ -28,12 +28,13 @@ class Lines extends Spiro
   {
     displayStyle();  
 
-    for (int i = 0; i < getNumberOfVectors(); i++) 
+    for (int i = 0; i < getNumberOfGears(); i++) 
     {
       for (int j = 0; j < getPetals(i); j++)
       {
         theta = (TAU/getPetals(i))*j;      
-        phi = (TAU/getPetals(i))*(j+getConnect(i));          
+        phi = (TAU/getPetals(i))*(j+getConnect(i));       
+
         if (lock != true)
         {
           xyz =  grinding()[0];
@@ -51,25 +52,21 @@ class Lines extends Spiro
     PVector loc = new PVector();
     PVector loc2 = new PVector();
 
-    //if (lock != true)
-    //{
-    for (int i = 0; i < getNumberOfVectors(); i++) 
+    for (int i = 0; i < getNumberOfGears(); i++) 
     {
-              ratio = 1/(getPetals(i)-1);
-
-      radius.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
-      radius.get(i).y = sin(theta/ratio)*vectors.get(i).y;
-      radius2.get(i).x = cos(phi/ratio)*vectors.get(i).x;
-      radius2.get(i).y = sin(phi/ratio)*vectors.get(i).y;
-      location[0] = loc.add(radius.get(i));
-      location[1] = loc2.add(radius2.get(i));
+      ratio = 1/(getPetals(i)-1);
+      circ.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
+      circ.get(i).y = sin(theta/ratio)*vectors.get(i).y;
+      circ2.get(i).x = cos(phi/ratio)*vectors.get(i).x;
+      circ2.get(i).y = sin(phi/ratio)*vectors.get(i).y;
+      location[0] = loc.add(circ.get(i));
+      location[1] = loc2.add(circ2.get(i));
     }
-    //}
     return location;
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-   G E T  &  S E T   M E T H O D S    
+   P R O P E R T I E S ~~~~  L T Y P E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   float getConnect(int gear)
@@ -83,20 +80,20 @@ class Lines extends Spiro
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-   O V E R R I D E   M E T H O D S    
+   P R O P E R T I E S ~~~~ O V E R R I D E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addVectors()
+  void addProperties()
   {
-    super.addVectors();
+    super.addProperties();
     connect.append(int(random(3, 10)));
-    radius2.add(new PVector());
+    circ2.add(new PVector());
   }
 
-  void deleteVectors(int del)
+  void deleteProperties(int del)
   { 
-    super.addVectors();
+    super.deleteProperties(del);
     connect.remove(del);
-    radius2.remove(del);
+    circ2.remove(del);
   }
-}
+}  

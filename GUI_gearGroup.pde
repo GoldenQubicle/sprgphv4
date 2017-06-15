@@ -1,21 +1,20 @@
-class GUI_vector_controls
+class GUI_gearGroup
 {
-  ControlP5 vc;
+  ControlP5 cp5;
   Accordion gearControls;
   int row = -1;
   int col = -1;
   int size2d = 150;
   int rowHeight = size2d + 100;
 
-  GUI_vector_controls(ControlP5 cp5)
+  GUI_gearGroup(ControlP5 gg)
   {    
-    vc = cp5;
+    cp5 = gg;
 
-    gearControls = vc.addAccordion("GC")
+    gearControls = cp5.addAccordion("GC")
       .setPosition(5, 5)
       .setWidth(730)
       .setCollapseMode(Accordion.SINGLE);
-
 
     buttonsAddDelete();
     setGrid();
@@ -24,8 +23,8 @@ class GUI_vector_controls
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    S T A R T  H E R E  xD
    
-   slider2d control is added by default
-   additional controls can be added per layerType
+   slider2d control is added by default to gear
+   additional property controls can be added per layerType
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void addControlsToGroup(int gear)
@@ -51,9 +50,9 @@ class GUI_vector_controls
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   V E C T O R  C O N T R O L S
+   P R O P E R T I E S  C O N T R O L S
    
-   when creating new vector controls don't forget to pass down int gear 
+   when creating new properties controls don't forget to pass down int gear 
    crucially, use it to set the group; .setGroup( "gear " + gear)
    also, remember positioning is relative to the gear group
    
@@ -61,7 +60,7 @@ class GUI_vector_controls
 
   void slider2D(int gear) 
   {
-    vc.addSlider2D("radius x y " + gear+1)
+    cp5.addSlider2D("radius x y " + gear+1)
       .setGroup( "gear " + gear)
       .setId(gear)
       .setPosition(10, 5)
@@ -77,7 +76,7 @@ class GUI_vector_controls
         {
           int gear = theEvent.getController().getId();
           PVector xy = new PVector(theEvent.getController().getArrayValue(0), theEvent.getController().getArrayValue(1));
-          layers.get(gui.layerSelected).setVectors(gear, xy);
+          layers.get(gui.layerSelected).setVectors(gear, xy);          
         }
       }
     }
@@ -87,7 +86,7 @@ class GUI_vector_controls
   void petals(int gear)
   {  
     Spiro spiro = (Spiro)layers.get(gui.layerSelected);    
-    vc.addSlider("petals " + gear)
+    cp5.addSlider("petals " + gear)
       .setGroup( "gear " + gear)
       .setId(gear)
       .setPosition(10, 200)
@@ -108,13 +107,13 @@ class GUI_vector_controls
       }
     }
     );
-    vc.getController("petals " + gear).getCaptionLabel().align(CENTER, CENTER);
+    cp5.getController("petals " + gear).getCaptionLabel().align(CENTER, CENTER);
   }
 
   void connectors(int gear)
   {  
     Lines line = (Lines)layers.get(gui.layerSelected);
-    vc.addSlider("connect " + gear)
+    cp5.addSlider("connect " + gear)
       .setGroup( "gear " + gear)
       .setId(gear)
       .setPosition(10, 185)
@@ -135,23 +134,22 @@ class GUI_vector_controls
       }
     }
     );
-    vc.getController("connect " + gear).getCaptionLabel().align(CENTER, CENTER);
+    cp5.getController("connect " + gear).getCaptionLabel().align(CENTER, CENTER);
   }
 
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   G L O B A L  V E C T O R  C O N T R O L S
+   G L O B A L  G E A R  C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void buttonsAddDelete() 
   {
-    vc.addGroup("gears global controls")
+    cp5.addGroup("gears global controls")
       .setBackgroundColor(color(255, 75))
       .disableCollapse()
       .setPosition(gui.rPaneXpos, 15)
       .setSize(gui.rPaneWidth, 50);    
 
-    vc.addButton("gear +")
+    cp5.addButton("gear +")
       .setPosition(0, 5)
       .setSize(50, 10)
       .setGroup("gears global controls")
@@ -161,16 +159,16 @@ class GUI_vector_controls
       public void controlEvent(CallbackEvent theEvent) 
       {
         layer(lock);
-        int newGear = layers.get(gui.layerSelected).getNumberOfVectors()+1;
-        layers.get(gui.layerSelected).setNumberOfVectors(newGear);
-        layers.get(gui.layerSelected).addVectors();        
+        int newGear = layers.get(gui.layerSelected).getNumberOfGears()+1;
+        layers.get(gui.layerSelected).setNumberOfGears(newGear);
+        layers.get(gui.layerSelected).addProperties();        
         setColsRows(newGear-1); 
         layer(lock);
       }
     }
     );
 
-    vc.addButton("gear -")
+    cp5.addButton("gear -")
       .setPosition(55, 5)
       .setSize(50, 10)
       .setGroup("gears global controls")
@@ -179,12 +177,12 @@ class GUI_vector_controls
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        if (layers.get(gui.layerSelected).getNumberOfVectors() > 1)
+        if (layers.get(gui.layerSelected).getNumberOfGears() > 1)
         {
           layer(lock);
-          int delGear = layers.get(gui.layerSelected).getNumberOfVectors()-1;
-          layers.get(gui.layerSelected).setNumberOfVectors(delGear);
-          layers.get(gui.layerSelected).deleteVectors(delGear); 
+          int delGear = layers.get(gui.layerSelected).getNumberOfGears()-1;
+          layers.get(gui.layerSelected).setNumberOfGears(delGear);
+          layers.get(gui.layerSelected).deleteProperties(delGear); 
           removeColsRows(delGear);
           layer(lock);
         }
@@ -195,7 +193,6 @@ class GUI_vector_controls
   }
 
 
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G R I D  H A N D L E R S
    call setGrid when dealing with layer 
@@ -204,7 +201,7 @@ class GUI_vector_controls
 
   void setGrid()
   {
-    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfVectors(); i++)
+    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfGears(); i++)
     {
       setColsRows(i);
     }
@@ -212,8 +209,8 @@ class GUI_vector_controls
 
   void delGrid()
   {
-    println(layers.get(gui.layerSelected).getNumberOfVectors());
-    for (int i = layers.get(gui.layerSelected).getNumberOfVectors()-1; i >= 0; i--)
+    println(layers.get(gui.layerSelected).getNumberOfGears());
+    for (int i = layers.get(gui.layerSelected).getNumberOfGears()-1; i >= 0; i--)
     {
       removeColsRows(i);
     }
@@ -254,10 +251,10 @@ class GUI_vector_controls
 
   void addRows() 
   {
-    vc.addGroup("row " + row)
+    cp5.addGroup("row " + row)
       .setBackgroundHeight(rowHeight)
       .setBackgroundColor(color(255, 50));
-    gearControls.addItem(vc.get(Group.class, "row " + row)).open(row);
+    gearControls.addItem(cp5.get(Group.class, "row " + row)).open(row);
   }
 
   void removeRows()
@@ -268,10 +265,10 @@ class GUI_vector_controls
 
   void addSingleGroup(int gears) 
   {
-    vc.addGroup("gear " + gears)
+    cp5.addGroup("gear " + gears)
       .setPosition(10+col*(size2d+30), 15)
       .setSize(size2d+20, size2d+75)
-      .setGroup(vc.get(Group.class, "row " + row))
+      .setGroup(cp5.get(Group.class, "row " + row))
       .setCaptionLabel("gear " + (gears+1))
       .setBackgroundColor(color(255, 75))
       .disableCollapse();

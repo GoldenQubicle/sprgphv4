@@ -5,8 +5,8 @@ class GUI extends PApplet
   int layerSelected = 0;
   int rPaneWidth = 105;
   int rPaneXpos = 740;
-  GUI_vector_controls vc;
-  ScrollableList layerList;
+  GUI_gearGroup gg;
+  ScrollableList layerList, propList;
 
   public GUI(PApplet theApplet)
   {
@@ -23,12 +23,56 @@ class GUI extends PApplet
   public void setup()
   {
     cp5 = new ControlP5(this);
-    vc = new GUI_vector_controls(cp5);
+    gg = new GUI_gearGroup(cp5);
+    setupProps();
+    addProps();
     layersGroup();
     for (int i = 0; i < layers.size(); i++)
     { 
-      addLayer(i);
+      addLayer(i);      
     }
+  }
+    
+  void addProps()
+  {    
+    cp5.get(ScrollableList.class, "properties")
+      .addItems(layers.get(layerSelected).props);   
+  }
+  
+  void delProps()
+  {    
+    
+  }
+  
+  void setupProps()
+  {
+    cp5.addScrollableList("properties")
+    .setPosition(rPaneXpos, 250)
+    .setSize(rPaneWidth, 50)
+    .setOpen(true)
+     .addCallback(new CallbackListener() 
+    {
+      public void controlEvent(CallbackEvent theEvent) 
+      {
+     
+        String propKey = theEvent.getController().getLabel();
+       controller.propList(propKey);
+      }
+    }
+    );
+  }
+  
+
+  
+  
+ /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   L A Y E R   M E T H O D S
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  
+  void addLayer(int ls)
+  {   
+    cp5.get(ScrollableList.class, "Layers")
+      .addItem("layer " + (ls + 1) + " ~ " + layers.get(ls).getType(), layers.get(ls));
   }
 
   void layersGroup()
@@ -53,20 +97,14 @@ class GUI extends PApplet
         if (layerSelected != theEvent.getController().getValue())
         {
           layer(lock);
-          vc.delGrid();
+          gg.delGrid();
           layerSelected = int(theEvent.getController().getValue());
-          vc.setGrid();
+          gg.setGrid();
           layer(lock);
         }
       }
     }
     );
-  }
-
-  void addLayer(int ls)
-  {   
-    cp5.get(ScrollableList.class, "Layers")
-      .addItem("layer " + (ls + 1) + " ~ " + layers.get(ls).getType(), layers.get(ls));
   }
 
   public void draw() 

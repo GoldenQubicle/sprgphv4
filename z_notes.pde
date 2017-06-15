@@ -26,11 +26,21 @@ andnnnddd, i guess the same is true for setting up the additional properties in 
 that is, the scrollable list from which to choose, will need to be read/write from layerType specific objects
 
 
+so okay, current thinking, pass reference of vectors & additional stuff into a dictionary
+however setting things up takes some carefull consideration since it basically entail something like
+for( getNumberofVectors){
+  for(getNumberofProperies){
+   add stuff to dictionary
+  }
+}
 
-
+however, when setup properly, it would *hopefully* mean I can pass the string of scrollable properties list
+as key into the dictionary, and make the ani act on that reference object, which should theoretically also alter the layer
  
  
- 
+ sooo scrollable list does actually accept java.util.Map<java.lang.String,java.lang.Object> to add items. . 
+ however, question is, how do I retrieve the values from those objects?! easy, by calling the key!
+ question still is though, is that value a referenced instance, i.e. can the ani be made to act on the props map, and then change the layer!?
 
  
  

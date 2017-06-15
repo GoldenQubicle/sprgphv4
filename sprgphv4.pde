@@ -1,6 +1,11 @@
+import java.util.*;
 import controlP5.*;
+import de.looksgood.ani.*;
+import de.looksgood.ani.easing.*;
 
 GUI gui;
+Controller controller = new Controller();
+Animation ani = new Animation();
 StringList layerTypes = new StringList("SPIRO", "LINES");
 ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
@@ -20,21 +25,23 @@ void setup()
   colorMode(RGB);
   surface.setTitle("Preview");
   surface.setResizable(true);
-  //layers.add(spiro);
-  layers.add(line);
   gui = new GUI(this);
+  Ani.init(this);
+  Ani.noAutostart();
+  Ani.setDefaultTimeMode(Ani.FRAMES);
+  layers.add(spiro);
+  layers.add(line);
 }
 
 void draw() 
 {
   background(128);
   translate(width/2, height/2);
- 
-    for (Layer myLayer : layers)
-    {
-      myLayer.display();
-    }
-  
+
+  for (Layer myLayer : layers)
+  {
+    myLayer.display();
+  }
 }
 
 void layer(boolean locked)

@@ -1,6 +1,6 @@
-class Spiro extends Layer  //<>//
+class Spiro extends Layer 
 {
-  ArrayList<PVector> radius = new ArrayList<PVector>();
+  ArrayList<PVector> circ = new ArrayList<PVector>();
   IntList petals = new IntList();
 
   Spiro(int type) 
@@ -10,17 +10,17 @@ class Spiro extends Layer  //<>//
     fill = true;
     stroke = false;
 
+    properties.append("petals");
+
     // yeah this is a bit hacky, but thats because lines extends spiro
     // hence need to perform a type check to disable this call for line type
     if (getType() == "SPIRO") 
     {
-      for (int i = 0; i < numberOfVectors; i++) 
+      for (int i = 0; i < numberOfGears; i++) 
       {
-        addVectors();
+        addProperties();
       }
     }
-
-    vectorProperties.append("petals");
   }
 
 
@@ -47,21 +47,20 @@ class Spiro extends Layer  //<>//
     PVector [] location = new PVector[1];
     PVector loc = new PVector();
 
-    for (int i = 0; i < getNumberOfVectors(); i++) 
+    for (int i = 0; i < getNumberOfGears(); i++) 
     {
       theta = (TAU/density)*t;      
       ratio = 1/(getPetals(i)-1);
-      radius.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
-      radius.get(i).y = sin(theta/ratio)*vectors.get(i).y;
-      location[0] = loc.add(radius.get(i));
+      circ.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
+      circ.get(i).y = sin(theta/ratio)*vectors.get(i).y;
+      location[0] = loc.add(circ.get(i));
     }
-
     return location;
   }
 
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-   G E T  &  S E T   M E T H O D S    
+   P R O P E R T I E S ~~~~  L T Y P E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   float getPetals(int gear)
@@ -74,22 +73,21 @@ class Spiro extends Layer  //<>//
     petals.set(gear, petal);
   }
 
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-   O V E R R I D E   M E T H O D S    
+   P R O P E R T I E S ~~~~ O V E R R I D E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addVectors()
+  void addProperties()
   {
-    super.addVectors();
-    radius.add(new PVector());
+    super.addProperties();
+    circ.add(new PVector());
     petals.append(int(random(3, 11)));
   }
 
-  void deleteVectors(int del)
+  void deleteProperties(int del)
   {
-    super.deleteVectors(del);
-    radius.remove(del);
+    super.deleteProperties(del);
+    circ.remove(del);
     petals.remove(del);
   }
 }

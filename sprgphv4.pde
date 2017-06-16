@@ -5,14 +5,16 @@ import de.looksgood.ani.easing.*;
 
 GUI gui;
 Controller controller = new Controller();
-Animation ani = new Animation();
+Animation ani;
 StringList layerTypes = new StringList("SPIRO", "LINES");
 ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
 int Height = 512;
 boolean lock = false;
+boolean animate = false;
 Spiro spiro = new Spiro(0);
 //Lines line = new Lines();
+
 
 void settings()
 {
@@ -27,10 +29,11 @@ void setup()
   surface.setResizable(true);
   gui = new GUI(this);
   Ani.init(this);
-  //Ani.noAutostart();
+  Ani.noAutostart();
   Ani.setDefaultTimeMode(Ani.FRAMES);
   layers.add(spiro);
   //layers.add(line);
+  ani = new Animation();
 }
 
 void draw() 

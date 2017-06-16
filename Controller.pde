@@ -9,6 +9,6 @@
 
   void propList(String mk)
   {
-    println(layers.get(gui.layerSelected).props.get(mk));
+    //println(layers.get(gui.layerSelected).properties.vX);
   }
 }

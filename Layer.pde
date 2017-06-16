@@ -7,8 +7,9 @@ class Layer
   float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
   String type;
-  StringList properties = new StringList("x", "y");
-  Map<String, Object> props = new HashMap<String, Object>();
+  StringList properties = new StringList("vX", "vY");
+  properties props = new properties();
+  ;
 
   private Layer(int gN, float d, int t)
   {
@@ -22,7 +23,6 @@ class Layer
     cStroke = color(random(155, 255), random(155, 255), random(155, 255));
   }
 
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D E F A U L T   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -34,13 +34,18 @@ class Layer
 
   PVector getVectors(int gear)
   {
-    return vectors.get(gear);
+    if (animate == true)
+    {
+      return props.passBack().get(gear);
+    } else {
+
+      return vectors.get(gear);
+    }
   }
 
   void setVectors(int gear, PVector xy)
   {
     vectors.set(gear, xy);
-    props.replace("x", xy.x);
   }
 
   int getNumberOfGears() 
@@ -60,7 +65,7 @@ class Layer
   void addProperties()
   {
     vectors.add(new PVector(random(5, 25), random(5, 25)));
-    props.put("x", vectors.get(0));
+    props.pass(vectors);
   }
 
   void deleteProperties(int del)
@@ -118,5 +123,36 @@ class Layer
 
   void display() 
   {
+  }
+}
+
+class properties 
+{
+  float vX, vY;
+
+  properties()
+  {
+  }
+
+  void pass( ArrayList<PVector> v)
+  {
+    for (int i = 0; i < v.size(); i++)
+    {
+       vX = v.get(i).x;
+       vY = v.get(i).y;
+    }
+  }
+
+
+
+  ArrayList<PVector> passBack()
+  {
+    ArrayList<PVector> v = new ArrayList<PVector>();
+    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfGears(); i++)
+    {
+      PVector test = new PVector(vX, vY);
+      v.add(test);
+    }
+    return v;
   }
 }

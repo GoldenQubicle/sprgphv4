@@ -35,8 +35,8 @@ class GUI extends PApplet
     
   void addProps()
   {    
-    cp5.get(ScrollableList.class, "properties")
-      .addItems(layers.get(layerSelected).props);   
+    cp5.get(ScrollableList.class, "properties");
+      //.addItems(layers.get(layerSelected).properties);   
   }
   
   void delProps()

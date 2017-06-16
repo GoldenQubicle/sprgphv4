@@ -42,6 +42,35 @@ as key into the dictionary, and make the ani act on that reference object, which
  however, question is, how do I retrieve the values from those objects?! easy, by calling the key!
  question still is though, is that value a referenced instance, i.e. can the ani be made to act on the props map, and then change the layer!?
 
+allright, hashmap is sorta working, however, one issue I hadnt thought about
+basically, the ani can act on whatever object is in props, however, I STILL need to call a field name for said object
+so, in other words, the key with which I store the object, somehow, has to correspond to a field name
+
+eeeeghghghgh. . this is reallt not quite working as expected, or, put in other way ani NEEDS to have fieldnames
+SOOOOOO maybe, the best approach here is to make a wrapper class for properties
+soo I can access them from layer.properties ... fieldname
+
+
+okidokdi sooooo think a wrapper class for properties MIGHT work, however, the issue then is that effectivly need make animation functions
+as in: what happends to the layer onscreen is obviously determined by BOTH
+  - input from gui
+  - return values from animated properties
+  
+so yeah, whatever happens in display will need to be able to receive input from both
+
+==============
+
+
+okay so I guess how it stands now the issue boils down to whatever new properties get introduced per layertype
+they will have to be added manually somewhere
+SO the question is, what is more conventient? as in: do I add them to the property class, and all related methods there
+OR do I just manually set them up in the animation class, as in, if I add new properties, 
+the corresponding ani will need to have new switches in order to point towards to proper object & field
+and perhaps, that actually is more conventient, because it circumvents the issue outlined above, namely having double display funciotnality
+as in, that, i.e. by switch statements for ani, both the gui controls AND the anis both act on whatever is in display
+
+
+eeeeeeeeeeeeerhm yeahhhhh. . thats a nice idea, HOWEVER! how the fuck am I gonna generated field names dynamically
  
  
  */

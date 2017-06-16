@@ -1,4 +1,4 @@
-class Spiro extends Layer 
+class Spiro extends Layer  //<>//
 {
   ArrayList<PVector> circ = new ArrayList<PVector>();
   IntList petals = new IntList();
@@ -6,7 +6,7 @@ class Spiro extends Layer
   Spiro(int type) 
   {
 
-    super(2, 2000, type);
+    super(1, 2000, type);
     fill = true;
     stroke = false;
 
@@ -22,7 +22,6 @@ class Spiro extends Layer
       }
     }
   }
-
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D E F A U L T   M E T H O D S
@@ -51,13 +50,15 @@ class Spiro extends Layer
     {
       theta = (TAU/density)*t;      
       ratio = 1/(getPetals(i)-1);
-      circ.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
-      circ.get(i).y = sin(theta/ratio)*vectors.get(i).y;
+      circ.get(i).x = cos(theta/ratio)*getVectors(i).x; // this here gets the gui controller PVector
+      
+      //circ.get(i).x = cos(theta/ratio)*props.passBack().get(0).x; // this here get the animated PVector
+
+      circ.get(i).y = sin(theta/ratio)*getVectors(i).y;
       location[0] = loc.add(circ.get(i));
     }
     return location;
   }
-
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
    P R O P E R T I E S ~~~~  L T Y P E      

@@ -12,7 +12,7 @@ int Width = 512;
 int Height = 512;
 boolean lock = false;
 Spiro spiro = new Spiro(0);
-Lines line = new Lines();
+//Lines line = new Lines();
 
 void settings()
 {
@@ -27,10 +27,10 @@ void setup()
   surface.setResizable(true);
   gui = new GUI(this);
   Ani.init(this);
-  Ani.noAutostart();
+  //Ani.noAutostart();
   Ani.setDefaultTimeMode(Ani.FRAMES);
   layers.add(spiro);
-  layers.add(line);
+  //layers.add(line);
 }
 
 void draw() 
@@ -38,6 +38,7 @@ void draw()
   background(128);
   translate(width/2, height/2);
 
+  ani.anis();
   for (Layer myLayer : layers)
   {
     myLayer.display();

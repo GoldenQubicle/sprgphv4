@@ -10,7 +10,6 @@ class GUI_gearGroup
   GUI_gearGroup(ControlP5 gg)
   {    
     cp5 = gg;
-
     gearControls = cp5.addAccordion("GC")
       .setPosition(5, 5)
       .setWidth(730)
@@ -55,6 +54,7 @@ class GUI_gearGroup
    when creating new properties controls don't forget to pass down int gear 
    crucially, use it to set the group; .setGroup( "gear " + gear)
    also, remember positioning is relative to the gear group
+   and cast layer to type to access their property methods
    
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -209,7 +209,6 @@ class GUI_gearGroup
 
   void delGrid()
   {
-    println(layers.get(gui.layerSelected).getNumberOfGears());
     for (int i = layers.get(gui.layerSelected).getNumberOfGears()-1; i >= 0; i--)
     {
       removeColsRows(i);
@@ -278,7 +277,6 @@ class GUI_gearGroup
 
   void removeSingleGroup(int del)
   {
-    println(del);
     gearControls.removeItem(gui.cp5.get(Group.class, "gear " + del));
     gui.cp5.get(Group.class, "gear " + del).remove();
   }

@@ -60,6 +60,7 @@ class Layer
   void addProperties()
   {
     vectors.add(new PVector(random(5, 25), random(5, 25)));
+    props.put("x", vectors.get(0));
   }
 
   void deleteProperties(int del)

@@ -29,46 +29,42 @@ class GUI extends PApplet
     layersGroup();
     for (int i = 0; i < layers.size(); i++)
     { 
-      addLayer(i);      
+      addLayer(i);
     }
   }
-    
+
   void addProps()
   {    
     cp5.get(ScrollableList.class, "properties");
-      //.addItems(layers.get(layerSelected).properties);   
   }
-  
+
   void delProps()
-  {    
-    
+  {
   }
-  
+
   void setupProps()
   {
     cp5.addScrollableList("properties")
-    .setPosition(rPaneXpos, 250)
-    .setSize(rPaneWidth, 50)
-    .setOpen(true)
-     .addCallback(new CallbackListener() 
+      .setPosition(rPaneXpos, 250)
+      .setSize(rPaneWidth, 50)
+      .setOpen(true)
+      .addCallback(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-     
         String propKey = theEvent.getController().getLabel();
-       controller.propList(propKey);
       }
     }
     );
   }
-  
 
-  
-  
- /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    L A Y E R   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  
+
   void addLayer(int ls)
   {   
     cp5.get(ScrollableList.class, "Layers")

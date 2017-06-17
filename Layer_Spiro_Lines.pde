@@ -15,7 +15,7 @@ class Lines extends Spiro
 
     for (int i = 0; i < numberOfGears; i++) 
     {
-      addProperties();
+      addGears();
     }
   }
 
@@ -55,10 +55,10 @@ class Lines extends Spiro
     for (int i = 0; i < getNumberOfGears(); i++) 
     {
       ratio = 1/(getPetals(i)-1);
-      circ.get(i).x = cos(theta/ratio)*vectors.get(i).x; 
-      circ.get(i).y = sin(theta/ratio)*vectors.get(i).y;
-      circ2.get(i).x = cos(phi/ratio)*vectors.get(i).x;
-      circ2.get(i).y = sin(phi/ratio)*vectors.get(i).y;
+      circ.get(i).x = cos(theta/ratio)*getGearVectors(i).x; 
+      circ.get(i).y = sin(theta/ratio)*getGearVectors(i).y;
+      circ2.get(i).x = cos(phi/ratio)*getGearVectors(i).x;
+      circ2.get(i).y = sin(phi/ratio)*getGearVectors(i).y;
       location[0] = loc.add(circ.get(i));
       location[1] = loc2.add(circ2.get(i));
     }
@@ -71,29 +71,27 @@ class Lines extends Spiro
 
   float getConnect(int gear)
   {
-    return connect.get(gear);
+    return gears.get(gear).connect;
   }
 
-  void setConnect(int gear, int petal)
+  void setConnect(int gear, int connect)
   {
-    connect.set(gear, petal);
+    gears.get(gear).connect = connect;
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
    P R O P E R T I E S ~~~~ O V E R R I D E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addProperties()
+  void addGears()
   {
-    super.addProperties();
-    connect.append(int(random(3, 10)));
+    super.addGears();
     circ2.add(new PVector());
   }
 
-  void deleteProperties(int del)
+  void deleteGears(int del)
   { 
-    super.deleteProperties(del);
-    connect.remove(del);
+    super.deleteGears(del);
     circ2.remove(del);
   }
 }  

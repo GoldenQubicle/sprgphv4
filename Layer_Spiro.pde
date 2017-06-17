@@ -2,11 +2,11 @@ class Spiro extends Layer  //<>//
 {
   ArrayList<PVector> circ = new ArrayList<PVector>();
   IntList petals = new IntList();
+  //IntDict petals = new IntDict();
 
   Spiro(int type) 
   {
-
-    super(1, 2000, type);
+    super(2, 2000, type);
     fill = true;
     stroke = false;
 
@@ -18,7 +18,7 @@ class Spiro extends Layer  //<>//
     {
       for (int i = 0; i < numberOfGears; i++) 
       {
-        addProperties();
+          addGears();     
       }
     }
   }
@@ -46,15 +46,12 @@ class Spiro extends Layer  //<>//
     PVector [] location = new PVector[1];
     PVector loc = new PVector();
 
-    for (int i = 0; i < getNumberOfGears(); i++) 
+    for (int i = 0; i < super.getNumberOfGears(); i++) 
     {
       theta = (TAU/density)*t;      
       ratio = 1/(getPetals(i)-1);
-      circ.get(i).x = cos(theta/ratio)*getVectors(i).x; // this here gets the gui controller PVector
-      
-      //circ.get(i).x = cos(theta/ratio)*props.passBack().get(0).x; // this here get the animated PVector
-
-      circ.get(i).y = sin(theta/ratio)*getVectors(i).y;
+      circ.get(i).x = cos(theta/ratio)*getGearVectors(i).x; 
+      circ.get(i).y = sin(theta/ratio)*getGearVectors(i).y;
       location[0] = loc.add(circ.get(i));
     }
     return location;
@@ -64,31 +61,29 @@ class Spiro extends Layer  //<>//
    P R O P E R T I E S ~~~~  L T Y P E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  float getPetals(int gear)
+  float getPetals(int gear)  
   {
-    return petals.get(gear);
+    return gears.get(gear).petals;
   }
 
   void setPetals(int gear, int petal)
   {
-    petals.set(gear, petal);
+    gears.get(gear).petals = petal;
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
    P R O P E R T I E S ~~~~ O V E R R I D E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addProperties()
+  void addGears()
   {
-    super.addProperties();
+    super.addGears();
     circ.add(new PVector());
-    petals.append(int(random(3, 11)));
   }
 
-  void deleteProperties(int del)
+  void deleteGears(int del)
   {
-    super.deleteProperties(del);
+    super.deleteGears(del);
     circ.remove(del);
-    petals.remove(del);
   }
 }

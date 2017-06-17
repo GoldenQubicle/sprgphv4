@@ -51,10 +51,13 @@ class GUI_gearGroup
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    P R O P E R T I E S  C O N T R O L S
    
-   when creating new properties controls don't forget to pass down int gear 
-   crucially, use it to set the group; .setGroup( "gear " + gear)
-   also, remember positioning is relative to the gear group
-   and cast layer to type to access their property methods
+   when creating new properties controls don't forget positioning is relative to group 
+   
+   pass down gear int and use it to set the group; 
+   .setGroup( "gear " + gear)
+   
+   cast layer to lType to access their property methods;
+   layerType layer = (layerType)layers.get(gui.layerSelected);    
    
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -65,7 +68,7 @@ class GUI_gearGroup
       .setId(gear)
       .setPosition(10, 5)
       .setSize(size2d, size2d)
-      .setValue(layers.get(gui.layerSelected).getVectors(gear).x, layers.get(gui.layerSelected).getVectors(gear).y)
+      .setValue(layers.get(gui.layerSelected).getGearVectors(gear).x, layers.get(gui.layerSelected).getGearVectors(gear).y)
       .setMinMax(-100, -100, 100, 100)
       .setCaptionLabel("radius x y ")
       .onChange(new CallbackListener()
@@ -76,7 +79,7 @@ class GUI_gearGroup
         {
           int gear = theEvent.getController().getId();
           PVector xy = new PVector(theEvent.getController().getArrayValue(0), theEvent.getController().getArrayValue(1));
-          layers.get(gui.layerSelected).setVectors(gear, xy);          
+          layers.get(gui.layerSelected).setGearVectors(gear, xy);
         }
       }
     }
@@ -161,7 +164,8 @@ class GUI_gearGroup
         layer(lock);
         int newGear = layers.get(gui.layerSelected).getNumberOfGears()+1;
         layers.get(gui.layerSelected).setNumberOfGears(newGear);
-        layers.get(gui.layerSelected).addProperties();        
+        //layers.get(gui.layerSelected).addProperties();
+        layers.get(gui.layerSelected).addGears();        
         setColsRows(newGear-1); 
         layer(lock);
       }
@@ -180,10 +184,11 @@ class GUI_gearGroup
         if (layers.get(gui.layerSelected).getNumberOfGears() > 1)
         {
           layer(lock);
-          int delGear = layers.get(gui.layerSelected).getNumberOfGears()-1;
-          layers.get(gui.layerSelected).setNumberOfGears(delGear);
-          layers.get(gui.layerSelected).deleteProperties(delGear); 
-          removeColsRows(delGear);
+          int del = layers.get(gui.layerSelected).getNumberOfGears()-1;
+          layers.get(gui.layerSelected).setNumberOfGears(del);
+          //layers.get(gui.layerSelected).deleteProperties(delGear);
+          layers.get(gui.layerSelected).deleteGears(del);         
+          removeColsRows(del);
           layer(lock);
         }
       }
@@ -236,7 +241,7 @@ class GUI_gearGroup
   void removeColsRows(int del)
   {
     removeSingleGroup(del);
-    
+
     if (col == 0)
     {
       col = 3;

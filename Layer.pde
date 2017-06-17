@@ -2,14 +2,13 @@ class Layer
 {
   PVector xyz = new PVector();
   ArrayList<PVector> vectors = new ArrayList<PVector>();
+  ArrayList<Gears> gears = new ArrayList<Gears>();
   int numberOfGears;
   color cFill, cStroke;
   float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
   String type;
-  StringList properties = new StringList("vX", "vY");
-  properties props = new properties();
-  ;
+  StringList properties = new StringList("x", "y");
 
   private Layer(int gN, float d, int t)
   {
@@ -32,20 +31,14 @@ class Layer
     return type;
   }
 
-  PVector getVectors(int gear)
+  PVector getGearVectors(int gear)
   {
-    if (animate == true)
-    {
-      return props.passBack().get(gear);
-    } else {
-
-      return vectors.get(gear);
-    }
+    return gears.get(gear).vector ;
   }
 
-  void setVectors(int gear, PVector xy)
+  void setGearVectors(int gear, PVector xy)
   {
-    vectors.set(gear, xy);
+    gears.get(gear).vector.set(xy);
   }
 
   int getNumberOfGears() 
@@ -58,25 +51,26 @@ class Layer
     numberOfGears=gears;
   }
 
+
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-   P R O P E R T I E S ~~~~ O V E R R I D E      
+   G E A R ~~~~ O V E R R I D E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addProperties()
+  void addGears()
   {
-    vectors.add(new PVector(random(5, 25), random(5, 25)));
-    props.pass(vectors);
+    Gears newGear = new Gears(type);
+    gears.add(newGear);
   }
 
-  void deleteProperties(int del)
+  void deleteGears(int del)
   {
-    vectors.remove(del);
+    gears.remove(del);
   }
-
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D I S P L A Y   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 
   void displayStyle() 
   {
@@ -119,40 +113,8 @@ class Layer
     {
       stroke(cStroke);
     }
-  }
-
+  }  
   void display() 
   {
-  }
-}
-
-class properties 
-{
-  float vX, vY;
-
-  properties()
-  {
-  }
-
-  void pass( ArrayList<PVector> v)
-  {
-    for (int i = 0; i < v.size(); i++)
-    {
-       vX = v.get(i).x;
-       vY = v.get(i).y;
-    }
-  }
-
-
-
-  ArrayList<PVector> passBack()
-  {
-    ArrayList<PVector> v = new ArrayList<PVector>();
-    for (int i = 0; i < layers.get(gui.layerSelected).getNumberOfGears(); i++)
-    {
-      PVector test = new PVector(vX, vY);
-      v.add(test);
-    }
-    return v;
   }
 }

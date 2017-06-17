@@ -1,10 +1,11 @@
+//import penner.easing.*;
 import java.util.*;
 import controlP5.*;
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 
 GUI gui;
-Controller controller = new Controller();
+Controller controller;
 Animation ani;
 StringList layerTypes = new StringList("SPIRO", "LINES");
 ArrayList<Layer> layers =  new ArrayList();
@@ -12,8 +13,8 @@ int Width = 512;
 int Height = 512;
 boolean lock = false;
 boolean animate = false;
-Spiro spiro = new Spiro(0);
-//Lines line = new Lines();
+//Spiro spiro = new Spiro(0);
+Lines line = new Lines();
 
 
 void settings()
@@ -28,11 +29,12 @@ void setup()
   surface.setTitle("Preview");
   surface.setResizable(true);
   gui = new GUI(this);
+  controller = new Controller();
   Ani.init(this);
   Ani.noAutostart();
   Ani.setDefaultTimeMode(Ani.FRAMES);
-  layers.add(spiro);
-  //layers.add(line);
+  //layers.add(spiro);
+  layers.add(line);
   ani = new Animation();
 }
 
@@ -41,7 +43,7 @@ void draw()
   background(128);
   translate(width/2, height/2);
 
-  ani.anis();
+  ani.aniTest();
   for (Layer myLayer : layers)
   {
     myLayer.display();

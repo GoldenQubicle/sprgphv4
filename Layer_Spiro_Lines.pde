@@ -26,6 +26,7 @@ class Lines extends Spiro
 
   void display() 
   {
+    cam.setActive(false);
     displayStyle();  
 
     for (int i = 0; i < getNumberOfGears(); i++) 

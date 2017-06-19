@@ -8,7 +8,7 @@ class Spiro extends Layer  //<>//
   {
     super(2, 2000, type);
     fill = true;
-    stroke = false;
+    stroke = true;
 
     properties.append("petals");
 
@@ -18,7 +18,7 @@ class Spiro extends Layer  //<>//
     {
       for (int i = 0; i < numberOfGears; i++) 
       {
-          addGears();     
+        addGears();
       }
     }
   }
@@ -29,6 +29,8 @@ class Spiro extends Layer  //<>//
 
   void display() 
   {
+    cam.setActive(false);
+
     displayStyle();  
 
     for (int t = 0; t < density; t++)
@@ -36,7 +38,7 @@ class Spiro extends Layer  //<>//
       if (lock != true)
       {
         xyz = grinding(t)[0];
-        ellipse(xyz.x, xyz.y, lineX, lineY);
+        ellipse(xyz.x, xyz.y, lineX, lineY);    
       }
     }
   }

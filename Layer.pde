@@ -38,7 +38,8 @@ class Layer
 
   void setGearVectors(int gear, PVector xy)
   {
-    gears.get(gear).vector.set(xy);
+    gears.get(gear).vector.x = xy.x;
+    gears.get(gear).vector.y = xy.y;
   }
 
   int getNumberOfGears() 

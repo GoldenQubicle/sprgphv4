@@ -45,6 +45,13 @@ class GUI_gearGroup
       connectors(gear);
 
       break;
+
+    case "SPIRO3D":
+
+      petals(gear);
+      zSlider3D(gear);
+
+      break;
     }
   }
 
@@ -84,6 +91,34 @@ class GUI_gearGroup
       }
     }
     );
+  }
+
+  void zSlider3D(int gear)
+  {
+    cp5.addSlider("z" + gear)
+      .setGroup( "gear " + gear)
+      .setId(gear)
+      .setPosition(10, 180)
+      .setSize(size2d, 8)
+      .setRange(-100, 100)
+      .setValue(layers.get(gui.layerSelected).getGearVectors(gear).z)
+      .setCaptionLabel("z depth")
+      .onChange(new CallbackListener() 
+    {
+      public void controlEvent(CallbackEvent theEvent) 
+      {
+        if (theEvent.getAction()==ControlP5.ACTION_BROADCAST) 
+        {
+          Spiro3D layer3d = (Spiro3D)layers.get(gui.layerSelected);
+          int gear = theEvent.getController().getId();
+          float z = theEvent.getController().getValue();
+          layer3d.setZDepth(gear, z);
+        }
+      }
+    }
+    );
+    cp5.getController("z" + gear).getCaptionLabel().align(CENTER, CENTER);
+    cp5.get(Slider.class, "petals " + gear).setRange(0, 20).getCaptionLabel().align(CENTER, CENTER);
   }
 
   void petals(int gear)
@@ -140,6 +175,8 @@ class GUI_gearGroup
     cp5.getController("connect " + gear).getCaptionLabel().align(CENTER, CENTER);
   }
 
+
+
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G L O B A L  G E A R  C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -164,7 +201,6 @@ class GUI_gearGroup
         layer(lock);
         int newGear = layers.get(gui.layerSelected).getNumberOfGears()+1;
         layers.get(gui.layerSelected).setNumberOfGears(newGear);
-        //layers.get(gui.layerSelected).addProperties();
         layers.get(gui.layerSelected).addGears();        
         setColsRows(newGear-1); 
         layer(lock);
@@ -186,8 +222,7 @@ class GUI_gearGroup
           layer(lock);
           int del = layers.get(gui.layerSelected).getNumberOfGears()-1;
           layers.get(gui.layerSelected).setNumberOfGears(del);
-          //layers.get(gui.layerSelected).deleteProperties(delGear);
-          layers.get(gui.layerSelected).deleteGears(del);         
+          layers.get(gui.layerSelected).deleteGears(del);        
           removeColsRows(del);
           layer(lock);
         }

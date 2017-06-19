@@ -6,6 +6,7 @@ class GUI extends PApplet
   int rPaneWidth = 105;
   int rPaneXpos = 740;
   GUI_gearGroup gg;
+  GUI_trackGroup tg;
   ScrollableList layerList, propList;
 
   public GUI(PApplet theApplet)
@@ -23,42 +24,20 @@ class GUI extends PApplet
   public void setup()
   {
     cp5 = new ControlP5(this);
+    
     gg = new GUI_gearGroup(cp5);
-    setupProps();
-    addProps();
-    layersGroup();
+    tg = new GUI_trackGroup(cp5);
+
+
+    
+    layersGroup();    
     for (int i = 0; i < layers.size(); i++)
     { 
       addLayer(i);
     }
   }
 
-  void addProps()
-  {    
-    cp5.get(ScrollableList.class, "properties");
-  }
-
-  void delProps()
-  {
-  }
-
-  void setupProps()
-  {
-    cp5.addScrollableList("properties")
-      .setPosition(rPaneXpos, 250)
-      .setSize(rPaneWidth, 50)
-      .setOpen(true)
-      .addCallback(new CallbackListener() 
-    {
-      public void controlEvent(CallbackEvent theEvent) 
-      {
-        String propKey = theEvent.getController().getLabel();
-      }
-    }
-    );
-  }
-
-
+  
 
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,20 +1,24 @@
 //import penner.easing.*;
+import peasy.*;
 import java.util.*;
 import controlP5.*;
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 
+PeasyCam cam;
 GUI gui;
 Controller controller;
 Animation ani;
-StringList layerTypes = new StringList("SPIRO", "LINES");
+StringList layerTypes = new StringList("SPIRO", "LINES", "SPIRO3D");
 ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
 int Height = 512;
 boolean lock = false;
 boolean animate = false;
-//Spiro spiro = new Spiro(0);
-Lines line = new Lines();
+//Spiro layer = new Spiro(0);
+Mesh layer = new Mesh();
+//Lines layer = new Lines();
+//Spiro3D layer = new Spiro3D();
 
 
 void settings()
@@ -28,13 +32,15 @@ void setup()
   colorMode(RGB);
   surface.setTitle("Preview");
   surface.setResizable(true);
+  cam = new PeasyCam(this, 512);
+  cam.setFreeRotationMode();
   gui = new GUI(this);
   controller = new Controller();
   Ani.init(this);
   Ani.noAutostart();
   Ani.setDefaultTimeMode(Ani.FRAMES);
-  //layers.add(spiro);
-  layers.add(line);
+  layers.add(layer);
+  //layers.add(line);
   ani = new Animation();
 }
 

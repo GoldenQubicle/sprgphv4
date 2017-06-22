@@ -6,29 +6,35 @@ class Mesh extends Spiro
   PVector xy2 = new PVector();
   // stuff for vertexCirle
   float thetaR, phiR;
-  int resolution = 12;
-  PVector radius = new PVector(2.5, 2.5, 2.5);
+  int resolution = 16;
+  PVector radius = new PVector(5, 5, 5);
   PVector circle = new PVector();
   PVector ring = new PVector();
-
-
 
   Mesh()
   {
     super(0);
     density = 500;
-    fill = false;
-    stroke = true;
+    fill = true;
+    stroke = false;
+  }
+
+  void lighting()
+  {
+    directionalLight(204, 204, 204, .5, 0, -1);
+    //ambientLight(50, 102, 102);
+    emissive(0, 26, 51);
   }
 
   void display()
   {
+    lighting();
     displayStyle();
     pushMatrix();
     translate(-width/2, -height/2); 
-    beginShape(QUAD_STRIP); 
+    beginShape(TRIANGLE_STRIP); 
 
-    for (int t = 0; t <= density; t++)
+    for (int t = 0; t < density; t++)
     {   
       if (lock != true)
       {
@@ -37,23 +43,13 @@ class Mesh extends Spiro
 
         for (int v = 0; v < resolution; v++) {
 
-          vertex(meshBuild(getNormal(t,xyz), xyz).get(v).x, meshBuild(getNormal(t, xyz),xyz).get(v).y, meshBuild(getNormal(t, xyz), xyz).get(v).z);
+          vertex(meshBuild(getNormal(t, xyz), xyz).get(v).x, meshBuild(getNormal(t, xyz), xyz).get(v).y, meshBuild(getNormal(t, xyz), xyz).get(v).z);
 
           vertex(meshBuild(getNormal(t+1, xy2), xy2).get(v).x, meshBuild(getNormal(t+1, xy2), xy2).get(v).y, meshBuild(getNormal(t+1, xy2), xy2).get(v).z);
         }
-
-        //for (PVector vert : meshBuild(getNormal(t)))
-        //{
-        //  vertex(vert.x, vert.y, vert.z);
-
-        //  for (PVector vertN : meshBuild(getNormal(t+1)))
-        //  {
-        //    vertex(vertN.x, vertN.y, vertN.z);
-        //  }
-        //}
       }
     }
-    endShape(CLOSE);
+    endShape();
     popMatrix();
   }
 
@@ -108,21 +104,25 @@ class Mesh extends Spiro
 
   PVector getNormal(int t, PVector pLoc)
   {
-    prev = new PVector();
-    next = new PVector();
-    normal = new PVector();
-    prev = grinding(t-1)[0]; //b
-    next = grinding(t+1)[0]; // c
-
-    PVector ab = PVector.sub(next, pLoc);
-    PVector ac = PVector.sub(prev, pLoc);
-
-    normal.x = ab.y;
-    normal.y = ab.x;           
-
-    if (PVector.dot(normal, ac) > 0)
+    if (lock != true)
     {
-      normal.mult(-1);
+      prev = new PVector();
+      next = new PVector();
+      normal = new PVector();
+
+      prev = grinding(t-1)[0]; //b
+      next = grinding(t+1)[0]; // c
+
+      PVector ab = PVector.sub(next, pLoc);
+      PVector ac = PVector.sub(prev, pLoc);
+
+      normal.x = ab.y;
+      normal.y = ab.x;           
+
+      //if (PVector.dot(normal, ac) > 0)
+      //{
+      //  normal.mult(-1);
+      //}
     }
     return normal;
   }

@@ -6,9 +6,9 @@ class Spiro extends Layer  //<>//
 
   Spiro(int type) 
   {
-    super(2, 2000, type);
+    super(4, 2000, type);
     fill = true;
-    stroke = true;
+    stroke = false;
 
     properties.append("petals");
 

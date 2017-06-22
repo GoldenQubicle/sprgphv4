@@ -46,7 +46,7 @@ void setup()
 
 void draw() 
 {
-  background(128);
+  background(0);
   translate(width/2, height/2);
 
   ani.aniTest();

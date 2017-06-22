@@ -26,7 +26,7 @@ class Mesh extends Spiro
     displayStyle();
     pushMatrix();
     translate(-width/2, -height/2); 
-    //beginShape(QUAD_STRIP); 
+    beginShape(TRIANGLE_STRIP); 
 
     for (int t = 0; t < density; t++)
     {   
@@ -48,59 +48,67 @@ class Mesh extends Spiro
         {
           normal.mult(-1);
         }
+        for(PVector vert : meshBuild(normal))
+        {
+        vertex(vert.x, vert.y, vert.z);
+        }
 
-
-
-
-        meshBuild(normal);
+        //vertex(meshBuild(normal).x, meshBuild(normal).y);
       }
     }
-    //endShape();
+    endShape();
 
     popMatrix();
   }
 
-  /* 2106 NOTE
-   so yeah, in order to actually make a mesh, Id need to have two 'rings' so to speak
-   or in other words, if I simply pass in the vertex cirlce per vector point, its going to connect the ring with itself
-   there're couple of presumed solutions to this
-   1) turn each cirle into a Pshape, store those and call methods - however, PShape creations slows things down dramatically
-   2) have the vertexCirlce return a PVector array, store those inside another array, loop over it cleverly, i.e. alternating between two rings
-   3) draw the vertices dynamically inside the density loop
-   
-   atm, option two seems to make the most sense because option one is slow as heck, and option three could very well end up with double vertices per ring
-   
-   */
 
-
-  void meshBuild(PVector n)
+  ArrayList<PVector> meshBuild(PVector n)
   { 
-    //pushMatrix();
-    //translate(xyz.x, xyz.y);  
-    //pushMatrix();
-    //rotate(-n.heading());
-    vertexCirle(n);    
-    //popMatrix();
-    //popMatrix();
+    pushMatrix();
+    translate(xyz.x, xyz.y);  
+    pushMatrix();
+    rotate(-n.heading());
+    pushMatrix();
+    rotateY(PI/2);
+    rotateX(PI/2);
+
+   ArrayList<PVector> drawMesh = new ArrayList<PVector>(recordPosition(vertexCirle()));
+    popMatrix();
+    popMatrix();
+    popMatrix();
+    return drawMesh;
   }
 
-
-  void vertexCirle(PVector n)
+  ArrayList<PVector> recordPosition(ArrayList<PVector> ring )
   {
-    pushMatrix();
-    //rotateY(PI/2);
-    //rotateX(PI/2);
-    beginShape(); 
+    ArrayList<PVector> vertexRing = new ArrayList<PVector>();
+    for (PVector vertice : ring)
+    {
+      PVector ringLoc = new PVector();
+      ringLoc.x = modelX(vertice.x, vertice.y, vertice.z);
+      ringLoc.y = modelY(vertice.x, vertice.y, vertice.z);
+      ringLoc.z = modelZ(vertice.x, vertice.y, vertice.z);
+      vertexRing.add(ringLoc);
+    }
+    return vertexRing;
+  }
+  
+  
+  ArrayList<PVector> vertexCirle()
+  {
+    ArrayList<PVector> ring = new ArrayList<PVector>();
     for (int i = 0; i < resolution; i++)
     {     
       theta = (TAU/resolution)*i;
-      circle.x = xyz.x;// cos(theta)*radius.x;
-      circle.y = xyz.y + sin(theta)*radius.y;
-      circle.z = xyz.z + cos(theta)*radius.z;
-      //circle.rotate(n.heading());
-      vertex(circle.x, circle.y, circle.z);
+      circle = new PVector();
+      circle.x = cos(theta)*radius.x;
+      circle.y = sin(theta)*radius.y;
+      circle.z = 0;
+      ring.add(circle);
     }
-    endShape(CLOSE);
-    popMatrix();
+    return ring;
   }
+  
+  
+  
 }

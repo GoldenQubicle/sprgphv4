@@ -1,4 +1,4 @@
-class Layer 
+class Layer
 {
   PVector xyz = new PVector();
   ArrayList<PVector> vectors = new ArrayList<PVector>();

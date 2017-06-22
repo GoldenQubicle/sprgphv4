@@ -22,7 +22,7 @@ class Spiro3D extends Spiro
     pushMatrix();
     translate(-width/2, -height/2);
 
-    beginShape(POLYGON);
+    beginShape(QUAD_STRIP);
 
     for (int t = 0; t < density; t++)
     {
@@ -33,8 +33,8 @@ class Spiro3D extends Spiro
         if (lock != true)
         {          
           xyz = grinding()[0];
-          curveVertex(xyz.x, xyz.y, xyz.z);
-          //vertex(xyz.x, xyz.y, xyz.z);
+          //curveVertex(xyz.x, xyz.y, xyz.z);
+          vertex(xyz.x, xyz.y, xyz.z);
         }
       }
     }

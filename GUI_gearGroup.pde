@@ -16,6 +16,7 @@ class GUI_gearGroup
       .setCollapseMode(Accordion.SINGLE);
 
     buttonsAddDelete();
+    addToGlobalGearGroup();
     setGrid();
   }
 
@@ -26,7 +27,7 @@ class GUI_gearGroup
    additional property controls can be added per layerType
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addControlsToGroup(int gear)
+  void addToGearGroup(int gear)
   {
     slider2D(gear);   
 
@@ -50,6 +51,27 @@ class GUI_gearGroup
 
       petals(gear);
       zSlider3D(gear);
+
+      break;
+
+    case "MESH":
+
+      petals(gear);
+
+      break;
+    }
+  }
+
+  void addToGlobalGearGroup()
+  {
+    // pls note this will probably fall over on layerswitching
+    
+    switch(getLayerType()) 
+    {
+
+    case "MESH":
+
+      meshRadius();
 
       break;
     }
@@ -175,8 +197,6 @@ class GUI_gearGroup
     cp5.getController("connect " + gear).getCaptionLabel().align(CENTER, CENTER);
   }
 
-
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G L O B A L  G E A R  C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -187,7 +207,7 @@ class GUI_gearGroup
       .setBackgroundColor(color(255, 75))
       .disableCollapse()
       .setPosition(gui.rPaneXpos, 15)
-      .setSize(gui.rPaneWidth, 50);    
+      .setSize(gui.rPaneWidth, 150);    
 
     cp5.addButton("gear +")
       .setPosition(0, 5)
@@ -232,6 +252,78 @@ class GUI_gearGroup
     ;
   }
 
+ /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   C U S T O M   L A Y E R T Y P E 
+   G L O B A L   C O N T R O L S
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+   
+void meshRadius()
+  {
+    Slider [] meshRadii = new Slider[3];
+    Mesh layer = (Mesh)layers.get(gui.layerSelected);
+
+    meshRadii[0] = cp5.addSlider("meshXr")
+      .setGroup("gears global controls")
+      .setPosition(0, 25)
+      .setSize(gui.rPaneWidth, 10)
+      .setValue(layer.getMeshRadius().x)
+      .setId(0);
+
+    meshRadii[1] = cp5.addSlider("meshYr")
+      .setGroup("gears global controls")
+      .setPosition(0, 40)
+      .setSize(gui.rPaneWidth, 10)
+      .setValue(layer.getMeshRadius().y)
+      .setId(1);
+
+
+    meshRadii[2]  = cp5.addSlider("meshZr")
+      .setGroup("gears global controls")
+      .setPosition(0, 55)
+      .setSize(gui.rPaneWidth, 10)
+      .setValue(layer.getMeshRadius().z)
+      .setId(2);
+
+    cp5.getController("meshXr").getCaptionLabel().align(CENTER, CENTER);
+    cp5.getController("meshYr").getCaptionLabel().align(CENTER, CENTER);
+    cp5.getController("meshZr").getCaptionLabel().align(CENTER, CENTER);
+    
+    // so actually what is labeled x controls the z space
+    // the other two. . kinda weird to call it x & y but yeah, they do something else 
+    // basically: because origin of the rings is in x&y, and then gets translated
+    // the controls are a bit cross wired
+  
+    for (Slider radius : meshRadii)
+    {
+      radius.addCallback(new CallbackListener() 
+      {
+        public void controlEvent(CallbackEvent theEvent) 
+        {
+          if (theEvent.getAction()==ControlP5.ACTION_BROADCAST)
+          {
+            Mesh layer = (Mesh)layers.get(gui.layerSelected);
+            Slider radi = cp5.get(Slider.class, theEvent.getController().getName());           
+
+            if (radi.getId() == 0 )
+            {
+              layer.setMeshRadius(radi.getValue(), layer.getMeshRadius().y, layer.getMeshRadius().z );
+            }
+
+            if (radi.getId() == 1 )
+            {
+              layer.setMeshRadius(layer.getMeshRadius().x, radi.getValue(), layer.getMeshRadius().z );
+            }
+
+            if (radi.getId() == 2 )
+            {
+              layer.setMeshRadius(layer.getMeshRadius().x, layer.getMeshRadius().y, radi.getValue() );
+            }
+          }
+        }
+      }
+      );
+    }
+  }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G R I D  H A N D L E R S
@@ -312,7 +404,7 @@ class GUI_gearGroup
       .setBackgroundColor(color(255, 75))
       .disableCollapse();
 
-    addControlsToGroup(gears);
+    addToGearGroup(gears);
   }
 
   void removeSingleGroup(int del)

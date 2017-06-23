@@ -1,4 +1,8 @@
 /*
+
+
+===========================================================================
+
  D E F I N I T I O N S 
  -  gearProperties are those variables which constitute a so-called gear, the makeup of which depends on layerType
  -  gearProperties must be kept in sync with NumberOfGears, i.e. anything which loops over NumberOfGears is considered a gearProperty
@@ -7,6 +11,7 @@
  
  
  ===========================================================================
+
  G E N E R A L  I D E A S
  -  have ui feedback on which controller and / or ui mode is active
  -  have the ability to edit multiple layers at once, e.g. set color over 4 layers 
@@ -14,7 +19,7 @@
  
  ===========================================================================
  
- regaring animations 
+ regarding animations 
  
  so, make a giant switch case which check incoming value from propertiesList (for each track)
  and cast the appropriate property into a generic object

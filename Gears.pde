@@ -18,6 +18,9 @@ class Gears
 
     case "SPIRO3D":
       petals = int(random(3, 11));
+
+    case "MESH":
+      petals = int(random(3, 11));
     }
   }
 }

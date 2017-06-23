@@ -55,7 +55,7 @@ class GUI extends PApplet
     cp5.addGroup("layers controls")
       .setBackgroundColor(color(255, 75))
       .disableCollapse()
-      .setPosition(rPaneXpos, 85)
+      .setPosition(rPaneXpos, 150)
       .setSize(rPaneWidth, 100);    
 
     cp5.addScrollableList("Layers")

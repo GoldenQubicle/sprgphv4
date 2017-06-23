@@ -1,75 +1,89 @@
 class Mesh extends Spiro
 {
-  PVector prev = new PVector();
-  PVector next = new PVector();
-  PVector normal = new PVector();
-  PVector xy2 = new PVector();
+   ArrayList<PVector> vectorPath = new ArrayList<PVector>();  
+  ArrayList<PVector> vertexR0ng = new ArrayList<PVector>(); 
+  ArrayList<PVector> vertexR1ng = new ArrayList<PVector>(); 
+  PVector n0rm, n1rm;
+
   // stuff for vertexCirle
-  float thetaR, phiR;
   int resolution = 16;
   PVector radius = new PVector(5, 5, 5);
-  PVector circle = new PVector();
-  PVector ring = new PVector();
 
   Mesh()
   {
-    super(0);
+    super(3);
     density = 500;
     fill = true;
     stroke = false;
+
+    for (int i = 0; i < numberOfGears; i++) 
+    {
+      addGears();
+    }
+
+    // setting up first 3 vector path points
+    for (int i = 0; i < 3; i++)
+    {
+      PVector xyz = new PVector();
+      xyz = grinding(i)[0]; 
+      vectorPath.add(xyz);
+    }
   }
 
   void lighting()
   {
     directionalLight(204, 204, 204, .5, 0, -1);
     //ambientLight(50, 102, 102);
-    emissive(0, 26, 51);
+    emissive(128, 26, 51);
   }
 
   void display()
   {
     lighting();
     displayStyle();
+
     pushMatrix();
-    translate(-width/2, -height/2); 
+    translate(-width/2, -height/2);     
     beginShape(TRIANGLE_STRIP); 
 
     for (int t = 0; t < density; t++)
     {   
       if (lock != true)
       {
-        xyz = grinding(t)[0]; 
-        xy2 = grinding(t+1)[0];
+        n0rm = getNormal(vectorPath.get(0), vectorPath.get(1));
+        n1rm = getNormal(vectorPath.get(1), vectorPath.get(2));
 
-        for (int v = 0; v < resolution; v++) {
+        vertexR0ng = getVertexRingPos(n0rm, vectorPath.get(0));
+        vertexR1ng = getVertexRingPos(n1rm, vectorPath.get(1));
 
-          vertex(meshBuild(getNormal(t, xyz), xyz).get(v).x, meshBuild(getNormal(t, xyz), xyz).get(v).y, meshBuild(getNormal(t, xyz), xyz).get(v).z);
-
-          vertex(meshBuild(getNormal(t+1, xy2), xy2).get(v).x, meshBuild(getNormal(t+1, xy2), xy2).get(v).y, meshBuild(getNormal(t+1, xy2), xy2).get(v).z);
+        for (int v = 0; v < resolution; v++) {          
+          vertex(vertexR0ng.get(v).x, vertexR0ng.get(v).y, vertexR0ng.get(v).z);
+          vertex(vertexR1ng.get(v).x, vertexR1ng.get(v).y, vertexR1ng.get(v).z);
         }
+
+        vectorPath.set(0, vectorPath.get(1));
+        vectorPath.set(1, vectorPath.get(2));
+        vectorPath.set(2, grinding(t)[0]);
       }
     }
-    endShape();
+    endShape(CLOSE);
     popMatrix();
   }
 
-
-  ArrayList<PVector> meshBuild(PVector n, PVector pLoc)
+  ArrayList<PVector> getVertexRingPos(PVector normal, PVector pLoc)
   { 
     pushMatrix();
     translate(pLoc.x, pLoc.y);  
     pushMatrix();
-    rotate(-n.heading());
+    rotate(-normal.heading());
     pushMatrix();
     rotateY(PI/2);
     rotateX(PI/2);
-
-    ArrayList<PVector> drawMesh = new ArrayList<PVector>(recordPosition(vertexCirle()));
-
+    ArrayList<PVector> vertexRingPos = new ArrayList<PVector>(recordPosition(vertexCirle()));
     popMatrix();
     popMatrix();
     popMatrix();
-    return drawMesh;
+    return vertexRingPos;
   }
 
   ArrayList<PVector> recordPosition(ArrayList<PVector> ring )
@@ -86,44 +100,39 @@ class Mesh extends Spiro
     return vertexRing;
   }
 
+  PVector getNormal(PVector current, PVector next)
+  {
+    PVector normal = new PVector();
+    PVector delta = PVector.sub(next, current);
+    normal.x = delta.y;
+    normal.y = delta.x;               
+    return normal;
+  }
 
   ArrayList<PVector> vertexCirle()
   {
     ArrayList<PVector> ring = new ArrayList<PVector>();
     for (int i = 0; i < resolution; i++)
     {     
-      theta = (TAU/resolution)*i;
-      circle = new PVector();
-      circle.x = cos(theta)*radius.x;
-      circle.y = sin(theta)*radius.y;
-      circle.z = 0;
+      float thetaR = (TAU/resolution)*i;
+      PVector circle = new PVector();
+      circle.x = cos(thetaR)*radius.x;
+      circle.y = sin(thetaR)*radius.y;
+      circle.z = radius.z;
       ring.add(circle);
     }
     return ring;
-  }  
+  }
 
-  PVector getNormal(int t, PVector pLoc)
+  PVector getMeshRadius()
   {
-    if (lock != true)
-    {
-      prev = new PVector();
-      next = new PVector();
-      normal = new PVector();
+    return radius;
+  }
 
-      prev = grinding(t-1)[0]; //b
-      next = grinding(t+1)[0]; // c
-
-      PVector ab = PVector.sub(next, pLoc);
-      PVector ac = PVector.sub(prev, pLoc);
-
-      normal.x = ab.y;
-      normal.y = ab.x;           
-
-      //if (PVector.dot(normal, ac) > 0)
-      //{
-      //  normal.mult(-1);
-      //}
-    }
-    return normal;
+  void setMeshRadius(float x, float y, float z)
+  {
+    radius.x = x;
+    radius.y = y;
+    radius.z = z;
   }
 }

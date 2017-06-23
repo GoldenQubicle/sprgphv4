@@ -9,7 +9,7 @@ PeasyCam cam;
 GUI gui;
 Controller controller;
 Animation ani;
-StringList layerTypes = new StringList("SPIRO", "LINES", "SPIRO3D");
+StringList layerTypes = new StringList("SPIRO", "LINES", "SPIRO3D", "MESH");
 ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
 int Height = 512;
@@ -46,7 +46,7 @@ void setup()
 
 void draw() 
 {
-  background(0);
+  background(128);
   translate(width/2, height/2);
 
   ani.aniTest();

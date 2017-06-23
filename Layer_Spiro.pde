@@ -2,19 +2,18 @@ class Spiro extends Layer  //<>//
 {
   ArrayList<PVector> circ = new ArrayList<PVector>();
   IntList petals = new IntList();
-  //IntDict petals = new IntDict();
 
   Spiro(int type) 
   {
-    super(4, 2000, type);
+    super(2, 2000, type);
     fill = true;
     stroke = false;
 
     properties.append("petals");
 
-    // yeah this is a bit hacky, but thats because lines extends spiro
-    // hence need to perform a type check to disable this call for line type
-    if (getType() == "SPIRO") 
+    // yeah this is a bit hacky, but thats because lines & mesh extends spiro
+    // hence need to perform a check to disable this call for those layerTypes
+    if (getType() == "SPIRO" ) 
     {
       for (int i = 0; i < numberOfGears; i++) 
       {

@@ -15,10 +15,10 @@ int Width = 512;
 int Height = 512;
 boolean lock = false;
 boolean animate = false;
-//Spiro layer = new Spiro(0);
-Mesh layer = new Mesh();
+Spiro layer = new Spiro(0);
 //Lines layer = new Lines();
 //Spiro3D layer = new Spiro3D();
+//Mesh layer = new Mesh(3);
 
 
 void settings()
@@ -42,6 +42,7 @@ void setup()
   layers.add(layer);
   //layers.add(line);
   ani = new Animation();
+  
 }
 
 void draw() 

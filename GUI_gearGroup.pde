@@ -65,7 +65,7 @@ class GUI_gearGroup
   void addToGlobalGearGroup()
   {
     // pls note this will probably fall over on layerswitching
-    
+
     switch(getLayerType()) 
     {
 
@@ -223,6 +223,7 @@ class GUI_gearGroup
         layers.get(gui.layerSelected).setNumberOfGears(newGear);
         layers.get(gui.layerSelected).addGears();        
         setColsRows(newGear-1); 
+        gui.tg.setProperties(1);
         layer(lock);
       }
     }
@@ -244,6 +245,7 @@ class GUI_gearGroup
           layers.get(gui.layerSelected).setNumberOfGears(del);
           layers.get(gui.layerSelected).deleteGears(del);        
           removeColsRows(del);
+          gui.tg.setProperties(1);
           layer(lock);
         }
       }
@@ -252,12 +254,12 @@ class GUI_gearGroup
     ;
   }
 
- /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    C U S T O M   L A Y E R T Y P E 
    G L O B A L   C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-   
-void meshRadius()
+
+  void meshRadius()
   {
     Slider [] meshRadii = new Slider[3];
     Mesh layer = (Mesh)layers.get(gui.layerSelected);
@@ -287,12 +289,12 @@ void meshRadius()
     cp5.getController("meshXr").getCaptionLabel().align(CENTER, CENTER);
     cp5.getController("meshYr").getCaptionLabel().align(CENTER, CENTER);
     cp5.getController("meshZr").getCaptionLabel().align(CENTER, CENTER);
-    
+
     // so actually what is labeled x controls the z space
     // the other two. . kinda weird to call it x & y but yeah, they do something else 
     // basically: because origin of the rings is in x&y, and then gets translated
     // the controls are a bit cross wired
-  
+
     for (Slider radius : meshRadii)
     {
       radius.addCallback(new CallbackListener() 

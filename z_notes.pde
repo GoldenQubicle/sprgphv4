@@ -1,5 +1,12 @@
 /*
 
+moving forward
+- make mock track ui, i.e. functional behaviourly, yet not hooked into anything yet
+- be able to add / delete tracks
+- be able to add / delete segments to track
+- be able to edit segment length & position
+
+once thats in place, figure out mapping of segment position to timeline, handled by controller
 
 ===========================================================================
 

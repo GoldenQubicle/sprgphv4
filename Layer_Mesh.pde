@@ -1,6 +1,6 @@
 class Mesh extends Spiro
 {
-   ArrayList<PVector> vectorPath = new ArrayList<PVector>();  
+  ArrayList<PVector> vectorPath = new ArrayList<PVector>();  
   ArrayList<PVector> vertexR0ng = new ArrayList<PVector>(); 
   ArrayList<PVector> vertexR1ng = new ArrayList<PVector>(); 
   PVector n0rm, n1rm;
@@ -9,9 +9,9 @@ class Mesh extends Spiro
   int resolution = 16;
   PVector radius = new PVector(5, 5, 5);
 
-  Mesh()
+  Mesh(int type)
   {
-    super(3);
+    super(type);
     density = 500;
     fill = true;
     stroke = false;
@@ -30,12 +30,9 @@ class Mesh extends Spiro
     }
   }
 
-  void lighting()
-  {
-    directionalLight(204, 204, 204, .5, 0, -1);
-    //ambientLight(50, 102, 102);
-    emissive(128, 26, 51);
-  }
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   D E F A U L T   M E T H O D S
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void display()
   {
@@ -70,6 +67,18 @@ class Mesh extends Spiro
     popMatrix();
   }
 
+  void lighting()
+  {
+    directionalLight(204, 204, 204, .5, 0, -1);
+    //ambientLight(50, 102, 102);
+    emissive(128, 26, 51);
+  }
+  
+  
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   M E S H I N G   M E T H O D S
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
   ArrayList<PVector> getVertexRingPos(PVector normal, PVector pLoc)
   { 
     pushMatrix();
@@ -79,7 +88,7 @@ class Mesh extends Spiro
     pushMatrix();
     rotateY(PI/2);
     rotateX(PI/2);
-    ArrayList<PVector> vertexRingPos = new ArrayList<PVector>(recordPosition(vertexCirle()));
+    ArrayList<PVector> vertexRingPos = new ArrayList<PVector>(recordPosition(vertexRing()));
     popMatrix();
     popMatrix();
     popMatrix();
@@ -109,20 +118,25 @@ class Mesh extends Spiro
     return normal;
   }
 
-  ArrayList<PVector> vertexCirle()
+  ArrayList<PVector> vertexRing()
   {
     ArrayList<PVector> ring = new ArrayList<PVector>();
     for (int i = 0; i < resolution; i++)
     {     
       float thetaR = (TAU/resolution)*i;
-      PVector circle = new PVector();
-      circle.x = cos(thetaR)*radius.x;
-      circle.y = sin(thetaR)*radius.y;
-      circle.z = radius.z;
-      ring.add(circle);
+      PVector vertex = new PVector();
+      vertex.x = cos(thetaR)*radius.x;
+      vertex.y = sin(thetaR)*radius.y;
+      vertex.z = radius.z;
+      ring.add(vertex);
     }
     return ring;
   }
+
+
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+   P R O P E R T I E S ~~~~  L T Y P E      
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   PVector getMeshRadius()
   {

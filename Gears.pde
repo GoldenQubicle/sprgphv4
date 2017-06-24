@@ -9,6 +9,7 @@ class Gears
 
     switch(lType)
     {
+      
     case "SPIRO":
       petals = int(random(3, 11));
 
@@ -21,6 +22,7 @@ class Gears
 
     case "MESH":
       petals = int(random(3, 11));
+      
     }
   }
 }

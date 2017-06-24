@@ -9,7 +9,7 @@ class Spiro extends Layer  //<>//
     fill = true;
     stroke = false;
 
-    properties.append("petals");
+    gearProp.add("petals");
 
     // yeah this is a bit hacky, but thats because lines & mesh extends spiro
     // hence need to perform a check to disable this call for those layerTypes

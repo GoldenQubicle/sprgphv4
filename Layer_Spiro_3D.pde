@@ -14,9 +14,14 @@ class Spiro3D extends Spiro
     }
     density = 200;
   }
+  
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   D E F A U L T   M E T H O D S
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void display()
   {
+    lighting();
     displayStyle();
 
     pushMatrix();
@@ -60,7 +65,13 @@ class Spiro3D extends Spiro
     return location;
   }
 
-
+ void lighting()
+  {
+    directionalLight(204, 204, 204, .5, 0, -1);
+    //ambientLight(50, 102, 102);
+    emissive(128, 26, 51);
+  }
+  
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
    P R O P E R T I E S ~~~~  L T Y P E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

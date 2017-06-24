@@ -1,13 +1,12 @@
-
 class Animation
-
 {
+  
   Ani test, test2, test3;
-
+  int tracks;
+  
   Animation()
   {
   }
-
 
   void aniTest()
   {

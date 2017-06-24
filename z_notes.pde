@@ -1,4 +1,14 @@
 /*
+current concerns
+- the track group is getting the layerSelected as an Id
+- gearGroups can be added to each layer on the fly
+- so the issue is: how to filter which tracks need to have their layerProperties updated?
+- or more specifaclly, how to get the ScrollableList controller out of the trackGroup so I can edit it
+
+starting to wonder: maybe a seperate track class would / could be usefull?
+
+
+==========================================================================
 
 moving forward
 - make mock track ui, i.e. functional behaviourly, yet not hooked into anything yet

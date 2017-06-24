@@ -223,7 +223,7 @@ class GUI_gearGroup
         layers.get(gui.layerSelected).setNumberOfGears(newGear);
         layers.get(gui.layerSelected).addGears();        
         setColsRows(newGear-1); 
-        gui.tg.setProperties(1);
+        gui.tg.setProperties(gui.layerSelected);
         layer(lock);
       }
     }
@@ -245,7 +245,7 @@ class GUI_gearGroup
           layers.get(gui.layerSelected).setNumberOfGears(del);
           layers.get(gui.layerSelected).deleteGears(del);        
           removeColsRows(del);
-          gui.tg.setProperties(1);
+          gui.tg.setProperties(gui.layerSelected);
           layer(lock);
         }
       }
@@ -364,12 +364,12 @@ class GUI_gearGroup
       addRows();
     }
 
-    addSingleGroup(gear);
+    addGearGroup(gear);
   }
 
   void removeColsRows(int del)
   {
-    removeSingleGroup(del);
+    removeGearGroup(del);
 
     if (col == 0)
     {
@@ -396,7 +396,7 @@ class GUI_gearGroup
     gui.cp5.get(Group.class, "row " + row).remove();
   }
 
-  void addSingleGroup(int gears) 
+  void addGearGroup(int gears) 
   {
     cp5.addGroup("gear " + gears)
       .setPosition(10+col*(size2d+30), 15)
@@ -409,7 +409,7 @@ class GUI_gearGroup
     addToGearGroup(gears);
   }
 
-  void removeSingleGroup(int del)
+  void removeGearGroup(int del)
   {
     gearControls.removeItem(gui.cp5.get(Group.class, "gear " + del));
     gui.cp5.get(Group.class, "gear " + del).remove();

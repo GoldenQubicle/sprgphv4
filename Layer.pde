@@ -9,8 +9,9 @@ class Layer
   boolean stroke, fill;
   String type;
   List<String> gearProp = new ArrayList<String>();
-  List<String> layerProp = new ArrayList<String>();
-
+  List<String> colorProp = new ArrayList<String>();
+  List<String> lineProp = new ArrayList<String>();
+  Map<String, List<String>> layerProperties = new HashMap<String, List<String>>();
 
   private Layer(int gN, float d, int t)
   {

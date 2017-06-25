@@ -5,11 +5,12 @@ class Spiro extends Layer  //<>//
 
   Spiro(int type) 
   {
-    super(2, 2000, type);
+    super(1, 2000, type);
     fill = true;
     stroke = false;
 
     gearProp.add("petals");
+    layerProperties.put("gear", gearProp);
 
     // yeah this is a bit hacky, but thats because lines & mesh extends spiro
     // hence need to perform a check to disable this call for those layerTypes
@@ -37,7 +38,7 @@ class Spiro extends Layer  //<>//
       if (lock != true)
       {
         xyz = grinding(t)[0];
-        ellipse(xyz.x, xyz.y, lineX, lineY);    
+        ellipse(xyz.x, xyz.y, lineX, lineY);
       }
     }
   }

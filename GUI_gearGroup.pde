@@ -223,7 +223,7 @@ class GUI_gearGroup
         layers.get(gui.layerSelected).setNumberOfGears(newGear);
         layers.get(gui.layerSelected).addGears();        
         setColsRows(newGear-1); 
-        gui.tg.setProperties(gui.layerSelected);
+        gui.tg.addGearTrackButtons(newGear-1);
         layer(lock);
       }
     }
@@ -245,7 +245,7 @@ class GUI_gearGroup
           layers.get(gui.layerSelected).setNumberOfGears(del);
           layers.get(gui.layerSelected).deleteGears(del);        
           removeColsRows(del);
-          gui.tg.setProperties(gui.layerSelected);
+          gui.tg.removeGearTrackButtons(del);          
           layer(lock);
         }
       }

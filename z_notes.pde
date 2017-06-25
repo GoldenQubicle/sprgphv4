@@ -1,13 +1,28 @@
 /*
 current concerns
-- the track group is getting the layerSelected as an Id
-- gearGroups can be added to each layer on the fly
-- so the issue is: how to filter which tracks need to have their layerProperties updated?
-- or more specifaclly, how to get the ScrollableList controller out of the trackGroup so I can edit it
 
-starting to wonder: maybe a seperate track class would / could be usefull?
+2406
+hm yeah, just from this current quick mockup its evident I need to rethink the design because;
+  - even with just a few gears, the properties list is becoming quit long already
+  - the past has proven that certain properties (e.g. radius x & y ) tend to move together
+  - these two things considered, itd probaly become quite elaborate and tedious to add tracks per property
+  
+SO what if I did away with the concept of individual tracks and instead group properties together sensibly, 
+and thus create a two-tier selection system, i.e. 
+  - select trackGroup for gear object, 
+  - trackGroup contains animations tracks for all gear properties
+  
+  in similar fashion have
+  - trackGroup color, which contains background, fill & stroke
+  - trackGroup line, which contains lineX, lineY & strokeWeight
+  
+this require some thinking upfront though
+basically I need to have an abstract trackGroup class, which has flexible design as to add properties of whatever type
 
-
+- trackGroup: layerSelected
+    - trackProperty:  layerobject, fieldname
+        - trackSegment  delay, duration, value, easingType
+  
 ==========================================================================
 
 moving forward

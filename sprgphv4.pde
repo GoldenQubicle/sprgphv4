@@ -16,7 +16,7 @@ int Height = 512;
 boolean lock = false;
 boolean animate = false;
 Spiro layer = new Spiro(0);
-Lines layer2 = new Lines();
+//Lines layer2 = new Lines();
 //Spiro3D layer = new Spiro3D();
 //Mesh layer = new Mesh(3);
 
@@ -40,9 +40,8 @@ void setup()
   Ani.noAutostart();
   Ani.setDefaultTimeMode(Ani.FRAMES);
   layers.add(layer);
-  layers.add(layer2);
+  //layers.add(layer2);
   ani = new Animation();
-  
 }
 
 void draw() 
@@ -51,9 +50,15 @@ void draw()
   translate(width/2, height/2);
 
   ani.aniTest();
-  for (Layer myLayer : layers)
+  if (lock != true)
   {
-    myLayer.display();
+    for (Layer myLayer : layers)
+    {
+      myLayer.display();
+    }
+  } else 
+  {
+    noLoop();
   }
 }
 

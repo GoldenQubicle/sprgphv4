@@ -207,7 +207,7 @@ class GUI_gearGroup
       .setBackgroundColor(color(255, 75))
       .disableCollapse()
       .setPosition(gui.rPaneXpos, 15)
-      .setSize(gui.rPaneWidth, 150);    
+      .setSize(gui.rPaneWidth, 100);    
 
     cp5.addButton("gear +")
       .setPosition(0, 5)

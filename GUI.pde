@@ -73,8 +73,10 @@ class GUI extends PApplet
         {
           layer(lock);
           gg.delGrid();
+          tg.delMenu();
           layerSelected = int(theEvent.getController().getValue());
           gg.setGrid();
+          tg.addMenu();
           layer(lock);
         }
       }

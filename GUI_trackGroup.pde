@@ -28,9 +28,8 @@ class GUI_trackGroup
    T R A C K   G R O U P  C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addTrackGroup(String track) 
+  void addTrackGroup(String tgName) 
   {
-    String tgName = "layer " + (gui.layerSelected+1) + " ~ " + layers.get(gui.layerSelected).getType() + " ~ " + track; 
     cp5.addGroup(tgName)
       .setId(gui.layerSelected)
       .setBackgroundHeight(trackHeight)
@@ -42,6 +41,21 @@ class GUI_trackGroup
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G L O B A L  T R A X  C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  void delMenu()
+  {
+    for (int i = layers.get(gui.layerSelected).getNumberOfGears()-1; i >= 0; i--)
+    {
+      removeGearTrackButtons(i);
+    }
+  }
+
+  void addMenu()
+  {
+    for (int g = 0; g < layers.get(gui.layerSelected).getNumberOfGears(); g++)
+    {
+      addGearTrackButtons(g);
+    }
+  }
 
   void addGearTrackButtons(int g)
   {    
@@ -50,6 +64,7 @@ class GUI_trackGroup
       yPos+=15; 
       col = 0;
     }    
+
     cp5.addButton("tG gear " + (g+1))
       .setPosition((50*col)+2, yPos)
       .setSize(45, 10)
@@ -58,7 +73,7 @@ class GUI_trackGroup
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        addTrackGroup(theEvent.getController().getName());
+        controller.createTrackGroup(theEvent.getController().getName());
       }
     }
     );
@@ -79,7 +94,6 @@ class GUI_trackGroup
     }
 
     cp5.get(Button.class, "tG gear " + (g+1)).remove();
-    
   }
 
   void menuTrackGroup()
@@ -90,5 +104,4 @@ class GUI_trackGroup
       .setBackgroundColor(color(255, 50))
       .setOpen(true);
   }
-
 }

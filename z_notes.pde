@@ -23,6 +23,16 @@ basically I need to have an abstract trackGroup class, which has flexible design
     - trackProperty:  layerobject, fieldname
         - trackSegment  delay, duration, value, easingType
   
+  
+hm yeah, good idea I still think, however it does pose a few additional issues
+  - when a gear object is deleted from the layer, a check needs to be made to see if there's a trackGroup for that gear object, and is so delete that as well
+  - allow possible duplicate trackGroups? probably not, so when hitting the button, it needs to become disabled and have message it already exists or something
+  
+ so, its apparent I need some storage to keep track of trackGroups xD
+ perhaps have the controller keep track in a hashmap, so it can check to see if the keys already exist
+ and may also be usefull later to check for changes
+  
+  
 ==========================================================================
 
 moving forward

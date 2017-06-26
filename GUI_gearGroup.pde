@@ -246,7 +246,7 @@ class GUI_gearGroup
           layers.get(gui.layerSelected).deleteGears(del);        
           removeColsRows(del);
           gui.tg.removeGearTrackButtons(del);   
-          controller.deleteTrackGroup(del);
+          controller.deleteGearTrackGroup(del);
           layer(lock);
         }
       }

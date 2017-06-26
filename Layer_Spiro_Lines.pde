@@ -11,7 +11,7 @@ class Lines extends Spiro
     fill = false;
     stroke = true;
 
-    gearProp.add("connect");
+    gearProp.append("connect");
 
     for (int i = 0; i < numberOfGears; i++) 
     {

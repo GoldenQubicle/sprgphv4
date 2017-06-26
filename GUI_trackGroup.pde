@@ -3,7 +3,10 @@ class GUI_trackGroup
   ControlP5 cp5;
   Accordion trackControls;
   int track = 0;
-  int trackHeight = 128;
+  int trackGroupHeight = 128;
+  int trackGroupWidth = 730;
+  int trackHeight = 20;
+  int trackWidth = 705;
   int yPos = 0;
   int col = 0;  
 
@@ -12,15 +15,11 @@ class GUI_trackGroup
     cp5 = tg;
     trackControls = cp5.addAccordion("TC")
       .setPosition(5, 256+20)
-      .setWidth(730)
+      .setWidth(trackGroupWidth)
       .setCollapseMode(Accordion.SINGLE);
 
     menuTrackGroup();
-
-    for (int g = 0; g < layers.get(gui.layerSelected).getNumberOfGears(); g++)
-    {  
-      addGearTrackButtons(g);
-    }
+    addMenu();
   }
 
 
@@ -28,21 +27,50 @@ class GUI_trackGroup
    T R A C K   G R O U P  C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addTrackGroup(String tgName) 
+  void addTrackGroup(String tgName, StringList properties) 
   {
     cp5.addGroup(tgName)
       .setId(gui.layerSelected)
-      .setBackgroundHeight(trackHeight)
+      .setBackgroundHeight(properties.size()*50)
       .setBackgroundColor(color(255, 50));
+
+    cp5.addButton("del " + tgName)
+      .setGroup(tgName)
+      .setPosition(10, (properties.size()*50)-20)
+      .setSize(40, 15)
+      .setCaptionLabel("delete")
+      .onClick(new CallbackListener() 
+    {
+      public void controlEvent(CallbackEvent theEvent) 
+      {
+        controller.deleteTrackGroup(theEvent.getController().getParent().toString());
+      }
+    }
+    );
+
+    for (int i = 0; i < properties.size(); i++)
+    {
+      cp5.addGroup("track " + properties.get(i) + tgName)
+        .setGroup(tgName)
+        .setPosition(10, 25+(40*i))
+        .setSize(trackWidth, 15)
+        .setBackgroundHeight(trackHeight)
+        .setBackgroundColor(color(255, 50))
+        .disableCollapse();
+    }
+
     trackControls.addItem(cp5.get(Group.class, tgName)).open();
-  }
+  }  
 
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G L O B A L  T R A X  C O N T R O L S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
   void delMenu()
   {
+    deleteColorTrackButton();
+    
     for (int i = layers.get(gui.layerSelected).getNumberOfGears()-1; i >= 0; i--)
     {
       removeGearTrackButtons(i);
@@ -51,10 +79,34 @@ class GUI_trackGroup
 
   void addMenu()
   {
+    addColorTrackButton();
+
     for (int g = 0; g < layers.get(gui.layerSelected).getNumberOfGears(); g++)
     {
       addGearTrackButtons(g);
     }
+  }
+
+  void deleteColorTrackButton()
+  {
+   cp5.get(Button.class, "color").remove(); 
+    
+  }
+
+  void addColorTrackButton()
+  {
+    cp5.addButton("color")
+      .setPosition(2, 2)
+      .setSize(45, 10)
+      .setGroup("menuTrackGroups")
+      .onClick(new CallbackListener() 
+    {
+      public void controlEvent(CallbackEvent theEvent) 
+      {
+        controller.createTrackGroup(theEvent.getController().getName());
+      }
+    }
+    );
   }
 
   void addGearTrackButtons(int g)

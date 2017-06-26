@@ -8,10 +8,9 @@ class Layer
   float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
   String type;
-  List<String> gearProp = new ArrayList<String>();
-  List<String> colorProp = new ArrayList<String>();
-  List<String> lineProp = new ArrayList<String>();
-  Map<String, List<String>> layerProperties = new HashMap<String, List<String>>();
+  StringList gearProp = new StringList();
+  StringList colorProp = new StringList();
+  StringList layerProperties = new StringList();
 
   private Layer(int gN, float d, int t)
   {
@@ -23,8 +22,10 @@ class Layer
     strokeWidth = 1;
     cFill = color(random(155, 255), random(155, 255), random(155, 255));
     cStroke = color(random(155, 255), random(155, 255), random(155, 255), 75);
-    gearProp.add("x");
-    gearProp.add("y");
+    gearProp.append("x");
+    gearProp.append("y");
+    colorProp.append("cFill");
+    colorProp.append("cStroke");
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

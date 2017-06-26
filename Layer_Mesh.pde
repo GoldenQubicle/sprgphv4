@@ -14,7 +14,7 @@ class Mesh extends Spiro
     super(type);
     density = 500;
     fill = true;
-    stroke = false;
+    stroke = true;
 
     for (int i = 0; i < numberOfGears; i++) 
     {
@@ -52,8 +52,9 @@ class Mesh extends Spiro
 
         vertexR0ng = getVertexRingPos(n0rm, vectorPath.get(0));
         vertexR1ng = getVertexRingPos(n1rm, vectorPath.get(1));
-
-        for (int v = 0; v < resolution; v++) {          
+                 
+        for (int v = 0; v < resolution; v++) {     
+       
           vertex(vertexR0ng.get(v).x, vertexR0ng.get(v).y, vertexR0ng.get(v).z);
           vertex(vertexR1ng.get(v).x, vertexR1ng.get(v).y, vertexR1ng.get(v).z);
         }

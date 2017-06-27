@@ -8,7 +8,21 @@ class Controller
   }
 
 
+  void checkForTrackGroups()
+  {
+    
+    
+   for(Group track : trackGroups.values())
+    {
+      
+      if(gui.cp5.isMouseOver(gui.cp5.getGroup(track.getName())))
+      {
 
+       println(track.getAddress()); 
+      };
+    }    
+    
+  }
 
   void createTrackGroup(String buttonName)
   {

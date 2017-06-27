@@ -36,7 +36,7 @@ class GUI_trackGroup
 
     cp5.addButton("del " + tgName)
       .setGroup(tgName)
-      .setPosition(10, (properties.size()*50)-20)
+      .setPosition(0, (properties.size()*50)-15)
       .setSize(40, 15)
       .setCaptionLabel("delete")
       .onClick(new CallbackListener() 
@@ -50,13 +50,30 @@ class GUI_trackGroup
 
     for (int i = 0; i < properties.size(); i++)
     {
-      cp5.addGroup("track " + properties.get(i) + tgName)
+      String track = "track " + properties.get(i) + " " +  tgName;
+      cp5.addGroup(track)
         .setGroup(tgName)
-        .setPosition(10, 25+(40*i))
-        .setSize(trackWidth, 15)
+        .setPosition(0, 20+(40*i))
+        .setSize(trackGroupWidth, 15)
         .setBackgroundHeight(trackHeight)
         .setBackgroundColor(color(255, 50))
+        .setCaptionLabel(properties.get(i))
         .disableCollapse();
+
+      cp5.addButton("segment " + track)
+        .setCaptionLabel("+")
+        .setGroup(track)
+        .setPosition(0, 0)
+        .setSize(15, trackHeight)
+        .onClick(new CallbackListener() 
+      {
+        public void controlEvent(CallbackEvent theEvent) 
+        {
+         println(theEvent.getController().getParent());
+          // function to add segments
+        }
+      }
+      );
     }
 
     trackControls.addItem(cp5.get(Group.class, tgName)).open();
@@ -70,7 +87,7 @@ class GUI_trackGroup
   void delMenu()
   {
     deleteColorTrackButton();
-    
+
     for (int i = layers.get(gui.layerSelected).getNumberOfGears()-1; i >= 0; i--)
     {
       removeGearTrackButtons(i);
@@ -89,8 +106,7 @@ class GUI_trackGroup
 
   void deleteColorTrackButton()
   {
-   cp5.get(Button.class, "color").remove(); 
-    
+    cp5.get(Button.class, "color").remove();
   }
 
   void addColorTrackButton()

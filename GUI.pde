@@ -24,12 +24,12 @@ class GUI extends PApplet
   public void setup()
   {
     cp5 = new ControlP5(this);
-    
+
     gg = new GUI_gearGroup(cp5);
     tg = new GUI_trackGroup(cp5);
 
 
-    
+
     layersGroup();    
     for (int i = 0; i < layers.size(); i++)
     { 
@@ -37,7 +37,7 @@ class GUI extends PApplet
     }
   }
 
-  
+
 
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -84,8 +84,11 @@ class GUI extends PApplet
     );
   }
 
+
+
   public void draw() 
   { 
+    //controller.checkForTrackGroups();
     background(100);
   }
 } 

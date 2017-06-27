@@ -8,40 +8,33 @@ class Controller
   }
 
 
-  void checkForTrackGroups()
+  void createAniSegment(int layer, String property, int prop, int gear)
   {
-    
-    
-   for(Group track : trackGroups.values())
-    {
-      
-      if(gui.cp5.isMouseOver(gui.cp5.getGroup(track.getName())))
-      {
 
-       println(track.getAddress()); 
-      };
-    }    
+    println("layer = " + layer + ", property is " + property + " propertyIndex = " + prop + " gearNo " + gear );  
     
+    gui.tg.addTrackSegment(layer, prop);
   }
 
-  void createTrackGroup(String buttonName)
+  void createTrackGroup(String property)
   {
-    String trackGroup = "layer " + (gui.layerSelected+1) + " ~ " + layers.get(gui.layerSelected).getType() + " ~ " + buttonName;
+    String trackGroup = "track:" + (trackGroups.size() + 1) + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType() + "    group:" + property;
     StringList trackProperties = new StringList();
 
     if (!trackGroups.containsKey(trackGroup))
     {
 
-      if (buttonName.contains("gear"))
+      if (property.equals("GEAR"))
       {
         trackProperties = layers.get(gui.layerSelected).gearProp;
       }
-       if (buttonName.contains("color"))
+      if (property.equals("COLOR"))
       {
         trackProperties = layers.get(gui.layerSelected).colorProp;
       }
+      
+      gui.tg.addTrackGroup(trackGroup, trackProperties, property);      
 
-      gui.tg.addTrackGroup(trackGroup, trackProperties);      
       trackGroups.put(trackGroup, gui.cp5.get(Group.class, trackGroup));
     } else
     {
@@ -61,6 +54,7 @@ class Controller
   }
 
   void deleteGearTrackGroup(int g)
+    // 2706 defunct atm
     // this is getting called when deleting gear vectors from layer, and deletes the corresponding trackGroup if present
     // asymmetrical function, i.e. there's no corresponding addGearTrackGroup
   {

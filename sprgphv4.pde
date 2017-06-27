@@ -17,7 +17,7 @@ boolean lock = false;
 boolean animate = false;
 Spiro layer = new Spiro(0);
 Lines layer2 = new Lines();
-//Spiro3D layer = new Spiro3D();
+//Spiro3D layer2 = new Spiro3D();
 //Mesh layer = new Mesh(3);
 
 

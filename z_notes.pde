@@ -1,6 +1,16 @@
 /*
 current concerns
 
+2706
+so yeah, finally Im getting all the relevant informatie into the controller on a per-track basis
+downside is this broke the crosslink between deleting gears from layer and check to see if corresponding trackGroup exist
+however, not really all that relevant atm
+biggest challenge yet to come, namely implement positioning behaviour of trackSegment, and mapping it to timelime. . ?
+
+also realized using trackGroups size as track indicator is maybe a bad idea
+because once a track gets deleted the track count is obviously no longer correct when adding new ones
+could solve that with caption labels probably, not really a concern  atm though
+
 2406
 hm yeah, just from this current quick mockup its evident I need to rethink the design because;
   - even with just a few gears, the properties list is becoming quit long already

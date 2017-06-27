@@ -88,7 +88,6 @@ class GUI extends PApplet
 
   public void draw() 
   { 
-    //controller.checkForTrackGroups();
     background(100);
   }
 } 

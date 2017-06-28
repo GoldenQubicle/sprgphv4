@@ -1,6 +1,21 @@
 /*
 current concerns
 
+2806
+
+er yeah. it occured to me that in order to get animation working properly, the initial values of the layerProperty to be animated need to be stored somewhere
+or in others words passing down the current value of a layerProperty as the target value for the ani isnt such a big deal - fingers crosses xD
+HOWEVER, obviously the layerProperty needs to be set to an initial value in order for the aniValue to actually take effect
+so question is; how and where is the initial condition for the layer going to be stored? And what if I add a gear while editting ani, what is then its initial value going to be?
+
+another question still; how am I going to compare the current state of trackSegments, against the previous one
+i.e. how am I going to be able to update only those anis which have changed, in order to only re-render that specific segment
+current thinking is; give each segment a unique stringvalue, and use that as key to store both the actual segments, and the corresponding ani in hashmaps
+than, use the keys to retrieve the controller objects from cp5, and compare them to the stored objects
+IF there's a change, either replace the corresponding ani wholesale, or ideally, update only those values which have actually changed (e.g. duration)
+
+AND here's another interesting thought: when I delete a trackGroup, all the trackSegments it contained need to be deleted as well
+
 2706
 so yeah, finally Im getting all the relevant informatie into the controller on a per-track basis
 downside is this broke the crosslink between deleting gears from layer and check to see if corresponding trackGroup exist

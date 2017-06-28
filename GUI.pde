@@ -28,17 +28,13 @@ class GUI extends PApplet
     gg = new GUI_gearGroup(cp5);
     tg = new GUI_trackGroup(cp5);
 
-
-
     layersGroup();    
+
     for (int i = 0; i < layers.size(); i++)
     { 
       addLayer(i);
     }
   }
-
-
-
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    L A Y E R   M E T H O D S
@@ -84,10 +80,9 @@ class GUI extends PApplet
     );
   }
 
-
-
   public void draw() 
   { 
     background(100);
+    controller.hooverAniSegment(mouseX);
   }
 } 

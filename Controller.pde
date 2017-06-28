@@ -1,41 +1,94 @@
 class Controller
 {
   Map<String, Group>trackGroups = new HashMap<String, Group>();
-
+  Map<String, ScrollableList>trackSegments = new HashMap<String, ScrollableList>();
+  int segment;
+  StringList editModes = new StringList("aniCenter", "aniLeft", "aniRight");
+  String editMode = editModes.get(2);
 
   Controller()
   {
   }
 
-
-  void createAniSegment(int layer, String property, int prop, int gear)
+  void hooverAniSegment(float mousePosX)
   {
+    for (String segment : trackSegments.keySet())
+    {
+      if (gui.cp5.isMouseOver(gui.cp5.getController(segment)))
+      {        
+        switch(editMode) 
+        {          
+        case "aniCenter":
+          mouseCenter(gui.cp5.get(ScrollableList.class, segment), mousePosX);
+          break;
 
-    println("layer = " + layer + ", property is " + property + " propertyIndex = " + prop + " gearNo " + gear );  
-    
-    gui.tg.addTrackSegment(layer, prop);
+        case "aniLeft":
+          mouseLeft(gui.cp5.get(ScrollableList.class, segment), mousePosX);
+          break;
+
+        case "aniRight":
+          mouseRight(gui.cp5.get(ScrollableList.class, segment), mousePosX);
+          break;
+        }
+      }
+    }
+  }    
+
+  void mouseCenter(ScrollableList segment, float mousePosX)
+  { // moving entire segment
+    float segCenter = segment.getPosition()[0] + (segment.getWidth()/2);
+    float deltaX = mousePosX - segCenter;
+    println("center", deltaX);
   }
+
+  void mouseLeft(ScrollableList segment, float mousePosX)
+  { // manipulate start time
+    float segStart = segment.getPosition()[0];
+    float deltaX = mousePosX - segStart;
+    println("left", deltaX);
+  }
+
+  void mouseRight(ScrollableList segment, float mousePosX)
+  { // manipulaye end time
+    float segEnd = segment.getPosition()[0] + segment.getWidth();
+    float deltaX = segEnd - mousePosX;
+    println("right", deltaX);
+  }
+
+  void createAniSegment(int layer, String property, int prop, int gear, String trackgroup)
+  {
+    segment+=1;
+    String trackSegment = trackgroup + "    property:" + prop + "    segment:" + segment;
+    gui.tg.addTrackSegment(trackSegment, segment);
+    trackSegments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
+  }
+
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   T R A C K   G R O U P   S E T U P 
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void createTrackGroup(String property)
   {
-    String trackGroup = "track:" + (trackGroups.size() + 1) + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType() + "    group:" + property;
+    String trackGroup = "trackGroup:" + (trackGroups.size() + 1) + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType() + "    group:" + property;
     StringList trackProperties = new StringList();
 
     if (!trackGroups.containsKey(trackGroup))
     {
-
-      if (property.equals("GEAR"))
+      switch(property)
       {
+      case "GEAR" :
         trackProperties = layers.get(gui.layerSelected).gearProp;
-      }
-      if (property.equals("COLOR"))
-      {
-        trackProperties = layers.get(gui.layerSelected).colorProp;
-      }
-      
-      gui.tg.addTrackGroup(trackGroup, trackProperties, property);      
+        break;
 
+      case "COLOR" :
+        trackProperties = layers.get(gui.layerSelected).colorProp;
+        break;
+      }
+
+      gui.tg.addTrackGroup(trackGroup, trackProperties, property);
+      
       trackGroups.put(trackGroup, gui.cp5.get(Group.class, trackGroup));
+      
     } else
     {
       // present message that trackGroup already exists

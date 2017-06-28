@@ -2,13 +2,14 @@ class GUI_trackGroup
 {
   ControlP5 cp5;
   Accordion trackControls;
-   int trackGroupHeight = 128;
+  int trackGroupHeight = 128;
   int trackGroupWidth = 730;
   int trackHeight = 20;
   int trackWidth = 705;
   int yPos = 0;
   int col = 0;  
   int buttonPressed; // used for gearNo, -1 when not applicable
+  String trackProp, trackGroup;
 
   GUI_trackGroup(ControlP5 tg)  
   {    
@@ -50,7 +51,7 @@ class GUI_trackGroup
 
     for (int i = 0; i < properties.size(); i++)
     {
-      String track = "track " + properties.get(i) + " " +  tgName;
+      String track = "property " + properties.get(i) + " " +  tgName;
       cp5.addGroup(track)
         .setGroup(tgName)   
         .setId(buttonPressed)
@@ -72,12 +73,14 @@ class GUI_trackGroup
       {
         public void controlEvent(CallbackEvent theEvent) 
         {
+          trackGroup = theEvent.getController().getParent().getParent().getName();
+          trackProp = theEvent.getController().getParent().getName();
           int gear = theEvent.getController().getParent().getId(); 
           int layer = theEvent.getController().getParent().getParent().getId();
           String property = theEvent.getController().getParent().getStringValue();
           int propertyIndex = theEvent.getController().getId();
           // function to add segments
-          controller.createAniSegment(layer, property, propertyIndex, gear);
+          controller.createAniSegment(layer, property, propertyIndex, gear, trackGroup);
         }
       }
       );
@@ -91,8 +94,26 @@ class GUI_trackGroup
     trackControls.addItem(cp5.get(Group.class, tgName)).open();
   }
 
-  void addTrackSegment(int layer, int prop)
-  {
+  void addTrackSegment(String segmentKey, int segmentId)
+  {    
+    cp5.addScrollableList(segmentKey)
+      .setStringValue(segmentKey)
+      .setId(segmentId)
+      .setGroup(trackProp)
+      .setItems(ani.EasingNames)
+      .setPosition(50, 0)
+      .setBarHeight(trackHeight)
+      .setWidth(500)
+      .setCaptionLabel("easings")
+      .setOpen(false)
+      .onClick(new CallbackListener() 
+    {
+      public void controlEvent(CallbackEvent theEvent) 
+      {
+        println("check");
+      }
+    }
+    );
   }
 
 

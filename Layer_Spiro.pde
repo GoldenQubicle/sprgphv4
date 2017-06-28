@@ -49,12 +49,12 @@ class Spiro extends Layer  //<>//
     PVector loc = new PVector();
 
     for (int i = 0; i < super.getNumberOfGears(); i++) 
-    {
+    {      
       theta = (TAU/density)*t;      
       ratio = 1/(getPetals(i)-1);
       circ.get(i).x = cos(theta/ratio)*getGearVectors(i).x; 
       circ.get(i).y = sin(theta/ratio)*getGearVectors(i).y;
-      location[0] = loc.add(circ.get(i));
+      location[0] = loc.add(circ.get(i));      
     }
     return location;
   }

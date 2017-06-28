@@ -28,16 +28,16 @@ class Lines extends Spiro
   {
     cam.setActive(false);
     displayStyle();  
-
-    for (int i = 0; i < getNumberOfGears(); i++) 
+    if (lock != true)
     {
-      for (int j = 0; j < getPetals(i); j++)
+      for (int i = 0; i < getNumberOfGears(); i++) 
       {
-        theta = (TAU/getPetals(i))*j;      
-        phi = (TAU/getPetals(i))*(j+getConnect(i));       
-
-        if (lock != true)
+        for (int j = 0; j < getPetals(i); j++)
         {
+          theta = (TAU/getPetals(i))*j;      
+          phi = (TAU/getPetals(i))*(j+getConnect(i));       
+
+
           xyz =  grinding()[0];
           xy2 =  grinding()[1];
 

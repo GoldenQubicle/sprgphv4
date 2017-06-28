@@ -1,9 +1,11 @@
 //import penner.easing.*;
 import peasy.*;
 import java.util.*;
+import java.io.*;
 import controlP5.*;
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
+
 
 PeasyCam cam;
 GUI gui;
@@ -49,18 +51,11 @@ void draw()
   background(128);
   translate(width/2, height/2);
 
-  ani.aniTest();
-  if (lock != true)
+  for (Layer myLayer : layers)
   {
-    for (Layer myLayer : layers)
-    {
-      myLayer.display();
-    }
-  } else 
-  {
-    noLoop();
+    myLayer.display();
   }
-}
+}  
 
 void layer(boolean locked)
 {

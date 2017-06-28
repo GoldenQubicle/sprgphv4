@@ -1,4 +1,4 @@
-class Layer
+class Layer implements Serializable
 {
   PVector xyz = new PVector();
   ArrayList<PVector> vectors = new ArrayList<PVector>();

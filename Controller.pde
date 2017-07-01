@@ -3,65 +3,56 @@ class Controller
   Map<String, Group>trackGroups = new HashMap<String, Group>();
   Map<String, ScrollableList>trackSegments = new HashMap<String, ScrollableList>();
   int segment;
-  StringList editModes = new StringList("aniCenter", "aniLeft", "aniRight");
-  String editMode = editModes.get(0);
+  StringList aniEditModes = new StringList("asOne", "left", "right");
+  String aniEditMode = aniEditModes.get(1);
+  boolean edit = true;
+  float deltaX, segWidth;
+  ScrollableList tobeMoved;
 
   Controller()
   {
   }
 
-  void hooverAniSegment(float mousePosX)
+  void getDelta (String segmentKey, float segStart, float segwidth, float mousePos)
   {
-    for (String segment : trackSegments.keySet())
+    segWidth = segwidth;
+    tobeMoved = trackSegments.get(segmentKey);
+    deltaX = mousePos - segStart;
+
+    if (aniEditMode.equals("left"))
     {
-      if (gui.cp5.isMouseOver(gui.cp5.getController(segment)))
-      {        
-        switch(editMode) 
-        {          
-        case "aniCenter":
-
-          mouseCenter(gui.cp5.get(ScrollableList.class, segment), mousePosX);
-          println(gui.cp5.get(ScrollableList.class, segment).getParent().getParent().getParent().getPosition()[0] + gui.cp5.get(ScrollableList.class, segment).getPosition()[0]); // absolute position
-
-          break;
-
-        case "aniLeft":
-
-          mouseLeft(gui.cp5.get(ScrollableList.class, segment), mousePosX);
-          println(gui.cp5.get(ScrollableList.class, segment).getPosition());
-
-          break;
-
-        case "aniRight":
-
-          mouseRight(gui.cp5.get(ScrollableList.class, segment), mousePosX);
-          println(gui.cp5.get(ScrollableList.class, segment).getPosition());
-
-          break;
-        }
-      }
+      segWidth = segWidth + segStart;
     }
-  }    
-
-  void mouseCenter(ScrollableList segment, float mousePosX)
-  { // moving entire segment
-    float segCenter = segment.getPosition()[0] + (segment.getWidth()/2);
-    float deltaX = mousePosX - segCenter;
-    //println("center", deltaX);
+    if (aniEditMode.equals("right"))
+    {
+      segWidth = segWidth - segStart;
+    }
   }
 
-  void mouseLeft(ScrollableList segment, float mousePosX)
-  { // manipulate start time
-    float segStart = segment.getPosition()[0];
-    float deltaX = mousePosX - segStart;
-    //println("left", deltaX);
-  }
-
-  void mouseRight(ScrollableList segment, float mousePosX)
-  { // manipulaye end time
-    float segEnd = segment.getPosition()[0] + segment.getWidth();
-    float deltaX = segEnd - mousePosX;
-    //println("right", deltaX);
+  void moveAni(float mouse)
+  {    
+    switch(aniEditMode) 
+    {        
+    case "asOne":  
+      tobeMoved.setPosition(mouse-deltaX, tobeMoved.getPosition()[1]);
+      break;
+    case "left":
+      tobeMoved.setPosition(mouse-deltaX, tobeMoved.getPosition()[1]);
+      tobeMoved.setWidth(int(segWidth-abs(mouse-deltaX)));
+      break;
+    case "right" :
+      tobeMoved.setWidth(int(segWidth+(mouse-deltaX)));
+      break;
+    }
+    // constrains need to be split out into cases / editModes as well
+    if (tobeMoved.getPosition()[0] < gui.tg.trackAddSegmentButtonWidth)
+    {
+      tobeMoved.setPosition(gui.tg.trackAddSegmentButtonWidth, tobeMoved.getPosition()[1]) ;
+    }
+    if(tobeMoved.getPosition()[0]+tobeMoved.getWidth() > gui.tg.trackGroupWidth)
+    {
+     tobeMoved.setPosition(gui.tg.trackAddSegmentButtonWidth, tobeMoved.getPosition()[1]) ;
+    }
   }
 
   void createAniSegment(int layer, String property, int prop, int gear, String trackgroup, String field)
@@ -70,7 +61,6 @@ class Controller
     String trackSegment = trackgroup + "    property:" + prop + "    segment:" + segment;
     gui.tg.addTrackSegment(trackSegment, segment);
     trackSegments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
-    //println(layer, property, prop, gear, );
     gif.createAni( layer, property, prop, gear, trackSegment, field);
   }
 

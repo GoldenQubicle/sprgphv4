@@ -6,16 +6,19 @@ class GUI_trackGroup
   int trackGroupWidth = 730;
   int trackHeight = 20;
   int trackWidth = 705;
+  int trackOffset = 5;
+  int trackAddSegmentButtonWidth = 15;
   int yPos = 0;
   int col = 0;  
   int buttonPressed; // used for gearNo, -1 when not applicable
   String trackProp, trackGroup;
+  boolean segmentHoover = false;
 
   GUI_trackGroup(ControlP5 tg)  
   {    
     cp5 = tg;
     trackControls = cp5.addAccordion("TC")
-      .setPosition(5, 256+20)
+      .setPosition(trackOffset, 256+20)
       .setWidth(trackGroupWidth)
       .setCollapseMode(Accordion.SINGLE);
 
@@ -57,11 +60,14 @@ class GUI_trackGroup
         .setId(buttonPressed)
         .setStringValue(property)
         .setPosition(0, 20+(40*i))
-        .setSize(trackGroupWidth, 15)
+        .setWidth(trackGroupWidth)
+        .setHeight(0)
         .setBackgroundHeight(trackHeight)
         .setBackgroundColor(color(255, 50))
         .setCaptionLabel(properties.get(i))
         .disableCollapse();
+
+      cp5.getGroup(track).getCaptionLabel().align(ControlP5.LEFT, ControlP5.TOP_OUTSIDE);
 
       cp5.addButton("segment " + track)
         .setCaptionLabel("+")
@@ -69,20 +75,22 @@ class GUI_trackGroup
         .setId(i)
         .setGroup(track)
         .setPosition(0, 0)
-        .setSize(15, trackHeight)
+        .setSize(trackAddSegmentButtonWidth, trackHeight)
         .onClick(new CallbackListener() 
       {
         public void controlEvent(CallbackEvent theEvent) 
         {
-          trackGroup = theEvent.getController().getParent().getParent().getName();
-          trackProp = theEvent.getController().getParent().getName();
-          int gear = theEvent.getController().getParent().getId(); 
-          int layer = theEvent.getController().getParent().getParent().getId();
-          String property = theEvent.getController().getParent().getStringValue();
-          int propertyIndex = theEvent.getController().getId();
-          String field = theEvent.getController().getStringValue();
-          // function to add segments
-          controller.createAniSegment(layer, property, propertyIndex, gear, trackGroup, field);
+          if (controller.edit == true)
+          {
+            trackGroup = theEvent.getController().getParent().getParent().getName();
+            trackProp = theEvent.getController().getParent().getName();
+            int gear = theEvent.getController().getParent().getId(); 
+            int layer = theEvent.getController().getParent().getParent().getId();
+            String property = theEvent.getController().getParent().getStringValue();
+            int propertyIndex = theEvent.getController().getId();
+            String field = theEvent.getController().getStringValue();
+            controller.createAniSegment(layer, property, propertyIndex, gear, trackGroup, field);
+          }
         }
       }
       );
@@ -103,18 +111,37 @@ class GUI_trackGroup
       .setId(segmentId)
       .setGroup(trackProp)
       .setItems(gif.EasingNames)
-      .setPosition(50, 0)
+      .setPosition(80, 0)
       .setBarHeight(trackHeight)
       .setWidth(500)
       .setCaptionLabel("easings")
-      .setOpen(false)
-      .onClick(new CallbackListener() 
+      .setOpen(false)     
+      .setColorBackground(ControlP5.ORANGE)     
+      .addCallback(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
-      {
-        int easing= int(theEvent.getController().getValue());
-        String aniKey = theEvent.getController().getStringValue();
-        gif.setAniEasing(easing, aniKey);
+      {       
+        if (theEvent.getAction() == ControlP5.ACTION_CLICK)
+        {
+          theEvent.getController().bringToFront();
+          int easing= int(theEvent.getController().getValue());
+          String segKey = theEvent.getController().getStringValue();
+          gif.setAniEasing(easing, segKey);
+        }
+
+        if (theEvent.getAction()== ControlP5.ACTION_ENTER && controller.edit == true)
+        {                             
+          segmentHoover = true;
+          theEvent.getController().setColorBackground(ControlP5.ORANGE);
+          String segKey = theEvent.getController().getStringValue();
+          float segStart = trackOffset + theEvent.getController().getPosition()[0];
+          float segWidth = theEvent.getController().getWidth();
+          controller.getDelta(segKey, segStart, segWidth, gui.getMousePos());
+        }
+        if (theEvent.getAction()== ControlP5.ACTION_LEAVE)
+        {
+          segmentHoover = false;
+        }
       }
     }
     );

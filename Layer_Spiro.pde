@@ -1,4 +1,4 @@
-class Spiro extends Layer  //<>//
+class Spiro extends Layer  //<>// //<>//
 {
   ArrayList<PVector> circ = new ArrayList<PVector>();
   IntList petals = new IntList();

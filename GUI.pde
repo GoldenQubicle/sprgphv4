@@ -24,7 +24,7 @@ class GUI extends PApplet
   public void setup()
   {
     cp5 = new ControlP5(this);
-
+    cp5.disableShortcuts();
     gg = new GUI_gearGroup(cp5);
     tg = new GUI_trackGroup(cp5);
 
@@ -83,7 +83,24 @@ class GUI extends PApplet
   public void draw() 
   { 
     background(100);
-    controller.hooverAniSegment(mouseX);
+    strokeWeight(3);
+    line(20, 270, 735, 270);  
+
+    if (tg.segmentHoover == true)
+    {
+      controller.moveAni(mouseX);
+      cursor(HAND);
+    } else 
+    {
+      cursor(ARROW);
+    }
+
     gif.aniPlay();
   }
+
+  float getMousePos()
+  {
+    return mouseX;
+  }
+
 } 

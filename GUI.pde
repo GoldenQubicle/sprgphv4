@@ -84,5 +84,6 @@ class GUI extends PApplet
   { 
     background(100);
     controller.hooverAniSegment(mouseX);
+    gif.aniPlay();
   }
 } 

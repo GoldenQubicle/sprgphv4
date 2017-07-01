@@ -7,6 +7,8 @@ class Spiro3D extends Spiro
     super(2);
     fill = false;
     stroke = true;
+    
+    gearProp.append("z");
 
     for (int i = 0; i < numberOfGears; i++) 
     {

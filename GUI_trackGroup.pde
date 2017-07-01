@@ -65,6 +65,7 @@ class GUI_trackGroup
 
       cp5.addButton("segment " + track)
         .setCaptionLabel("+")
+        .setStringValue(properties.get(i))
         .setId(i)
         .setGroup(track)
         .setPosition(0, 0)
@@ -79,8 +80,9 @@ class GUI_trackGroup
           int layer = theEvent.getController().getParent().getParent().getId();
           String property = theEvent.getController().getParent().getStringValue();
           int propertyIndex = theEvent.getController().getId();
+          String field = theEvent.getController().getStringValue();
           // function to add segments
-          controller.createAniSegment(layer, property, propertyIndex, gear, trackGroup);
+          controller.createAniSegment(layer, property, propertyIndex, gear, trackGroup, field);
         }
       }
       );
@@ -100,7 +102,7 @@ class GUI_trackGroup
       .setStringValue(segmentKey)
       .setId(segmentId)
       .setGroup(trackProp)
-      .setItems(ani.EasingNames)
+      .setItems(gif.EasingNames)
       .setPosition(50, 0)
       .setBarHeight(trackHeight)
       .setWidth(500)
@@ -110,7 +112,9 @@ class GUI_trackGroup
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        println("check");
+        int easing= int(theEvent.getController().getValue());
+        String aniKey = theEvent.getController().getStringValue();
+        gif.setAniEasing(easing, aniKey);
       }
     }
     );

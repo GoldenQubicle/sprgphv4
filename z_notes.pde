@@ -1,68 +1,18 @@
 /*
-current concerns
-
-2806
-
-er yeah. it occured to me that in order to get animation working properly, the initial values of the layerProperty to be animated need to be stored somewhere
-or in others words passing down the current value of a layerProperty as the target value for the ani isnt such a big deal - fingers crosses xD
-HOWEVER, obviously the layerProperty needs to be set to an initial value in order for the aniValue to actually take effect
-so question is; how and where is the initial condition for the layer going to be stored? And what if I add a gear while editting ani, what is then its initial value going to be?
-
-another question still; how am I going to compare the current state of trackSegments, against the previous one
-i.e. how am I going to be able to update only those anis which have changed, in order to only re-render that specific segment
-current thinking is; give each segment a unique stringvalue, and use that as key to store both the actual segments, and the corresponding ani in hashmaps
-than, use the keys to retrieve the controller objects from cp5, and compare them to the stored objects
-IF there's a change, either replace the corresponding ani wholesale, or ideally, update only those values which have actually changed (e.g. duration)
-
-AND here's another interesting thought: when I delete a trackGroup, all the trackSegments it contained need to be deleted as well
-
-2706
-so yeah, finally Im getting all the relevant informatie into the controller on a per-track basis
-downside is this broke the crosslink between deleting gears from layer and check to see if corresponding trackGroup exist
-however, not really all that relevant atm
-biggest challenge yet to come, namely implement positioning behaviour of trackSegment, and mapping it to timelime. . ?
-
-also realized using trackGroups size as track indicator is maybe a bad idea
-because once a track gets deleted the track count is obviously no longer correct when adding new ones
-could solve that with caption labels probably, not really a concern  atm though
-
-2406
-hm yeah, just from this current quick mockup its evident I need to rethink the design because;
-  - even with just a few gears, the properties list is becoming quit long already
-  - the past has proven that certain properties (e.g. radius x & y ) tend to move together
-  - these two things considered, itd probaly become quite elaborate and tedious to add tracks per property
-  
-SO what if I did away with the concept of individual tracks and instead group properties together sensibly, 
-and thus create a two-tier selection system, i.e. 
-  - select trackGroup for gear object, 
-  - trackGroup contains animations tracks for all gear properties
-  
-  in similar fashion have
-  - trackGroup color, which contains background, fill & stroke
-  - trackGroup line, which contains lineX, lineY & strokeWeight
-  
-this require some thinking upfront though
-basically I need to have an abstract trackGroup class, which has flexible design as to add properties of whatever type
 
 - trackGroup: layerSelected
     - trackProperty:  layerobject, fieldname
         - trackSegment  delay, duration, value, easingType
   
   
-hm yeah, good idea I still think, however it does pose a few additional issues
-  - when a gear object is deleted from the layer, a check needs to be made to see if there's a trackGroup for that gear object, and is so delete that as well
-  - allow possible duplicate trackGroups? probably not, so when hitting the button, it needs to become disabled and have message it already exists or something
-  
- so, its apparent I need some storage to keep track of trackGroups xD
- perhaps have the controller keep track in a hashmap, so it can check to see if the keys already exist
- and may also be usefull later to check for changes
-  
-  
+ - when a trackGroup is deleted, all the trackSegments contained within need to be deleted as well 
+ - when a gear object is deleted from the layer, a check needs to be made to see if there's a trackGroup for that gear object, and if so delete that as well
+    
 ==========================================================================
 
-moving forward
-- make mock track ui, i.e. functional behaviourly, yet not hooked into anything yet
-- be able to add / delete tracks
+moving forward 24-6
+- make mock track ui, i.e. functional behaviourly, yet not hooked into anything yet DONE 1-7
+- be able to add / delete tracks  DONE  1-7
 - be able to add / delete segments to track
 - be able to edit segment length & position
 

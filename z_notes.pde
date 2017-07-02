@@ -1,8 +1,19 @@
 /*
 
-
-
 obviously, the controller class need to be renames to controller_trackGroup
+   just thinking, myabe below will be helpfull 
+   
+   trackGroup_GUI extends GUI
+         trackGroupControl extends trackGroup_GUI
+   
+   though the latter may actually be not such a good idea, since then the controller effectivly becomes part of gui. .
+   then again, instead of having it call gif.createAni() directly it would just call a general method in the main controller
+   
+   also; where do I want to perform check for overlapping trackAniSegments? 
+   - could possible do that by checking the startPos & endPos on each segment on the track
+   - or could defer that check to the anis themselves, and have it perform a frame range check
+   - the latter could be usefull, since I already want to have such a frameRangeCheck in order to re-render aniSegments which have been updated
+   
 
 - trackGroup: layerSelected
     - trackProperty:  layerobject, fieldname

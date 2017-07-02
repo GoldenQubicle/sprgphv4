@@ -13,26 +13,18 @@ class Controller
   {
   }
 
-  void onMouseEnter(String segmentKey, float mousePos)
-  {
-    tobeMoved = trackSegments.get(segmentKey);
-    segWidth = tobeMoved.getWidth();
-    segStart = tobeMoved.getPosition()[0];
-    segMouseEnter = mousePos;
-  }
-
   void aniSegmentHandler()
   {
     float delta = segMouseEnter-gui.mouseX;
     switch(aniEditMode) 
     {  
     case "asOne" :
-      float newStart = constrain(int(segStart-delta), gui.tg.trackAddSegmentButtonWidth, gui.tg.trackGroupWidth-tobeMoved.getWidth());
+      float newStart = constrain((segStart-delta), gui.tg.trackAddSegmentButtonWidth, gui.tg.trackGroupWidth-tobeMoved.getWidth());
       tobeMoved.setPosition(newStart, tobeMoved.getPosition()[1]); 
       break;
 
     case "left" :
-      float newStart2 = constrain(int(segStart-delta), gui.tg.trackAddSegmentButtonWidth, gui.tg.trackGroupWidth);
+      float newStart2 = constrain((segStart-delta), gui.tg.trackAddSegmentButtonWidth, gui.tg.trackGroupWidth);
       tobeMoved.setPosition(newStart2, tobeMoved.getPosition()[1]);
       if (tobeMoved.getPosition()[0] > 15)
       {
@@ -41,13 +33,21 @@ class Controller
       break;
 
     case "right" :
-      float newWidth = constrain(int(segWidth-delta), 0, gui.tg.trackGroupWidth-segStart);
+      float newWidth = constrain((segWidth-delta), 0, gui.tg.trackGroupWidth-segStart);
       tobeMoved.setWidth(int(newWidth));
       break;
     }
   }
 
-   void createAniSegment(int layer, String property, int prop, int gear, String trackgroup, String field)
+  void updateHandler(float mousePos)
+  {
+    segWidth = tobeMoved.getWidth();
+    segStart = tobeMoved.getPosition()[0];
+    segMouseEnter = mousePos;
+  }
+
+
+  void createAniSegment(int layer, String property, int prop, int gear, String trackgroup, String field)
   {
     segment+=1;
     String trackSegment = trackgroup + "    property:" + prop + "    segment:" + segment;

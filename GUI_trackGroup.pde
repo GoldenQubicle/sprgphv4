@@ -105,6 +105,11 @@ class GUI_trackGroup
     trackControls.addItem(cp5.get(Group.class, tgName)).open();
   }
 
+
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   T R A C K   S E G M E N T   S E T U P 
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
   void addTrackSegment(String segmentKey, int segmentId)
   {    
     cp5.addScrollableList(segmentKey)
@@ -130,15 +135,16 @@ class GUI_trackGroup
           gif.setAniEasing(easing, segKey);
         }
 
-        if (theEvent.getAction()== ControlP5.ACTION_ENTER && controller.editMode == true)
+        if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.editMode == true)
         {                             
           segmentHoover = true;
           theEvent.getController().setColorForeground(ControlP5.RED);
           theEvent.getController().setColorActive(ControlP5.RED);
           String segKey = theEvent.getController().getStringValue();
-          controller.onMouseEnter(segKey, gui.getMousePos());
+          controller.tobeMoved = cp5.get(ScrollableList.class, segKey);
+          controller.updateHandler(gui.mouseX);
         }
-        if (theEvent.getAction()== ControlP5.ACTION_LEAVE)
+        if (theEvent.getAction() == ControlP5.ACTION_LEAVE)
         {
           segmentHoover = false;
         }

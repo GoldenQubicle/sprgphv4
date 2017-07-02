@@ -86,7 +86,6 @@ class GUI extends PApplet
     strokeWeight(3);
     line(gui.tg.trackStart, 270, gui.tg.trackEnd, 270);  
 
-
     if (tg.segmentHoover == true)
     {
       controller.aniSegmentHandler();
@@ -105,14 +104,17 @@ class GUI extends PApplet
     if (key == 'a')
     {
       controller.aniEditMode = controller.aniEditModes.get(1);
+      controller.updateHandler(mouseX);
     }
     if (key == 's')
     {
       controller.aniEditMode = controller.aniEditModes.get(0);
+      controller.updateHandler(mouseX);
     }
     if (key == 'd')
     {
       controller.aniEditMode = controller.aniEditModes.get(2);
+      controller.updateHandler(mouseX);
     }
   }
 

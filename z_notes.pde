@@ -1,5 +1,9 @@
 /*
 
+
+
+obviously, the controller class need to be renames to controller_trackGroup
+
 - trackGroup: layerSelected
     - trackProperty:  layerobject, fieldname
         - trackSegment  delay, duration, value, easingType

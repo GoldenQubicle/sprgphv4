@@ -84,11 +84,12 @@ class GUI extends PApplet
   { 
     background(100);
     strokeWeight(3);
-    line(20, 270, 735, 270);  
+    line(gui.tg.trackStart, 270, gui.tg.trackEnd, 270);  
+
 
     if (tg.segmentHoover == true)
     {
-      controller.moveAni(mouseX);
+      controller.aniSegmentHandler();
       cursor(HAND);
     } else 
     {
@@ -98,9 +99,25 @@ class GUI extends PApplet
     gif.aniPlay();
   }
 
+  void keyPressed()
+  {
+
+    if (key == 'a')
+    {
+      controller.aniEditMode = controller.aniEditModes.get(1);
+    }
+    if (key == 's')
+    {
+      controller.aniEditMode = controller.aniEditModes.get(0);
+    }
+    if (key == 'd')
+    {
+      controller.aniEditMode = controller.aniEditModes.get(2);
+    }
+  }
+
   float getMousePos()
   {
     return mouseX;
   }
-
 } 

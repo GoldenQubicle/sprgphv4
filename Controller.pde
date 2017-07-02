@@ -4,64 +4,56 @@ class Controller
   Map<String, ScrollableList>trackSegments = new HashMap<String, ScrollableList>();
   int segment;
   StringList aniEditModes = new StringList("asOne", "left", "right");
-  String aniEditMode = aniEditModes.get(1);
-  boolean edit = true;
-  float deltaX, segWidth;
+  String aniEditMode = aniEditModes.get(2);
+  boolean editMode = true;
+  float segMouseEnter, segWidth, segStart;
   ScrollableList tobeMoved;
 
   Controller()
   {
   }
 
-  void getDelta (String segmentKey, float segStart, float segwidth, float mousePos)
+  void onMouseEnter(String segmentKey, float mousePos)
   {
-    segWidth = segwidth;
     tobeMoved = trackSegments.get(segmentKey);
-    deltaX = mousePos - segStart;
-
-    if (aniEditMode.equals("left"))
-    {
-      segWidth = segWidth + segStart;
-    }
-    if (aniEditMode.equals("right"))
-    {
-      segWidth = segWidth - segStart;
-    }
+    segWidth = tobeMoved.getWidth();
+    segStart = tobeMoved.getPosition()[0];
+    segMouseEnter = mousePos;
   }
 
-  void moveAni(float mouse)
-  {    
+  void aniSegmentHandler()
+  {
+    float delta = segMouseEnter-gui.mouseX;
     switch(aniEditMode) 
-    {        
-    case "asOne":  
-      tobeMoved.setPosition(mouse-deltaX, tobeMoved.getPosition()[1]);
+    {  
+    case "asOne" :
+      float newStart = constrain(int(segStart-delta), gui.tg.trackAddSegmentButtonWidth, gui.tg.trackGroupWidth-tobeMoved.getWidth());
+      tobeMoved.setPosition(newStart, tobeMoved.getPosition()[1]); 
       break;
-    case "left":
-      tobeMoved.setPosition(mouse-deltaX, tobeMoved.getPosition()[1]);
-      tobeMoved.setWidth(int(segWidth-abs(mouse-deltaX)));
+
+    case "left" :
+      float newStart2 = constrain(int(segStart-delta), gui.tg.trackAddSegmentButtonWidth, gui.tg.trackGroupWidth);
+      tobeMoved.setPosition(newStart2, tobeMoved.getPosition()[1]);
+      if (tobeMoved.getPosition()[0] > 15)
+      {
+        tobeMoved.setWidth(int(segWidth+delta));
+      }
       break;
+
     case "right" :
-      tobeMoved.setWidth(int(segWidth+(mouse-deltaX)));
+      float newWidth = constrain(int(segWidth-delta), 0, gui.tg.trackGroupWidth-segStart);
+      tobeMoved.setWidth(int(newWidth));
       break;
-    }
-    // constrains need to be split out into cases / editModes as well
-    if (tobeMoved.getPosition()[0] < gui.tg.trackAddSegmentButtonWidth)
-    {
-      tobeMoved.setPosition(gui.tg.trackAddSegmentButtonWidth, tobeMoved.getPosition()[1]) ;
-    }
-    if(tobeMoved.getPosition()[0]+tobeMoved.getWidth() > gui.tg.trackGroupWidth)
-    {
-     tobeMoved.setPosition(gui.tg.trackAddSegmentButtonWidth, tobeMoved.getPosition()[1]) ;
     }
   }
 
-  void createAniSegment(int layer, String property, int prop, int gear, String trackgroup, String field)
+   void createAniSegment(int layer, String property, int prop, int gear, String trackgroup, String field)
   {
     segment+=1;
     String trackSegment = trackgroup + "    property:" + prop + "    segment:" + segment;
     gui.tg.addTrackSegment(trackSegment, segment);
     trackSegments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
-    gif.createAni( layer, property, prop, gear, trackSegment, field);
+    gif.createAni(layer, property, prop, gear, trackSegment, field);
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

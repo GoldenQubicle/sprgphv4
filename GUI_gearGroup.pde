@@ -65,7 +65,7 @@ class GUI_gearGroup
   void addToGlobalGearGroup()
   {
     // pls note this will probably fall over on layerswitching
-
+    // 1 7 nope is just not doing anything atm
     switch(getLayerType()) 
     {
 

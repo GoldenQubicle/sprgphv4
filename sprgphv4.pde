@@ -15,9 +15,9 @@ int Width = 512;
 int Height = 512;
 boolean lock = false;
 Spiro layer = new Spiro(0);
-Lines layer2 = new Lines();
+//Lines layer2 = new Lines();
 //Spiro3D layer = new Spiro3D();
-//Mesh layer = new Mesh(3);
+//Mesh layer2 = new Mesh(3);
 
 void settings()
 {
@@ -36,7 +36,7 @@ void setup()
   gif = new Animation(this);
   controller = new Controller();
   layers.add(layer);
-  layers.add(layer2);
+  //layers.add(layer2);
 }
 
 void draw() 

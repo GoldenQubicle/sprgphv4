@@ -5,9 +5,10 @@ class GUI_trackGroup
   int trackGroupHeight = 128;
   int trackGroupWidth = 730;
   int trackHeight = 20;
-  int trackWidth = 705;
   int trackOffset = 5;
   int trackAddSegmentButtonWidth = 15;
+  int trackStart = trackOffset + trackAddSegmentButtonWidth;
+  int trackEnd = trackOffset + trackGroupWidth;
   int yPos = 0;
   int col = 0;  
   int buttonPressed; // used for gearNo, -1 when not applicable
@@ -80,7 +81,7 @@ class GUI_trackGroup
       {
         public void controlEvent(CallbackEvent theEvent) 
         {
-          if (controller.edit == true)
+          if (controller.editMode == true)
           {
             trackGroup = theEvent.getController().getParent().getParent().getName();
             trackProp = theEvent.getController().getParent().getName();
@@ -111,12 +112,12 @@ class GUI_trackGroup
       .setId(segmentId)
       .setGroup(trackProp)
       .setItems(gif.EasingNames)
-      .setPosition(80, 0)
+      .setPosition(150, 0)
       .setBarHeight(trackHeight)
       .setWidth(500)
       .setCaptionLabel("easings")
       .setOpen(false)     
-      .setColorBackground(ControlP5.ORANGE)     
+      .setColorForeground(ControlP5.TEAL)
       .addCallback(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
@@ -129,14 +130,13 @@ class GUI_trackGroup
           gif.setAniEasing(easing, segKey);
         }
 
-        if (theEvent.getAction()== ControlP5.ACTION_ENTER && controller.edit == true)
+        if (theEvent.getAction()== ControlP5.ACTION_ENTER && controller.editMode == true)
         {                             
           segmentHoover = true;
-          theEvent.getController().setColorBackground(ControlP5.ORANGE);
+          theEvent.getController().setColorForeground(ControlP5.RED);
+          theEvent.getController().setColorActive(ControlP5.RED);
           String segKey = theEvent.getController().getStringValue();
-          float segStart = trackOffset + theEvent.getController().getPosition()[0];
-          float segWidth = theEvent.getController().getWidth();
-          controller.getDelta(segKey, segStart, segWidth, gui.getMousePos());
+          controller.onMouseEnter(segKey, gui.getMousePos());
         }
         if (theEvent.getAction()== ControlP5.ACTION_LEAVE)
         {

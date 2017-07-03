@@ -2,17 +2,17 @@ class GUI_trackGroup
 {
   ControlP5 cp5;
   Accordion trackControls;
-  int trackGroupHeight = 128;
-  int trackGroupWidth = 730;
+  int groupHeight = 128;
+  int groupWidth = 730;
   int trackHeight = 20;
   int trackOffset = 5;
   int trackAddSegmentButtonWidth = 15;
   int trackStart = trackOffset + trackAddSegmentButtonWidth;
-  int trackEnd = trackOffset + trackGroupWidth;
+  int trackEnd = trackOffset + groupWidth;
   int yPos = 0;
   int col = 0;  
-  int buttonPressed; // used for gearNo, -1 when not applicable
-  String trackProp, trackGroup;
+  int buttonPressed; // used to retrieve gearNo for controller, -1 when not applicable
+  String track, group;
   boolean segmentHoover = false;
 
   GUI_trackGroup(ControlP5 tg)  
@@ -20,7 +20,7 @@ class GUI_trackGroup
     cp5 = tg;
     trackControls = cp5.addAccordion("TC")
       .setPosition(trackOffset, 256+20)
-      .setWidth(trackGroupWidth)
+      .setWidth(groupWidth)
       .setCollapseMode(Accordion.SINGLE);
 
     menuTrackGroup();
@@ -49,49 +49,49 @@ class GUI_trackGroup
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        controller.deleteTrackGroup(theEvent.getController().getParent().toString());
+        controller.tG.deleteGroup(theEvent.getController().getParent().toString());
       }
     }
     );
 
     for (int i = 0; i < properties.size(); i++)
     {
-      String track = "property " + properties.get(i) + " " +  tgName;
-      cp5.addGroup(track)
+      String trackName = "property " + properties.get(i) + " " +  tgName;
+      cp5.addGroup(trackName)
         .setGroup(tgName)   
         .setId(buttonPressed)
         .setStringValue(property)
         .setPosition(0, 20+(40*i))
-        .setWidth(trackGroupWidth)
+        .setWidth(groupWidth)
         .setHeight(0)
         .setBackgroundHeight(trackHeight)
         .setBackgroundColor(color(255, 50))
         .setCaptionLabel(properties.get(i))
         .disableCollapse();
 
-      cp5.getGroup(track).getCaptionLabel().align(ControlP5.LEFT, ControlP5.TOP_OUTSIDE);
+      cp5.getGroup(trackName).getCaptionLabel().align(ControlP5.LEFT, ControlP5.TOP_OUTSIDE);
 
-      cp5.addButton("segment " + track)
+      cp5.addButton("segment " + trackName)
         .setCaptionLabel("+")
         .setStringValue(properties.get(i))
         .setId(i)
-        .setGroup(track)
+        .setGroup(trackName)
         .setPosition(0, 0)
         .setSize(trackAddSegmentButtonWidth, trackHeight)
         .onClick(new CallbackListener() 
       {
         public void controlEvent(CallbackEvent theEvent) 
         {
-          if (controller.editMode == true)
+          if (controller.tG.edit == true)
           {
-            trackGroup = theEvent.getController().getParent().getParent().getName();
-            trackProp = theEvent.getController().getParent().getName();
+            group = theEvent.getController().getParent().getParent().getName();
+            track = theEvent.getController().getParent().getName();
             int gear = theEvent.getController().getParent().getId(); 
             int layer = theEvent.getController().getParent().getParent().getId();
             String property = theEvent.getController().getParent().getStringValue();
             int propertyIndex = theEvent.getController().getId();
             String field = theEvent.getController().getStringValue();
-            controller.createAniSegment(layer, property, propertyIndex, gear, trackGroup, field);
+            controller.tG.createSegment(layer, property, propertyIndex, gear, group, field);
           }
         }
       }
@@ -116,7 +116,7 @@ class GUI_trackGroup
     cp5.addScrollableList(segmentKey)
       .setStringValue(segmentKey)
       .setId(segmentId)
-      .setGroup(trackProp)
+      .setGroup(track)
       .setItems(gif.EasingNames)
       .setPosition(150, 0)
       .setBarHeight(trackHeight)
@@ -135,16 +135,16 @@ class GUI_trackGroup
           //String segKey = theEvent.getController().getStringValue();
           //gif.setAniEasing(easing, segKey);
         }    
-  
-        if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.editMode == true)
+
+        if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.tG.edit == true)
         {                             
           segmentHoover = true;
           theEvent.getController().setColorForeground(ControlP5.ORANGE);
           theEvent.getController().setColorActive(ControlP5.GREEN);
           String segKey = theEvent.getController().getStringValue();
-          controller.tobeMoved = cp5.get(ScrollableList.class, segKey);
-          controller.updateHandlerValues(gui.mouseX);
-          controller.aniToBeUpdated(segKey, 0);
+          controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);
+          controller.tG.updateSegmentHandler(gui.mouseX);
+          controller.tG.segmentChanged(segKey, 0);
         }
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)
         {
@@ -156,11 +156,15 @@ class GUI_trackGroup
   }
 
 
-
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    G L O B A L  T R A C K  C O N T R O L S
-   additional trackGroups added to menu here
+   additional trackGroups can be added here
+   
+   trackGroup buttons need add..() & del..() methods,
+   which in turn need to be added to addMenu() & delMenu() below
+     
+   trackGroup name is written in all CAPS and declared with setStringValue()
+   use getStringValue() to pass it down to controller on callback  
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void addColorTrackButton()
@@ -176,10 +180,15 @@ class GUI_trackGroup
       public void controlEvent(CallbackEvent theEvent) 
       {
         buttonPressed = theEvent.getController().getId();
-        controller.createTrackGroup(theEvent.getController().getStringValue());
+        controller.tG.createGroup(theEvent.getController().getStringValue());
       }
     }
     );
+  }
+
+  void delColorTrackButton()
+  {
+    cp5.get(Button.class, "color").remove();
   }
 
   void addGearTrackButtons(int g)
@@ -189,7 +198,7 @@ class GUI_trackGroup
       yPos+=15; 
       col = 0;
     }    
-
+    
     cp5.addButton("tG gear " + (g+1))      
       .setStringValue("GEAR")
       .setId(g)
@@ -202,7 +211,7 @@ class GUI_trackGroup
       public void controlEvent(CallbackEvent theEvent) 
       {
         buttonPressed = theEvent.getController().getId();
-        controller.createTrackGroup(theEvent.getController().getStringValue());
+        controller.tG.createGroup(theEvent.getController().getStringValue());
       }
     }
     );
@@ -210,7 +219,7 @@ class GUI_trackGroup
     col+=1;
   }
 
-  void removeGearTrackButtons(int g)
+  void delGearTrackButtons(int g)
   {
     if (g%2 == 0)
     {
@@ -221,36 +230,15 @@ class GUI_trackGroup
     {
       col-=1;
     }
-
     cp5.get(Button.class, "tG gear " + (g+1)).remove();
   }
 
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    T R A C K G R O U P  S I D E  M E N U    
+   
+   N O T E: at present there is no layerType switch case yet 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-  void menuTrackGroup()
-  {
-    cp5.addGroup("menuTrackGroups")
-      .setCaptionLabel("Track Groups")
-      .setPosition(gui.rPaneXpos, 256+30)
-      .setSize(gui.rPaneWidth, 150)
-      .setBackgroundColor(color(255, 50))
-      .setColorForeground(ControlP5.BLUE)
-      .disableCollapse()
-      .setOpen(true);
-  }
-
-  void delMenu()
-  {
-    deleteColorTrackButton();
-
-    for (int i = layers.get(gui.layerSelected).getNumberOfGears()-1; i >= 0; i--)
-    {
-      removeGearTrackButtons(i);
-    }
-  }
 
   void addMenu()
   {
@@ -262,8 +250,25 @@ class GUI_trackGroup
     }
   }
 
-  void deleteColorTrackButton()
+  void delMenu()
   {
-    cp5.get(Button.class, "color").remove();
+    delColorTrackButton();
+
+    for (int i = layers.get(gui.layerSelected).getNumberOfGears()-1; i >= 0; i--)
+    {
+      delGearTrackButtons(i);
+    }
+  }
+
+  void menuTrackGroup()
+  {
+    cp5.addGroup("menuTrackGroups")
+      .setCaptionLabel("Track Groups")
+      .setPosition(gui.rPaneXpos, 256+30)
+      .setSize(gui.rPaneWidth, 150)
+      .setBackgroundColor(color(255, 50))
+      .setColorForeground(ControlP5.BLUE)
+      .disableCollapse()
+      .setOpen(true);
   }
 }

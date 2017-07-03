@@ -87,5 +87,5 @@ class Spiro extends Layer  //<>// //<>//
   {
     super.deleteGears(del);
     circ.remove(del);
-  }
+  } 
 }

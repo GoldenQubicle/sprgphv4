@@ -68,7 +68,6 @@ class GUI_gearGroup
     // 1 7 nope is just not doing anything atm
     switch(getLayerType()) 
     {
-
     case "MESH":
 
       meshRadius();
@@ -254,8 +253,8 @@ class GUI_gearGroup
           layers.get(gui.layerSelected).setNumberOfGears(del);
           layers.get(gui.layerSelected).deleteGears(del);        
           removeColsRows(del);
-          gui.tg.removeGearTrackButtons(del);   
-          controller.deleteGearTrackGroup(del);
+          gui.tg.delGearTrackButtons(del);   
+          controller.tG.deleteGearTrackGroup(del);
           layer(lock);
         }
       }
@@ -291,7 +290,6 @@ class GUI_gearGroup
       .setId(1)
       .setColorForeground(ControlP5.BLUE)
       .setColorActive(ControlP5.ORANGE);
-
 
     meshRadii[2]  = cp5.addSlider("meshZr")
       .setGroup("gears global controls")

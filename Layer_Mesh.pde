@@ -4,7 +4,7 @@ class Mesh extends Spiro
   ArrayList<PVector> vertexR0ng = new ArrayList<PVector>(); 
   ArrayList<PVector> vertexR1ng = new ArrayList<PVector>(); 
   PVector n0rm, n1rm;
-
+  StringList meshProp = new StringList();
   // stuff for vertexCirle
   int resolution = 16;
   PVector radius = new PVector(5, 5, 5);
@@ -28,6 +28,9 @@ class Mesh extends Spiro
       xyz = grinding(i)[0]; 
       vectorPath.add(xyz);
     }
+    meshProp.append("x");
+    meshProp.append("y");
+    meshProp.append("z");
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,9 +55,9 @@ class Mesh extends Spiro
 
         vertexR0ng = getVertexRingPos(n0rm, vectorPath.get(0));
         vertexR1ng = getVertexRingPos(n1rm, vectorPath.get(1));
-                 
+
         for (int v = 0; v < resolution; v++) {     
-       
+
           vertex(vertexR0ng.get(v).x, vertexR0ng.get(v).y, vertexR0ng.get(v).z);
           vertex(vertexR1ng.get(v).x, vertexR1ng.get(v).y, vertexR1ng.get(v).z);
         }
@@ -74,8 +77,8 @@ class Mesh extends Spiro
     //ambientLight(50, 102, 102);
     emissive(128, 26, 51);
   }
-  
-  
+
+
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    M E S H I N G   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

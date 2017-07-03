@@ -91,7 +91,7 @@ class GUI extends PApplet
 
     if (tg.segmentHoover == true)
     {
-      controller.aniSegmentHandler();
+      controller.tG.segmentHandler();
       cursor(HAND);
     } else 
     {
@@ -106,18 +106,18 @@ class GUI extends PApplet
 
     if (key == 'a')
     {
-      controller.aniEditMode = controller.aniEditModes.get(1);
-      controller.updateHandlerValues(mouseX);
+      controller.tG.editMode = controller.tG.editModes.get(1);
+      controller.tG.updateSegmentHandler(mouseX);
     }
     if (key == 's')
     {
-      controller.aniEditMode = controller.aniEditModes.get(0);
-      controller.updateHandlerValues(mouseX);
+      controller.tG.editMode = controller.tG.editModes.get(0);
+      controller.tG.updateSegmentHandler(mouseX);
     }
     if (key == 'd')
     {
-      controller.aniEditMode = controller.aniEditModes.get(2);
-      controller.updateHandlerValues(mouseX);
+      controller.tG.editMode = controller.tG.editModes.get(2);
+      controller.tG.updateSegmentHandler(mouseX);
     }
   }
 

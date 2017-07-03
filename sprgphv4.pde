@@ -17,7 +17,7 @@ boolean lock = false;
 Spiro layer = new Spiro(0);
 //Lines layer2 = new Lines();
 //Spiro3D layer = new Spiro3D();
-//Mesh layer2 = new Mesh(3);
+//Mesh layer = new Mesh(3);
 
 void settings()
 {

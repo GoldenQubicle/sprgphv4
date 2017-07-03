@@ -4,7 +4,7 @@ class Animation
   AniSequence seq;
   Ani ani;
 
-  Map<String, Ani> trackAni = new HashMap<String, Ani>();
+  Map<String, Ani> aniSegments = new HashMap<String, Ani>();
 
   Easing[] easings = { Ani.LINEAR, Ani.QUAD_IN, Ani.QUAD_OUT, Ani.QUAD_IN_OUT, Ani.CUBIC_IN, Ani.CUBIC_IN_OUT, Ani.CUBIC_OUT, Ani.QUART_IN, Ani.QUART_OUT, Ani.QUART_IN_OUT, Ani.QUINT_IN, Ani.QUINT_OUT, Ani.QUINT_IN_OUT, Ani.SINE_IN, Ani.SINE_OUT, Ani.SINE_IN_OUT, Ani.CIRC_IN, Ani.CIRC_OUT, Ani.CIRC_IN_OUT, Ani.EXPO_IN, Ani.EXPO_OUT, Ani.EXPO_IN_OUT, Ani.BACK_IN, Ani.BACK_OUT, Ani.BACK_IN_OUT, Ani.BOUNCE_IN, Ani.BOUNCE_OUT, Ani.BOUNCE_IN_OUT, Ani.ELASTIC_IN, Ani.ELASTIC_OUT, Ani.ELASTIC_IN_OUT};
   String[] EasingNames = {"LINEAR", "QUAD_IN", "QUAD_OUT", "QUAD_IN_OUT", "CUBIC_IN", "CUBIC_IN_OUT", "CUBIC_OUT", "QUART_IN", "QUART_OUT", "QUART_IN_OUT", "QUINT_IN", "QUINT_OUT", "QUINT_IN_OUT", "SINE_IN", "SINE_OUT", "SINE_IN_OUT", "CIRC_IN", "CIRC_OUT", "CIRC_IN_OUT", "EXPO_IN", "EXPO_OUT", "EXPO_IN_OUT", "BACK_IN", "BACK_OUT", "BACK_IN_OUT", "BOUNCE_IN", "BOUNCE_OUT", "BOUNCE_IN_OUT", "ELASTIC_IN", "ELASTIC_OUT", "ELASTIC_IN_OUT"};
@@ -24,22 +24,22 @@ class Animation
 
   void setAniEasing(int easing, String segmentKey)
   {           
-    trackAni.get(segmentKey).setEasing(easings[easing]);
+    aniSegments.get(segmentKey).setEasing(easings[easing]);
   }
 
   void setAniDuration(float duration, String segmentKey)
   {
-    trackAni.get(segmentKey).setDuration(duration);
+    aniSegments.get(segmentKey).setDuration(duration);
   }
 
   void setAniDelay(float delay, String segmentKey)
   {
-    trackAni.get(segmentKey).setDelay(delay);
+    aniSegments.get(segmentKey).setDelay(delay);
   }
 
   void setAniValue(float value, String segmentKey)
   {
-    trackAni.get(segmentKey).setEnd(value);
+    aniSegments.get(segmentKey).setEnd(value);
   }
 
 
@@ -69,12 +69,12 @@ class Animation
     ani = new Ani(obj, 200, 50, field, 150);
     ani.setPlayMode(Ani.FORWARD);
     ani.repeat(1);
-    trackAni.put(segmentKey, ani);
+    aniSegments.put(segmentKey, ani);
   }
 
   void aniPlay()
   {
-    for (Ani ani : trackAni.values() )
+    for (Ani ani : aniSegments.values() )
     {
       if (keyPressed == true)
       {

@@ -5,7 +5,7 @@ question still is how to actually differentiate between the initial layerState a
 - could try setting up a temporary edit layer, possibly by cloning / copying the inital layer
 - if this produces a referenced object - which is a distinct possibility - Id much prefer to start looking into saving stuff out properly to json 
 
-==========================
+==========================================================================
 
 ok some quick thoughts how to handle updating aniSegments
 
@@ -27,7 +27,7 @@ finally, in all 3 cases the controller somehow keeps track of changed frame rang
 
 so, this means the trackGroup gui simply has no direct relation anymore with the ani, and as such, the scrollableList should not send anything down directly to the gif / ani class in terms of easingstyle
 
-=================
+==========================================================================
 
 as for how to check overlapping trackSegments
 basically it means the constrains currently static need to be made dynamic
@@ -85,46 +85,13 @@ once thats in place, figure out mapping of segment position to timeline, handled
  
  ===========================================================================
  
- regarding animations 
- 
- so, make a giant switch case which check incoming value from propertiesList (for each track)
- and cast the appropriate property into a generic object
- 
- this way, each and every ani object can - theoretically - have to same constructor call by calling
- 
- new Ani(propertyToAnimate, duration, delay, propertyFieldName, Value)
- ................1.............2........3.............4...........5...        
- 
- 1 + 4) are determined on a trackObject level
- 
- 2 + 3 + 5) these need to be determined on a aniObject level
- 
- 1) this is taken care of by casting whatever property into a generic object
- 4) should be handled as well by passing down value propertyList from track
- 
- so, each track object need to hold multiple segments
-     each segment consist of aniEasing list
-     
- so here's a question, will the track object hold the anis, or should I pass this back into animation class proper. . 
- thats probably a good idea, because that way, I could quickly check if something has changed first on a track level
- and than on a ani level
- as in, the animation class holds an arraylist of tracks, the track class in turn holds an arraylist of segments
- then the animation class should have an update function which check current status (provided by gui) against tracks
- if something has changed, update the segment?!
- could perhaps use hashmaps here, e.g. store each track, let aninatiom class first chech if key is present, and is so if objects match
- and no, good
- if yes, retrieve segment hashmap from track, and rinse-and-repeat on segment level
- 
- 
- also, still not clear whats the best approach to handling the time, i.e. in seconds or frames?
- for now, think frames will do best
- 
- that said, it is clear the animation class will need to have a rocksolid timer, which can be used for rendering as well
- 
- also, may want to use ani sequence, because it appears that way seek wil act in the complete sequence instead individual ani
- yep that deffo works
- so the animation class  wil need to construct a complete sequence
- so in other words the track and segment objects only serve to pass information back-and-forth between gui and animation class
+so for shits 'n giggles lets document the workflow for adding new animating properties to a layer
+first of all, a new StringList is needed in the layerObject, populated with the fieldnames of the values to be animated
+then, in GUI_trackGroup a new button needs to be setup, and added to menu
+then, new switch cases for that trackGroup need to added to the tgController & the animation class
+also, probably need to recast the layer into its type in order to acces the propertyList & field values
+all-in-all it should, theoretically, work quite smoothly
+
  
  
  

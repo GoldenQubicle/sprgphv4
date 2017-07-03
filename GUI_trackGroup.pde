@@ -37,7 +37,8 @@ class GUI_trackGroup
     cp5.addGroup(tgName)   
       .setId(gui.layerSelected)
       .setBackgroundHeight(properties.size()*50)
-      .setBackgroundColor(color(255, 50));
+      .setBackgroundColor(color(255, 50))
+      .setColorForeground(ControlP5.BLUE);
 
     cp5.addButton("del " + tgName)
       .setGroup(tgName)
@@ -111,7 +112,7 @@ class GUI_trackGroup
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void addTrackSegment(String segmentKey, int segmentId)
-  {    
+  {        
     cp5.addScrollableList(segmentKey)
       .setStringValue(segmentKey)
       .setId(segmentId)
@@ -130,19 +131,20 @@ class GUI_trackGroup
         if (theEvent.getAction() == ControlP5.ACTION_CLICK)
         {
           theEvent.getController().bringToFront();
-          int easing= int(theEvent.getController().getValue());
-          String segKey = theEvent.getController().getStringValue();
-          gif.setAniEasing(easing, segKey);
-        }
-
+          //int easing= int(theEvent.getController().getValue());
+          //String segKey = theEvent.getController().getStringValue();
+          //gif.setAniEasing(easing, segKey);
+        }    
+  
         if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.editMode == true)
         {                             
           segmentHoover = true;
-          theEvent.getController().setColorForeground(ControlP5.RED);
-          theEvent.getController().setColorActive(ControlP5.RED);
+          theEvent.getController().setColorForeground(ControlP5.ORANGE);
+          theEvent.getController().setColorActive(ControlP5.GREEN);
           String segKey = theEvent.getController().getStringValue();
           controller.tobeMoved = cp5.get(ScrollableList.class, segKey);
-          controller.updateHandler(gui.mouseX);
+          controller.updateHandlerValues(gui.mouseX);
+          controller.aniToBeUpdated(segKey, 0);
         }
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)
         {
@@ -152,6 +154,8 @@ class GUI_trackGroup
     }
     );
   }
+
+
 
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,6 +237,8 @@ class GUI_trackGroup
       .setPosition(gui.rPaneXpos, 256+30)
       .setSize(gui.rPaneWidth, 150)
       .setBackgroundColor(color(255, 50))
+      .setColorForeground(ControlP5.BLUE)
+      .disableCollapse()
       .setOpen(true);
   }
 

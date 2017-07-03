@@ -25,6 +25,8 @@ class GUI extends PApplet
   {
     cp5 = new ControlP5(this);
     cp5.disableShortcuts();
+    cp5.setColorActive(ControlP5.GREEN);
+    cp5.setColorForeground(ControlP5.ORANGE);
     gg = new GUI_gearGroup(cp5);
     tg = new GUI_trackGroup(cp5);
 
@@ -52,7 +54,8 @@ class GUI extends PApplet
       .setBackgroundColor(color(255, 75))
       .disableCollapse()
       .setPosition(rPaneXpos, 150)
-      .setSize(rPaneWidth, 100);    
+      .setSize(rPaneWidth, 100)
+      .setColorForeground(ControlP5.BLUE);      
 
     cp5.addScrollableList("Layers")
       .setGroup("layers controls")
@@ -104,17 +107,17 @@ class GUI extends PApplet
     if (key == 'a')
     {
       controller.aniEditMode = controller.aniEditModes.get(1);
-      controller.updateHandler(mouseX);
+      controller.updateHandlerValues(mouseX);
     }
     if (key == 's')
     {
       controller.aniEditMode = controller.aniEditModes.get(0);
-      controller.updateHandler(mouseX);
+      controller.updateHandlerValues(mouseX);
     }
     if (key == 'd')
     {
       controller.aniEditMode = controller.aniEditModes.get(2);
-      controller.updateHandler(mouseX);
+      controller.updateHandlerValues(mouseX);
     }
   }
 

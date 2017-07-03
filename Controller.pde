@@ -2,15 +2,28 @@ class Controller
 {
   Map<String, Group>trackGroups = new HashMap<String, Group>();
   Map<String, ScrollableList>trackSegments = new HashMap<String, ScrollableList>();
+  IntDict aniUpdate = new IntDict();
   int segment;
   StringList aniEditModes = new StringList("asOne", "left", "right");
-  String aniEditMode = aniEditModes.get(2);
+  String aniEditMode = aniEditModes.get(0);
   boolean editMode = true;
   float segMouseEnter, segWidth, segStart;
   ScrollableList tobeMoved;
 
   Controller()
   {
+  }
+
+  void aniToBeUpdated(String segmentKey, int flag)
+  {
+    // soo when controller goes to town, segments flagged for deletion needs to be removed from trackSegments as well
+    if (!aniUpdate.hasKey(segmentKey))
+    {
+      aniUpdate.add(segmentKey, flag);
+    } else 
+    {
+      aniUpdate.set(segmentKey, flag);
+    }  
   }
 
   void aniSegmentHandler()
@@ -37,9 +50,16 @@ class Controller
       tobeMoved.setWidth(int(newWidth));
       break;
     }
+
+    if (gui.keyPressed == true && gui.key == DELETE)
+    {
+      aniToBeUpdated(tobeMoved.getStringValue(), 1);
+      gui.cp5.getController(tobeMoved.getStringValue()).remove();
+      //trackSegments.remove(tobeMoved.getStringValue());
+    }
   }
 
-  void updateHandler(float mousePos)
+  void updateHandlerValues(float mousePos)
   {
     segWidth = tobeMoved.getWidth();
     segStart = tobeMoved.getPosition()[0];
@@ -50,10 +70,10 @@ class Controller
   void createAniSegment(int layer, String property, int prop, int gear, String trackgroup, String field)
   {
     segment+=1;
-    String trackSegment = trackgroup + "    property:" + prop + "    segment:" + segment;
+    String trackSegment = trackgroup +  "    gearNo:" + gear +  "    property:" + prop + "    segment:" + segment;
     gui.tg.addTrackSegment(trackSegment, segment);
     trackSegments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
-    gif.createAni(layer, property, prop, gear, trackSegment, field);
+    //gif.createAni(layer, property, prop, gear, trackSegment, field);
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,6 +115,15 @@ class Controller
     {
       gui.cp5.get(Group.class, trackGroup).remove();
       trackGroups.remove(trackGroup);
+    }
+
+    for (String segmentKey : trackSegments.keySet())
+    {
+      if (segmentKey.contains(trackGroup))
+      {
+        //trackSegments.remove(segmentKey);
+        aniToBeUpdated(segmentKey, 1);
+      }
     }
   }
 

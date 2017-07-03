@@ -100,6 +100,8 @@ class GUI_gearGroup
       .setValue(layers.get(gui.layerSelected).getGearVectors(gear).x, layers.get(gui.layerSelected).getGearVectors(gear).y)
       .setMinMax(-100, -100, 100, 100)
       .setCaptionLabel("radius x y ")
+      .setColorForeground(ControlP5.BLUE)
+      .setColorActive(ControlP5.ORANGE)
       .onChange(new CallbackListener()
     {
       public void controlEvent(CallbackEvent theEvent) 
@@ -125,6 +127,8 @@ class GUI_gearGroup
       .setRange(-100, 100)
       .setValue(layers.get(gui.layerSelected).getGearVectors(gear).z)
       .setCaptionLabel("z depth")
+      .setColorForeground(ControlP5.BLUE)
+      .setColorActive(ControlP5.ORANGE)
       .onChange(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
@@ -153,6 +157,8 @@ class GUI_gearGroup
       .setSize(size2d, 8)
       .setValue(spiro.getPetals(gear))
       .setCaptionLabel("petals")
+      .setColorForeground(ControlP5.BLUE)
+      .setColorActive(ControlP5.ORANGE)
       .onChange(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
@@ -180,6 +186,8 @@ class GUI_gearGroup
       .setSize(size2d, 8)
       .setValue(line.getConnect(gear))
       .setCaptionLabel("connections")
+      .setColorForeground(ControlP5.BLUE)
+      .setColorActive(ControlP5.ORANGE)
       .onChange(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
@@ -207,7 +215,8 @@ class GUI_gearGroup
       .setBackgroundColor(color(255, 75))
       .disableCollapse()
       .setPosition(gui.rPaneXpos, 15)
-      .setSize(gui.rPaneWidth, 100);    
+      .setSize(gui.rPaneWidth, 100)
+      .setColorForeground(ControlP5.BLUE);    
 
     cp5.addButton("gear +")
       .setPosition(0, 5)
@@ -270,14 +279,18 @@ class GUI_gearGroup
       .setPosition(0, 25)
       .setSize(gui.rPaneWidth, 10)
       .setValue(layer.getMeshRadius().x)
-      .setId(0);
+      .setId(0)
+      .setColorForeground(ControlP5.BLUE)
+      .setColorActive(ControlP5.ORANGE);
 
     meshRadii[1] = cp5.addSlider("meshYr")
       .setGroup("gears global controls")
       .setPosition(0, 40)
       .setSize(gui.rPaneWidth, 10)
       .setValue(layer.getMeshRadius().y)
-      .setId(1);
+      .setId(1)
+      .setColorForeground(ControlP5.BLUE)
+      .setColorActive(ControlP5.ORANGE);
 
 
     meshRadii[2]  = cp5.addSlider("meshZr")
@@ -285,7 +298,9 @@ class GUI_gearGroup
       .setPosition(0, 55)
       .setSize(gui.rPaneWidth, 10)
       .setValue(layer.getMeshRadius().z)
-      .setId(2);
+      .setId(2)
+      .setColorForeground(ControlP5.BLUE)
+      .setColorActive(ControlP5.ORANGE);
 
     cp5.getController("meshXr").getCaptionLabel().align(CENTER, CENTER);
     cp5.getController("meshYr").getCaptionLabel().align(CENTER, CENTER);
@@ -387,7 +402,8 @@ class GUI_gearGroup
   {
     cp5.addGroup("row " + row)
       .setBackgroundHeight(rowHeight)
-      .setBackgroundColor(color(255, 50));
+      .setBackgroundColor(color(255, 50))
+      .setColorForeground(ControlP5.BLUE);
     gearControls.addItem(cp5.get(Group.class, "row " + row)).open(row);
   }
 
@@ -405,6 +421,7 @@ class GUI_gearGroup
       .setGroup(cp5.get(Group.class, "row " + row))
       .setCaptionLabel("gear " + (gears+1))
       .setBackgroundColor(color(255, 75))
+      .setColorForeground(ControlP5.BLUE)
       .disableCollapse();
 
     addToGearGroup(gears);

@@ -111,10 +111,10 @@ class GUI_trackGroup
    T R A C K   S E G M E N T   S E T U P 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addTrackSegment(String segmentKey, int segmentId)
+  void addTrackSegment(String segmentKey, int segmentId, String field)
   {        
     cp5.addScrollableList(segmentKey)
-      .setStringValue(segmentKey)
+      .setStringValue(field)
       .setId(segmentId)
       .setGroup(track)
       .setItems(gif.EasingNames)
@@ -141,7 +141,7 @@ class GUI_trackGroup
           segmentHoover = true;
           theEvent.getController().setColorForeground(ControlP5.ORANGE);
           theEvent.getController().setColorActive(ControlP5.GREEN);
-          String segKey = theEvent.getController().getStringValue();
+          String segKey = theEvent.getController().getName().toString();
           controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);
           controller.tG.updateSegmentHandler(gui.mouseX);
           controller.tG.segmentChanged(segKey, 0);

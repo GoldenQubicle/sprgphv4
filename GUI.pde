@@ -103,6 +103,10 @@ class GUI extends PApplet
 
   void keyPressed()
   {
+    if(key == ' ')
+    {
+      controller.checkAniTrackSegments();
+    }
 
     if (key == 'a')
     {

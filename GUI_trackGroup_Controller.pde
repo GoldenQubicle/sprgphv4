@@ -65,6 +65,7 @@ class GUI_trackGroup_Controller
     if (!aniUpdate.hasKey(segmentKey))
     {
       aniUpdate.add(segmentKey, flag);
+      //println("aniSegment flag set");
     } else 
     {
       aniUpdate.set(segmentKey, flag);
@@ -75,7 +76,7 @@ class GUI_trackGroup_Controller
   {
     segment+=1;
     String trackSegment = trackgroup +  "    gearNo:" + gear +  "    property:" + prop + "    segment:" + segment;
-    gui.tg.addTrackSegment(trackSegment, segment);
+    gui.tg.addTrackSegment(trackSegment, segment, field);
     segments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
     //gif.createAni(layer, property, prop, gear, trackSegment, field);
   }

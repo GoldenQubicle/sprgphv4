@@ -15,10 +15,10 @@ int Width = 512;
 int Height = 512;
 boolean lock = false;
 boolean pause = true;
-Spiro layer = new Spiro(0);
+//Spiro layer = new Spiro(0);
 //Lines layer2 = new Lines();
 //Spiro3D layer = new Spiro3D();
-//Mesh layer = new Mesh(3);
+Mesh layer = new Mesh(3);
 
 void settings()
 {
@@ -45,15 +45,11 @@ void draw()
   background(128);
   translate(width/2, height/2);
 
-  if (pause == false)
-  {
-    gif.aniPlay();
-  } 
-    
   for (Layer myLayer : layers)
   {
     myLayer.display();
   }
+  gif.aniCheckForEnd();
 }  
 
 void layer(boolean locked)

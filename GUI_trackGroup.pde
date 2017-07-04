@@ -14,7 +14,6 @@ class GUI_trackGroup
   int buttonPressed; // used to retrieve gearNo for controller, -1 when not applicable
   String track, group;
   boolean segmentHoover = false;
-
   GUI_trackGroup(ControlP5 tg)  
   {    
     cp5 = tg;
@@ -25,8 +24,10 @@ class GUI_trackGroup
 
     menuTrackGroup();
     addMenu();
+    
+    controller.mapStart = trackAddSegmentButtonWidth;
+    controller.mapEnd = groupWidth;
   }
-
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    T R A C K   G R O U P   S E T U P 

@@ -105,14 +105,11 @@ class GUI extends PApplet
   {
     if (key == ' ')
     {
-      controller.checkAniTrackSegments();
-    }
-    if (key == 'p')
-    {
-      controller.clearAniupdate();
       ani(pause);
-      println(pause);
+      controller.checkAniTrackSegments();
+      gif.aniPlayPause();
     }
+
     if (key == 'a')
     {
       controller.tG.editMode = controller.tG.editModes.get(1);

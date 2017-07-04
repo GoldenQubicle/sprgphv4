@@ -1,4 +1,4 @@
-class Animation //<>// //<>//
+class Animation  //<>//
 {
   PApplet parent;
   AniSequence seq;
@@ -16,43 +16,18 @@ class Animation //<>// //<>//
   {
     parent = theApplet;
     Ani.init(parent);
-    Ani.noAutostart();
     Ani.setDefaultTimeMode(Ani.FRAMES);
+    Ani.noAutostart();
     seq = new AniSequence(parent);
   }
 
-  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   A N I  U P D A T E  M E T H O D S  
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-  void setAniEasing(int easing, String segmentKey)
-  {           
-    aniSegments.get(segmentKey).setEasing(easings[easing]);
-  }
-
-  void setAniDuration(float duration, String segmentKey)
-  {
-    aniSegments.get(segmentKey).setDuration(duration);
-  }
-
-  void setAniDelay(float delay, String segmentKey)
-  {
-    aniSegments.get(segmentKey).setDelay(delay);
-  }
-
-  void setAniValue(float value, String segmentKey)
-  {
-    aniSegments.get(segmentKey).setEnd(value);
-  }
-
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   A N I  G L O B A L  M E T H O D S  
+   G E N E R A L   M E T H O D S   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  Ani createAni(int layer, String property, int gear, String segmentKey, String field, float duration, float delay, int easing)
+  Ani createAni(int layer, String property, int gear, String field, float duration, float delay, int easing)
   {
-    ;
     Object obj = new Object();
 
     switch(property)
@@ -72,22 +47,40 @@ class Animation //<>// //<>//
 
     ani = new Ani(obj, duration, delay, field, 150, easings[easing]);
     ani.setPlayMode(Ani.FORWARD);
-    ani.repeat(1);
+    ani.noRepeat();
     return ani;
   }
 
-  void aniPlay()
+
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   P L A Y  M E T H O D S   
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+  void aniPlayPause()
   {
-    for (Ani ani : aniSegments.values() )
+    for (Ani ani : aniSegments.values()) 
     {
-      {
+      if (!ani.isPlaying() && pause == false)
+      {        
         ani.start();
       }
-      
-      //if (ani.isEnded())
-      //{      
-      //  ani.seek(0);
-      //}
+      if (ani.isPlaying() && pause == true)
+      {
+        ani.end();      
+        ani.seek(0);
+      }
+    }
+  }
+
+  void aniCheckForEnd()
+  {
+    for (Ani ani : aniSegments.values()) 
+    {
+      if (ani.isEnded())
+      {
+        ani.seek(0);
+        pause = true;
+      }
     }
   }
 }

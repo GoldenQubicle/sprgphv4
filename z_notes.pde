@@ -1,5 +1,14 @@
 /*
 
+ok so play / pause is sorta fixed for now
+HOWEVER, since each ani is checked if it has ended individually, it still looks a bit wonky
+YET this is not an issue because I know what's causing it
+ANDd I plan to remedy this by putting the anis in a sequence, and use play/pause/seek on the sequence
+
+==========================================================================
+
+
+
 question still is how to actually differentiate between the initial layerState and edit layerState. Or to put that another way,  how need to retrieve layerValues to pass into ani, and then change the layerValues back to initial state?
 
 - could try setting up a temporary edit layer, possibly by cloning / copying the inital layer

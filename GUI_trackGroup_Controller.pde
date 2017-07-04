@@ -45,10 +45,8 @@ class GUI_trackGroup_Controller
 
     if (gui.keyPressed == true && gui.key == DELETE)
     {
-      //println("really?!");
       segmentChanged(segmentActive.getName(), 1);
       gui.cp5.getController(segmentActive.getName()).remove();
-      //segments.remove(segmentActive.getName());
     }
   }
 
@@ -127,7 +125,6 @@ class GUI_trackGroup_Controller
     {
       if (segKey.contains(trackGroup))
       {
-        //trackSegments.remove(segmentKey);
         segmentChanged(segKey, 1);
       }
     }

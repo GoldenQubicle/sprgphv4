@@ -50,17 +50,16 @@ class Animation //<>// //<>//
    A N I  G L O B A L  M E T H O D S  
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void createAni(int layer, String property, int propertyIndex, int gear, String segmentKey, String field, float duration, float delay, int easing)
+  Ani createAni(int layer, String property, int gear, String segmentKey, String field, float duration, float delay, int easing)
   {
-    //println(layer, property, propertyIndex, gear, segmentKey, field, duration, delay );
-    println(segmentKey);
+    ;
     Object obj = new Object();
 
     switch(property)
     {
     case "GEAR":
       obj = layers.get(layer).gears.get(gear).vector;
-      if (propertyIndex == 2)
+      if (field == "petals")
       {
         obj = layers.get(layer).gears.get(gear);
       }
@@ -74,23 +73,21 @@ class Animation //<>// //<>//
     ani = new Ani(obj, duration, delay, field, 150, easings[easing]);
     ani.setPlayMode(Ani.FORWARD);
     ani.repeat(1);
-    aniSegments.put(segmentKey, ani);
+    return ani;
   }
 
   void aniPlay()
   {
-
-    if (gui.keyPressed == true && gui.key == 'p')
-      for (Ani ani : aniSegments.values() )
+    for (Ani ani : aniSegments.values() )
+    {
       {
-        {
-          ani.start();
-        }
-
-        if (ani.isEnded())
-        {      
-          ani.seek(0);
-        }
+        ani.start();
       }
+      
+      //if (ani.isEnded())
+      //{      
+      //  ani.seek(0);
+      //}
+    }
   }
 }

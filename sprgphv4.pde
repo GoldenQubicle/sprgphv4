@@ -14,6 +14,7 @@ ArrayList<Layer> layers =  new ArrayList();
 int Width = 512;
 int Height = 512;
 boolean lock = false;
+boolean pause = true;
 Spiro layer = new Spiro(0);
 //Lines layer2 = new Lines();
 //Spiro3D layer = new Spiro3D();
@@ -44,8 +45,11 @@ void draw()
   background(128);
   translate(width/2, height/2);
 
-  gif.aniPlay();
-
+  if (pause == false)
+  {
+    gif.aniPlay();
+  } 
+    
   for (Layer myLayer : layers)
   {
     myLayer.display();
@@ -60,6 +64,17 @@ void layer(boolean locked)
   } else 
   {
     lock = false;
+  }
+}
+
+void ani(boolean playing)
+{
+  if (playing == true)
+  {
+    pause = false;
+  } else
+  {
+    pause = true;
   }
 }
 

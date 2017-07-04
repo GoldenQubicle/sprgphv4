@@ -45,40 +45,41 @@ class GUI_trackGroup_Controller
 
     if (gui.keyPressed == true && gui.key == DELETE)
     {
-      segmentChanged(segmentActive.getStringValue(), 1);
-      gui.cp5.getController(segmentActive.getStringValue()).remove();
-      //trackSegments.remove(tobeMoved.getStringValue());
+      //println("really?!");
+      segmentChanged(segmentActive.getName(), 1);
+      gui.cp5.getController(segmentActive.getName()).remove();
+      //segments.remove(segmentActive.getName());
     }
   }
 
   void updateSegmentHandler(float mousePos)
   {
-    segWidth = segmentActive.getWidth();
-    segStart = segmentActive.getPosition()[0];
-    segMouseEnter = mousePos;
+    if (!segments.isEmpty()) {
+      segWidth = segmentActive.getWidth();
+      segStart = segmentActive.getPosition()[0];
+      segMouseEnter = mousePos;
+    }
   }
 
 
   void segmentChanged(String segmentKey, int flag)
   {
-    // soo when controller goes to town, segments flagged for deletion needs to be removed from trackSegments as well
     if (!aniUpdate.hasKey(segmentKey))
     {
       aniUpdate.add(segmentKey, flag);
-      //println("aniSegment flag set");
-    } else 
+    }
+    if (flag == 1)
     {
       aniUpdate.set(segmentKey, flag);
     }
   }
 
-  void createSegment(int layer, String property, int prop, int gear, String trackgroup, String field)
+  void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
   {
     segment+=1;
-    String trackSegment = trackgroup +  "    gearNo:" + gear +  "    property:" + prop + "    segment:" + segment;
+    String trackSegment = trackgroup +  "    gearNo:" + gear +  "    property:" + propertyIndex + "    segment:" + segment;
     gui.tg.addTrackSegment(trackSegment, segment, field);
     segments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
-    //gif.createAni(layer, property, prop, gear, trackSegment, field);
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -122,12 +123,12 @@ class GUI_trackGroup_Controller
       groups.remove(trackGroup);
     }
 
-    for (String segmentKey : segments.keySet())
+    for (String segKey : segments.keySet())
     {
-      if (segmentKey.contains(trackGroup))
+      if (segKey.contains(trackGroup))
       {
         //trackSegments.remove(segmentKey);
-        segmentChanged(segmentKey, 1);
+        segmentChanged(segKey, 1);
       }
     }
   }

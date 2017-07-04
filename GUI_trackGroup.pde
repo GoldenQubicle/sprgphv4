@@ -131,9 +131,6 @@ class GUI_trackGroup
         if (theEvent.getAction() == ControlP5.ACTION_CLICK)
         {
           theEvent.getController().bringToFront();
-          //int easing= int(theEvent.getController().getValue());
-          //String segKey = theEvent.getController().getStringValue();
-          //gif.setAniEasing(easing, segKey);
         }    
 
         if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.tG.edit == true)
@@ -153,6 +150,7 @@ class GUI_trackGroup
       }
     }
     );
+    controller.tG.segmentActive = cp5.get(ScrollableList.class, segmentKey);
   }
 
 
@@ -162,7 +160,7 @@ class GUI_trackGroup
    
    trackGroup buttons need add..() & del..() methods,
    which in turn need to be added to addMenu() & delMenu() below
-     
+   
    trackGroup name is written in all CAPS and declared with setStringValue()
    use getStringValue() to pass it down to controller on callback  
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -198,7 +196,7 @@ class GUI_trackGroup
       yPos+=15; 
       col = 0;
     }    
-    
+
     cp5.addButton("tG gear " + (g+1))      
       .setStringValue("GEAR")
       .setId(g)

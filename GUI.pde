@@ -98,16 +98,21 @@ class GUI extends PApplet
       cursor(ARROW);
     }
 
-    gif.aniPlay();
+    //gif.aniPlay();
   }
 
   void keyPressed()
   {
-    if(key == ' ')
+    if (key == ' ')
     {
       controller.checkAniTrackSegments();
     }
-
+    if (key == 'p')
+    {
+      controller.clearAniupdate();
+      ani(pause);
+      println(pause);
+    }
     if (key == 'a')
     {
       controller.tG.editMode = controller.tG.editModes.get(1);

@@ -8,7 +8,7 @@ class GUI extends PApplet
   GUI_gearGroup gg;
   GUI_trackGroup tg;
   ScrollableList layerList, propList;
-
+  
   public GUI(PApplet theApplet)
   {
     super();
@@ -20,6 +20,12 @@ class GUI extends PApplet
   {
     size(860, 512);
   } 
+  
+public void controlEvent(ControlEvent theEvent) {
+ //println(theEvent.getController().getName()); 
+  //println(theEvent.getController().getStringValue()); 
+
+}
 
   public void setup()
   {
@@ -35,7 +41,8 @@ class GUI extends PApplet
     for (int i = 0; i < layers.size(); i++)
     { 
       addLayer(i);
-    }
+    }        
+  
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -82,6 +89,8 @@ class GUI extends PApplet
     }
     );
   }
+
+
 
   public void draw() 
   { 

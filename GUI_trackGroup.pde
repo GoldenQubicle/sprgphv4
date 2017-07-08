@@ -107,7 +107,6 @@ class GUI_trackGroup
     trackControls.addItem(cp5.get(Group.class, tgName)).open();
   }
 
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    T R A C K   S E G M E N T   S E T U P 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

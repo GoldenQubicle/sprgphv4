@@ -41,7 +41,6 @@ class Mesh extends Spiro
   {
     lighting();
     displayStyle();
-
     pushMatrix();
     translate(-width/2, -height/2);     
     beginShape(TRIANGLE_STRIP); 

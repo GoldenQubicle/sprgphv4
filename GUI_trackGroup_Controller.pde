@@ -15,7 +15,36 @@ class GUI_trackGroup_Controller
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   S E G M E N T  M E T H O D S  
+   R E F A C T O R   T H I S   S H I T  
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+  // this needs to be repurposed to something like segmentSelected
+  // and used to perform matching stringValue with active controllers
+  // this takes place in main controller
+  void segmentChanged(String segmentKey, int flag)
+  {
+    if (!aniUpdate.hasKey(segmentKey))
+    {
+      aniUpdate.add(segmentKey, flag);
+    }
+    if (flag == 1)
+    {
+      aniUpdate.set(segmentKey, flag);
+    }
+  }
+
+  void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
+  {
+    segment+=1;
+    String trackSegment = trackgroup +  "    gearNo:" + gear +  "    property:" + propertyIndex + "    segment:" + segment;
+    gui.tg.addTrackSegment(trackSegment, segment, field);
+    segments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
+    // call main controller for ani creation
+    // dont forget delete segment below will also need to make a direct call 
+  }
+
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   S E G M E N T  H A N D L E R   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void segmentHandler()
@@ -44,7 +73,7 @@ class GUI_trackGroup_Controller
     }
 
     if (gui.keyPressed == true && gui.key == DELETE)
-    {
+    {     
       segmentChanged(segmentActive.getName(), 1);
       gui.cp5.getController(segmentActive.getName()).remove();
     }
@@ -59,31 +88,12 @@ class GUI_trackGroup_Controller
     }
   }
 
-
-  void segmentChanged(String segmentKey, int flag)
-  {
-    if (!aniUpdate.hasKey(segmentKey))
-    {
-      aniUpdate.add(segmentKey, flag);
-    }
-    if (flag == 1)
-    {
-      aniUpdate.set(segmentKey, flag);
-    }
-  }
-
-  void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
-  {
-    segment+=1;
-    String trackSegment = trackgroup +  "    gearNo:" + gear +  "    property:" + propertyIndex + "    segment:" + segment;
-    gui.tg.addTrackSegment(trackSegment, segment, field);
-    segments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
-  }
-
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    T R A C K   G R O U P   S E T U P 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+  // ok something broke because now it's possible to add multiple trackGroups for the same properties
+  // this wasnt the case before 7-7
   void createGroup(String property)
   {
     String trackGroup = "trackGroup:" + (groups.size() + 1) + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType() + "    group:" + property;

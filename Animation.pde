@@ -44,7 +44,7 @@ class Animation  //<>//
       obj = layers.get(layer);
       break;
     }
-
+     //                  edit     edit         edit      edit
     ani = new Ani(obj, duration, delay, field, 150, easings[easing]);
     ani.setPlayMode(Ani.FORWARD);
     ani.noRepeat();

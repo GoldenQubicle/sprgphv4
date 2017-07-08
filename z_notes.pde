@@ -1,5 +1,96 @@
 /*
 
+k so current thinking, 
+
+when in editMode
+- listen for controllers active, get their stringValue
+- get selected trackSegments, and get their stringValue
+- perform stringValue matching, if ok
+- retrieve ani by segmentKey, and pass down controller value
+
+so, what this means in practical terms: 
+- design a naming scheme which will serve to match controllers with trackSegments
+- implement said naming scheme for controllers using the stringValue
+- carefully re-organize construction of segmentKey, such that they're still getting an unique key, however, segments gets passed the appropriate stringValue 
+- when performing matching, there needs to be a check for layer selected - can possibly get this from trackgroup id
+
+And more generally speaking, atm ani creation & updating is deffered 
+however I might want to consider more direct approach because that'll free up aniUpdate Map 
+which can then be used to retain the keys which can be used to do stringValue matching. 
+Or in other words, there really isn't any particular reason why it's set up the way it is
+other than it initially helped me figure stuff out - which is a legit reason - but it doesn't really serve an inherent purpose. 
+
+
+SO on ani creation, all I really need is the object and the field
+
+naming scheme to match trackSegments with controllers by matching stringValue
+
+
+gear - 1 - vector      | this requires additional check on segment if it's x or y, since slider2d cannot differentiate that
+gear - 2 - petals    
+gear - 3 - connect
+
+
+
+soo here's an additional thing: I'd much prefer it if I only had to set these stringValues once, i.e. have 1 place where I can add them, and they'll propogate throughout the stringValue fields
+and the same goes for other property types and the like
+or to put that another, whatever needs to be matched in dependent on the layer type and it's properties
+and atm I feel there's a few too many places which rely on manually setting switches / stringValues, etc
+
+so yeah, really need to carefully trace the whole trackGroup &  trackSegment flow to ensure that
+1) trackGroups have unique keys, but cannot be made more than once!
+2) segments have unique keys, but share the stringValue with controllers
+
+some more thinking: the stringValue of actual segments can be used as key, since segments are bound to a track, i.e. controller is already known
+so I could use the parent, i.e. the indivudal track to store the controller string value
+and then use the add buttons stringValue to pass down the fieldname for aniCreation
+
+==========================================================================
+
+ok so the question below, how to hold on, and return to, inital layerState after setting ani values
+AND the particular ill considered question of actually getting end values into the ani
+BOTH boil down to a question of editting
+
+so, the current thinking is: I have a timeline, and an indicator
+when in edit mode, the indicator asks: at this particular time, i.e. frame number, 
+is there an ani whose delay+duration match this frame number ~ implies some form of snapping / rubber banding of indicator to segment end, otherwise it would fidlly I think to get it exact
+if so, are there any anis in this subset whose layer object / id, matches with the one currently selected in gui ~implies either object comparison, or give the later an id field
+if so, which controller is currently broadcasting, i.e. being manipulated ~ implies a global listeren active during edit mode
+if so, does one of the anis map to the same object / field?  ~ this implies the controllers have some field (e.g. stingvalue) which matches with part of the aniKey?
+finally, if this is all true, then the values from the current controller is directly passed down the ani with setEnd()
+
+
+hm yeah I really like this idea better than needing to select segments, temporarily store the key, look up the controller / layer it belongs to and then listen for events
+though, come to think of it, it does eliminate the process of elimination, hehe
+so, that mean, select a segment and store its key
+from that key, check if the current layer selected matches (simply done by checking the value of layerlist!)
+and actually, why would I have the ani value be set from the controller, instead why not simply ask the laterobject?! - hm no, because that would require getters for all layer stuffies, color ect
+yeah so, bascially what I propose here is using the segmentkey, to look up to apprpriate controller by stringValue / Id / name / whatever
+soooo couldnt I give the segment a callback which in edit mode would just take care of that?!
+
+bascially, there two ways to go about: 
+- topdown, from controller active, checking time line, looking up ani 
+     pros direct line from gui to ani, does not involve the tracksegments, which is good because the value is not graphically represented in segment anyway
+     cons lots of checks going on, would need to parse key into strings, and a switch case to get the appropriate value
+- bottomup, segment active, look up controller, get value
+     pros potentially easy matching by stringvalue, name, id, etc
+     cons does require a lot of redesign, tracksegments no longer purely visual elements
+
+
+what about a hybrid method
+basically, when in edit mode get the active controller name / stringvalue / whatever makes it unique id-able
+then check if there any segments selected which have the same unique id-able properties
+if yes, get the key, use that to retrieve ani and pass down value, eg.
+
+identified by active segment | identified by active controller
+
+gif.aniSegments.get(aniKey).setEnd(theEvent.getController.getValue());
+
+
+==========================================================================
+
+
+
 ok so play / pause is sorta fixed for now
 HOWEVER, since each ani is checked if it has ended individually, it still looks a bit wonky
 YET this is not an issue because I know what's causing it

@@ -14,6 +14,7 @@ class Controller
    A N I   T R A C K   H A N D L I N G   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+ 
   void checkAniTrackSegments()
   {
     for (String aniKey : tG.aniUpdate.keyArray())
@@ -22,6 +23,7 @@ class Controller
       {
         newSeg =  controller.tG.segments.get(aniKey);       
         gif.aniSegments.put(aniKey, aniParameters(newSeg));
+        println(aniKey);
       } else if (tG.aniUpdate.get(aniKey) == 0)
       {
         update = aniParameters(controller.tG.segments.get(aniKey));        
@@ -38,6 +40,8 @@ class Controller
     tG.aniUpdate.clear();
   }
 
+// split this into one function for actually creating ani and put it in map (possibly animation class can handle this)
+// and have anothter function which updates the parameters
   Ani aniParameters(ScrollableList segment)
   {
     int layer = segment.getParent().getParent().getId();

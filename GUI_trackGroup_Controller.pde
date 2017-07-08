@@ -18,23 +18,15 @@ class GUI_trackGroup_Controller
    R E F A C T O R   T H I S   S H I T  
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  // this needs to be repurposed to something like segmentSelected
-  // and used to perform matching stringValue with active controllers
-  // this takes place in main controller
-  void segmentChanged(String segmentKey, int flag)
+  void segmentSelected(String segmentKey, int flag)
   {
-    //println(segments.get(segmentKey).getStringValue());
     
     if (!aniUpdate.hasKey(segmentKey))
     {
       aniUpdate.clear();
       aniUpdate.add(segmentKey, flag);
     }
-    //if (flag == 1)
-    //{
-    //  aniUpdate.set(segmentKey, flag);
-    //}
-  }
+   }
 
   void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
   {
@@ -45,8 +37,7 @@ class GUI_trackGroup_Controller
     gui.tg.addTrackSegment(segmentKey, controllerKey);
     segments.put(segmentKey, gui.cp5.get(ScrollableList.class, segmentKey));
     controller.initAni(gui.cp5.get(ScrollableList.class, segmentKey));
-    // call main controller for ani creation
-    // dont forget delete segment below will also need to make a direct call
+
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,7 +71,7 @@ class GUI_trackGroup_Controller
 
     if (gui.keyPressed == true && gui.key == DELETE)
     {     
-      segmentChanged(segmentActive.getName(), 1);
+      segmentSelected(segmentActive.getName(), 1);
       gui.cp5.getController(segmentActive.getName()).remove();
     }
   }
@@ -131,7 +122,7 @@ class GUI_trackGroup_Controller
     {
       if (segKey.contains(trackGroup))
       {
-        segmentChanged(segKey, 1);
+        segmentSelected(segKey, 1);
       }
     }
   }

@@ -1,9 +1,9 @@
-class Layer implements Serializable
+class Layer
 {
   PVector xyz = new PVector();
   ArrayList<PVector> vectors = new ArrayList<PVector>();
   ArrayList<Gears> gears = new ArrayList<Gears>();
-  int numberOfGears;
+  int numberOfGears, _t;
   color cFill, cStroke;
   float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
@@ -12,9 +12,10 @@ class Layer implements Serializable
   StringList colorProp = new StringList();
   StringList layerProperties = new StringList();
 
-  private Layer(int gN, float d, int t)
+ private Layer(int gN, float d, int t)
   {
     type = layerTypes.get(t);
+    _t = t;
     numberOfGears = gN;
     density = d;
     lineX = 1;
@@ -57,7 +58,6 @@ class Layer implements Serializable
   {
     numberOfGears=gears;
   }
-
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
    G E A R ~~~~ O V E R R I D E      
@@ -123,5 +123,5 @@ class Layer implements Serializable
   }  
   void display() 
   {
-  }  
+  }
 }

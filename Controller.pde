@@ -4,10 +4,12 @@ class Controller
   ScrollableList newSeg;
   Ani update;
   float mapStart, mapEnd;
+  ArrayList<Layer> layerInit = new ArrayList<Layer>();
 
   Controller() 
   {
     tG = new GUI_trackGroup_Controller();
+
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -15,34 +17,7 @@ class Controller
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-
-
-  //void checkAniTrackSegments()
-  //{
-  //  for (String aniKey : tG.aniUpdate.keyArray())
-  //  {
-  //    if (!gif.aniSegments.containsKey(aniKey) && tG.aniUpdate.get(aniKey)== 0 ) 
-  //    {
-  //      newSeg =  controller.tG.segments.get(aniKey);       
-  //      gif.aniSegments.put(aniKey, aniParameters(newSeg));
-  //      //println(aniKey);
-  //    } else if (tG.aniUpdate.get(aniKey) == 0)
-  //    {
-  //      update = aniParameters(controller.tG.segments.get(aniKey));        
-  //      if (!gif.aniSegments.get(aniKey).equals(update))
-  //      {
-  //        gif.aniSegments.replace(aniKey, update);
-  //      }
-  //    } else if (tG.aniUpdate.get(aniKey) == 1)
-  //    {
-  //      controller.tG.segments.remove(aniKey);
-  //      gif.aniSegments.remove(aniKey);
-  //    }
-  //  }
-  //  tG.aniUpdate.clear();
-  //}
-
-  void wibble(ControlEvent theEvent)
+  void matchSegmentController(ControlEvent theEvent)
   {
 
     if (tG.aniUpdate.size() > 0)
@@ -51,21 +26,17 @@ class Controller
       String segmentControllerKey = tG.segments.get(aniSegmentKey).getStringValue();
       if (segmentControllerKey.contains(theEvent.getController().getStringValue()))      
       {
-        //println(theEvent.getController().getStringValue(), tG.segments.get(aniSegmentKey).getStringValue());
         updateAniEndValue(aniSegmentKey, theEvent.getController().getValue());
-  println(segmentControllerKey);
-        //if (segmentControllerKey.contains("x"))
-        //{
-        //  updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue()[0]);
-        //}
-        //if (segmentControllerKey.contains("y"))
-        //{
-        //  updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue()[1]);
-        //}
+      }
+      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("x"))
+      {
+        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(0));
+      }
+      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("y"))
+      {
+        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(1));
       }
     }
-
-    //println(theEvent.getController().getName());
   }
 
 
@@ -86,8 +57,6 @@ class Controller
     gif.aniSegments.get(segmentKey).setEasing(gif.easings[easing]);
   }
 
-  // split this into one function for actually creating ani and put it in map (possibly animation class can handle this)
-  // and have anothter function which updates the parameters
   void initAni(ScrollableList segment)
   {
     int layer = segment.getParent().getParent().getId();
@@ -95,12 +64,6 @@ class Controller
     String field = segment.getParent().getStringValue();
     String controllerKey = segment.getStringValue();
     String segmentKey = segment.getName();
-    //float duration = round(map(segment.getWidth(), mapStart, mapEnd, 0, gif.frames));
-    //float start = round(map(segment.getPosition()[0], mapStart, mapEnd, 0, gif.frames));
-    //int easing = int(segment.getValue());
-
-    //println("layer: " + layer + " gear: " +  gear + " field: " +  field + " controller: " +  controllerKey + " duration: " +  duration + " start: " +  start + " easing: " + easing);
-    //println(segmentKey);
     gif.createAni(layer, field, gear, controllerKey, segmentKey);
   }
 }

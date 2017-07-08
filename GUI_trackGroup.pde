@@ -14,6 +14,7 @@ class GUI_trackGroup
   int buttonPressed; // used to retrieve gearNo for controller, -1 when not applicable
   String track, group;
   boolean segmentHoover = false;
+  
   GUI_trackGroup(ControlP5 tg)  
   {    
     cp5 = tg;
@@ -58,7 +59,6 @@ class GUI_trackGroup
     for (int i = 0; i < properties.size(); i++)
     {
       String trackName = groupKey + "    property " + properties.get(i) ;
-      //println(trackName);
       cp5.addGroup(trackName)
         .setGroup(groupKey)   
         .setId(buttonPressed)
@@ -75,7 +75,6 @@ class GUI_trackGroup
 
       cp5.addButton("segment " + trackName)
         .setCaptionLabel("+")
-        //.setStringValue(properties.get(i))
         .setId(i)
         .setGroup(trackName)
         .setPosition(0, 0)
@@ -115,7 +114,6 @@ class GUI_trackGroup
   {        
     cp5.addScrollableList(segmentKey)
       .setStringValue(controllerKey)
-      //.setId(segmentId)
       .setGroup(track)
       .setItems(gif.EasingNames)
       .setPosition(150, 0)
@@ -141,14 +139,12 @@ class GUI_trackGroup
           String segKey = theEvent.getController().getName().toString();
           controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);          
           controller.tG.updateSegmentHandler(gui.mouseX);
-          controller.tG.segmentChanged(segKey, 0);
+          controller.tG.segmentSelected(segKey, 0);
           controller.updateAni(cp5.get(ScrollableList.class, segKey));
-          //println(theEvent.getController().getStringValue());
         }
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)
         {
           segmentHoover = false;
-          //controller.tG.aniUpdate.clear();
         }
       }
     }

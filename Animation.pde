@@ -26,7 +26,6 @@ class Animation  //<>//
    G E N E R A L   M E T H O D S   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  //Ani createAni(int layer, String field, int gear, String controllerKey, float duration, float delay, int easing)
   void createAni(int layer, String field, int gear, String controllerKey, String aniKey)
 
   {
@@ -44,7 +43,7 @@ class Animation  //<>//
     {
       obj = layers.get(layer);
     }
-    //                  edit     edit         edit      edit
+  
     ani = new Ani(obj, duration, 0, field, 150, easings[0]);
     ani.setPlayMode(Ani.FORWARD);
     ani.noRepeat();
@@ -68,11 +67,11 @@ class Animation  //<>//
       {        
         ani.start();
       }
-      if (ani.isPlaying() && pause == true)
-      {
-        ani.end();      
-        ani.seek(0);
-      }
+      //if (ani.isPlaying() && pause == true)
+      //{
+      //  ani.end();      
+      //  //ani.seek(0);
+      //}
     }
   }
 

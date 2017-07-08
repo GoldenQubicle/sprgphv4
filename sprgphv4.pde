@@ -33,9 +33,9 @@ void setup()
   surface.setResizable(true);
   cam = new PeasyCam(this, 512);
   cam.setFreeRotationMode();
+  controller = new Controller();
   gui = new GUI(this);
   gif = new Animation(this);
-  controller = new Controller();
   layers.add(layer);
   //layers.add(layer2);
 }

@@ -1,5 +1,29 @@
 /*
 
+yeeeahhh so thing is:
+when I delete a trackGroup and want to remove the corresponding segments
+I cannot iterate over segmentsMap and remove them from said map at the same
+THAT is why I had the aniUpdate flag for deletion system setup in the frigging first place
+doesnt mean it cannot exists in parrallel, or maybe even have a temporary segmentSelectedMap serve more than one purpose
+besides, Im not quite happy with using an IntDict as means  to keep track, 
+because I now have to first retrieve keys, and then retrieve actual segment to get to the stringValue
+Id much rather just pass the key, or perhaps even pass in the actual segment selected
+
+
+RRRIGHT - if I want to have the intial layerState, I need to have a method which replaces the obj of the ani to be the current state
+SOOOO - actually need to 1) keep track of which segments have been editted - which is different from the list of segmentsSelected
+as in, a segment may be editted (e.g. in length) while not have been selected, because the latter is only used to match segment to controller, i.e. to set the endValue
+
+
+hmm actually, what if I only change the inital layer state? 
+then, no segment would be flagged for change / selected
+however, the ani object would still need to be updated to reflect the changes in initial state
+in other words, I actually probably will have to just update each and all ani, i.e. create new ani and replace them in map
+
+
+
+
+
 k so current thinking, 
 
 when in editMode

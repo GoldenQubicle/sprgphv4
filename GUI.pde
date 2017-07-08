@@ -22,18 +22,8 @@ class GUI extends PApplet
   } 
 
   public void controlEvent(ControlEvent theEvent) {
-  controller.wibble(theEvent);
-  //  println(theEvent.getController().getValue());
-  //  if (controller.tG.aniUpdate.size() > 0)
-  //  {
-  //    String aniSegmentKey = controller.tG.aniUpdate.key(0);
-  //    String segmentControllerKey = controller.tG.segments.get(aniSegmentKey).getStringValue();
-  //    if (segmentControllerKey.contains(theEvent.getController().getStringValue()))      
-  //    {
-  //      println(theEvent.getController().getStringValue(), controller.tG.segments.get(aniSegmentKey).getStringValue());
-  //      controller.updateAniEndValue(aniSegmentKey, theEvent.getController().getValue());
-  //    }
-  //  }
+  controller.matchSegmentController(theEvent);
+
   }
 
   public void setup()
@@ -98,8 +88,6 @@ class GUI extends PApplet
     );
   }
 
-
-
   public void draw() 
   { 
     background(100);
@@ -128,7 +116,6 @@ class GUI extends PApplet
     if (key == ' ')
     {
       ani(pause);
-      //controller.checkAniTrackSegments();
       gif.aniPlayPause();
     }
 

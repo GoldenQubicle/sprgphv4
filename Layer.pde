@@ -3,7 +3,7 @@ class Layer
   PVector xyz = new PVector();
   ArrayList<PVector> vectors = new ArrayList<PVector>();
   ArrayList<Gears> gears = new ArrayList<Gears>();
-  int numberOfGears, _t;
+  int numberOfGears;
   color cFill, cStroke;
   float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
@@ -15,7 +15,6 @@ class Layer
  private Layer(int gN, float d, int t)
   {
     type = layerTypes.get(t);
-    _t = t;
     numberOfGears = gN;
     density = d;
     lineX = 1;

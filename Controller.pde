@@ -5,7 +5,8 @@ class Controller
   Ani update;
   float mapStart, mapEnd;
   ArrayList<Layer> layerInit = new ArrayList<Layer>();
-
+  FileIO fileio = new FileIO();
+  
   Controller() 
   {
     tG = new GUI_trackGroup_Controller();

@@ -108,6 +108,12 @@ class GUI extends PApplet
 
   void keyPressed()
   {
+    if(key == 'p')
+    {
+     controller.fileio.saveLayer();
+     println("saved");
+    }
+    
     if(key == 'q')
     {
      controller.tG.aniUpdate.clear(); 

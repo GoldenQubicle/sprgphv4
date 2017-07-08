@@ -24,7 +24,7 @@ class GUI_trackGroup
 
     menuTrackGroup();
     addMenu();
-    
+
     controller.mapStart = trackAddSegmentButtonWidth;
     controller.mapEnd = groupWidth;
   }
@@ -33,16 +33,16 @@ class GUI_trackGroup
    T R A C K   G R O U P   S E T U P 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addTrackGroup(String tgName, StringList properties, String property) 
+  void addTrackGroup(String groupKey, StringList properties) 
   {
-    cp5.addGroup(tgName)   
+    cp5.addGroup(groupKey)   
       .setId(gui.layerSelected)
       .setBackgroundHeight(properties.size()*50)
       .setBackgroundColor(color(255, 50))
       .setColorForeground(ControlP5.BLUE);
 
-    cp5.addButton("del " + tgName)
-      .setGroup(tgName)
+    cp5.addButton("del " + groupKey)
+      .setGroup(groupKey)
       .setPosition(0, (properties.size()*50)-15)
       .setSize(40, 15)
       .setCaptionLabel("delete")
@@ -50,18 +50,19 @@ class GUI_trackGroup
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        controller.tG.deleteGroup(theEvent.getController().getParent().toString());
+        controller.tG.deleteGroup(theEvent.getController().getParent().getName());
       }
     }
     );
 
     for (int i = 0; i < properties.size(); i++)
     {
-      String trackName = "property " + properties.get(i) + " " +  tgName;
+      String trackName = groupKey + "    property " + properties.get(i) ;
+      //println(trackName);
       cp5.addGroup(trackName)
-        .setGroup(tgName)   
+        .setGroup(groupKey)   
         .setId(buttonPressed)
-        .setStringValue(property)
+        .setStringValue(properties.get(i))
         .setPosition(0, 20+(40*i))
         .setWidth(groupWidth)
         .setHeight(0)
@@ -74,7 +75,7 @@ class GUI_trackGroup
 
       cp5.addButton("segment " + trackName)
         .setCaptionLabel("+")
-        .setStringValue(properties.get(i))
+        //.setStringValue(properties.get(i))
         .setId(i)
         .setGroup(trackName)
         .setPosition(0, 0)
@@ -86,12 +87,16 @@ class GUI_trackGroup
           if (controller.tG.edit == true)
           {
             group = theEvent.getController().getParent().getParent().getName();
-            track = theEvent.getController().getParent().getName();
+            track = theEvent.getController().getParent().getName();     
+
+            String field = theEvent.getController().getParent().getStringValue();
+            String property = theEvent.getController().getParent().getStringValue();
+
             int gear = theEvent.getController().getParent().getId(); 
             int layer = theEvent.getController().getParent().getParent().getId();
-            String property = theEvent.getController().getParent().getStringValue();
+
             int propertyIndex = theEvent.getController().getId();
-            String field = theEvent.getController().getStringValue();
+
             controller.tG.createSegment(layer, property, propertyIndex, gear, group, field);
           }
         }
@@ -99,23 +104,18 @@ class GUI_trackGroup
       );
     }
 
-    if (property.equals("GEAR"))
-    {
-      cp5.getGroup(tgName).setCaptionLabel(tgName + " " + (buttonPressed+1));
-    }
-
-    trackControls.addItem(cp5.get(Group.class, tgName)).open();
+    trackControls.addItem(cp5.get(Group.class, groupKey)).open();
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    T R A C K   S E G M E N T   S E T U P 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addTrackSegment(String segmentKey, int segmentId, String field)
+  void addTrackSegment(String segmentKey, String controllerKey)
   {        
     cp5.addScrollableList(segmentKey)
-      .setStringValue(field)
-      .setId(segmentId)
+      .setStringValue(controllerKey)
+      //.setId(segmentId)
       .setGroup(track)
       .setItems(gif.EasingNames)
       .setPosition(150, 0)
@@ -139,13 +139,16 @@ class GUI_trackGroup
           theEvent.getController().setColorForeground(ControlP5.ORANGE);
           theEvent.getController().setColorActive(ControlP5.GREEN);
           String segKey = theEvent.getController().getName().toString();
-          controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);
+          controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);          
           controller.tG.updateSegmentHandler(gui.mouseX);
           controller.tG.segmentChanged(segKey, 0);
+          controller.updateAni(cp5.get(ScrollableList.class, segKey));
+          //println(theEvent.getController().getStringValue());
         }
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)
         {
           segmentHoover = false;
+          //controller.tG.aniUpdate.clear();
         }
       }
     }
@@ -161,7 +164,7 @@ class GUI_trackGroup
    trackGroup buttons need add..() & del..() methods,
    which in turn need to be added to addMenu() & delMenu() below
    
-   trackGroup name is written in all CAPS and declared with setStringValue()
+   groupType is written in all CAPS and declared with setStringValue()
    use getStringValue() to pass it down to controller on callback  
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -177,8 +180,8 @@ class GUI_trackGroup
     {
       public void controlEvent(CallbackEvent theEvent) 
       {
-        buttonPressed = theEvent.getController().getId();
-        controller.tG.createGroup(theEvent.getController().getStringValue());
+        String groupType = theEvent.getController().getStringValue();
+        controller.tG.createGroup(groupType);
       }
     }
     );
@@ -209,7 +212,8 @@ class GUI_trackGroup
       public void controlEvent(CallbackEvent theEvent) 
       {
         buttonPressed = theEvent.getController().getId();
-        controller.tG.createGroup(theEvent.getController().getStringValue());
+        String groupType = theEvent.getController().getStringValue() + (theEvent.getController().getId()+1);
+        controller.tG.createGroup(groupType);
       }
     }
     );

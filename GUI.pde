@@ -8,7 +8,7 @@ class GUI extends PApplet
   GUI_gearGroup gg;
   GUI_trackGroup tg;
   ScrollableList layerList, propList;
-  
+
   public GUI(PApplet theApplet)
   {
     super();
@@ -20,12 +20,21 @@ class GUI extends PApplet
   {
     size(860, 512);
   } 
-  
-public void controlEvent(ControlEvent theEvent) {
- //println(theEvent.getController().getName()); 
-  //println(theEvent.getController().getStringValue()); 
 
-}
+  public void controlEvent(ControlEvent theEvent) {
+  controller.wibble(theEvent);
+  //  println(theEvent.getController().getValue());
+  //  if (controller.tG.aniUpdate.size() > 0)
+  //  {
+  //    String aniSegmentKey = controller.tG.aniUpdate.key(0);
+  //    String segmentControllerKey = controller.tG.segments.get(aniSegmentKey).getStringValue();
+  //    if (segmentControllerKey.contains(theEvent.getController().getStringValue()))      
+  //    {
+  //      println(theEvent.getController().getStringValue(), controller.tG.segments.get(aniSegmentKey).getStringValue());
+  //      controller.updateAniEndValue(aniSegmentKey, theEvent.getController().getValue());
+  //    }
+  //  }
+  }
 
   public void setup()
   {
@@ -41,8 +50,7 @@ public void controlEvent(ControlEvent theEvent) {
     for (int i = 0; i < layers.size(); i++)
     { 
       addLayer(i);
-    }        
-  
+    }
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,22 +108,27 @@ public void controlEvent(ControlEvent theEvent) {
 
     if (tg.segmentHoover == true)
     {
+      
       controller.tG.segmentHandler();
       cursor(HAND);
     } else 
     {
       cursor(ARROW);
     }
-
     //gif.aniPlay();
   }
 
   void keyPressed()
   {
+    if(key == 'q')
+    {
+     controller.tG.aniUpdate.clear(); 
+    }
+    
     if (key == ' ')
     {
       ani(pause);
-      controller.checkAniTrackSegments();
+      //controller.checkAniTrackSegments();
       gif.aniPlayPause();
     }
 

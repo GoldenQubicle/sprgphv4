@@ -3,7 +3,7 @@ class GUI_trackGroup_Controller
   Map<String, Group> groups = new HashMap<String, Group>();
   Map<String, ScrollableList> segments = new HashMap<String, ScrollableList>();
   IntDict aniUpdate = new IntDict();
-  int segment;
+  int id;
   StringList editModes = new StringList("asOne", "left", "right");
   String editMode = editModes.get(0);
   boolean edit = true;
@@ -23,24 +23,30 @@ class GUI_trackGroup_Controller
   // this takes place in main controller
   void segmentChanged(String segmentKey, int flag)
   {
+    //println(segments.get(segmentKey).getStringValue());
+    
     if (!aniUpdate.hasKey(segmentKey))
     {
+      aniUpdate.clear();
       aniUpdate.add(segmentKey, flag);
     }
-    if (flag == 1)
-    {
-      aniUpdate.set(segmentKey, flag);
-    }
+    //if (flag == 1)
+    //{
+    //  aniUpdate.set(segmentKey, flag);
+    //}
   }
 
   void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
   {
-    segment+=1;
-    String trackSegment = trackgroup +  "    gearNo:" + gear +  "    property:" + propertyIndex + "    segment:" + segment;
-    gui.tg.addTrackSegment(trackSegment, segment, field);
-    segments.put(trackSegment, gui.cp5.get(ScrollableList.class, trackSegment));
+    id+=1;
+    String segmentKey = trackgroup +  "    gearNo:" + gear +  "    property:" + property + "    segment:" + id;
+    String controllerKey = trackgroup.substring(11, 17) + field;
+
+    gui.tg.addTrackSegment(segmentKey, controllerKey);
+    segments.put(segmentKey, gui.cp5.get(ScrollableList.class, segmentKey));
+    controller.initAni(gui.cp5.get(ScrollableList.class, segmentKey));
     // call main controller for ani creation
-    // dont forget delete segment below will also need to make a direct call 
+    // dont forget delete segment below will also need to make a direct call
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,39 +98,29 @@ class GUI_trackGroup_Controller
    T R A C K   G R O U P   S E T U P 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  // ok something broke because now it's possible to add multiple trackGroups for the same properties
-  // this wasnt the case before 7-7
-  void createGroup(String property)
+  void createGroup(String groupType)
   {
-    String trackGroup = "trackGroup:" + (groups.size() + 1) + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType() + "    group:" + property;
+    String trackGroup = "trackGroup:" + groupType  + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType(); 
     StringList trackProperties = new StringList();
 
     if (!groups.containsKey(trackGroup))
     {
-      switch(property)
+      if (groupType.contains("GEAR"))
       {
-      case "GEAR" :
         trackProperties = layers.get(gui.layerSelected).gearProp;
-        break;
-
-      case "COLOR" :
+      }
+      if (groupType.contains("COLOR"))
+      {
         trackProperties = layers.get(gui.layerSelected).colorProp;
-        break;
       }
 
-      gui.tg.addTrackGroup(trackGroup, trackProperties, property);
-
+      gui.tg.addTrackGroup(trackGroup, trackProperties);
       groups.put(trackGroup, gui.cp5.get(Group.class, trackGroup));
-    } else
-    {
-      // present message that trackGroup already exists
     }
   }  
 
-  void deleteGroup(String tgName)
+  void deleteGroup(String trackGroup)
   {
-    String trackGroup = tgName.substring(0, (tgName.length()-8));
-
     if (groups.containsKey(trackGroup))
     {
       gui.cp5.get(Group.class, trackGroup).remove();
@@ -141,11 +137,9 @@ class GUI_trackGroup_Controller
   }
 
   void deleteGearTrackGroup(int g)
-    // 2706 defunct atm
-    // this is getting called when deleting gear vectors from layer, and deletes the corresponding trackGroup if present
-    // asymmetrical function, i.e. there's no corresponding addGearTrackGroup
   {
-    String trackGroup =  "layer " + (gui.layerSelected+1) + " ~ " + layers.get(gui.layerSelected).getType() + " ~ " + "tG gear " + (g+1);
+    String trackGroup = "trackGroup:GEAR" + (g+1)  + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType(); 
+
     if (groups.containsKey(trackGroup))
     {
       gui.cp5.get(Group.class, trackGroup).remove();

@@ -26,29 +26,33 @@ class Animation  //<>//
    G E N E R A L   M E T H O D S   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  Ani createAni(int layer, String property, int gear, String field, float duration, float delay, int easing)
+  //Ani createAni(int layer, String field, int gear, String controllerKey, float duration, float delay, int easing)
+  void createAni(int layer, String field, int gear, String controllerKey, String aniKey)
+
   {
     Object obj = new Object();
 
-    switch(property)
+    if (controllerKey.contains("GEAR"))
     {
-    case "GEAR":
       obj = layers.get(layer).gears.get(gear).vector;
       if (field == "petals")
       {
         obj = layers.get(layer).gears.get(gear);
       }
-      break;
-
-    case "COLOR":
-      obj = layers.get(layer);
-      break;
     }
-     //                  edit     edit         edit      edit
-    ani = new Ani(obj, duration, delay, field, 150, easings[easing]);
+    if (controllerKey.contains("COLOR"))
+    {
+      obj = layers.get(layer);
+    }
+    //                  edit     edit         edit      edit
+    ani = new Ani(obj, duration, 0, field, 150, easings[0]);
     ani.setPlayMode(Ani.FORWARD);
     ani.noRepeat();
-    return ani;
+
+    if (!aniSegments.containsKey(aniKey))
+    {
+      aniSegments.put(aniKey, ani);
+    }
   }
 
 

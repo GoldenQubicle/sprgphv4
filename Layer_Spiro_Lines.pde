@@ -1,6 +1,6 @@
 class Lines extends Spiro
 { 
-  IntList connect = new IntList();
+  //IntList connect = new IntList();
   ArrayList<PVector> circ2 = new ArrayList<PVector>();
   PVector xy2 = new PVector();
 
@@ -11,7 +11,7 @@ class Lines extends Spiro
     fill = false;
     stroke = true;
 
-    gearProp.append("connect");
+    gearProp.add("connect");
 
     for (int i = 0; i < numberOfGears; i++) 
     {

@@ -1,18 +1,22 @@
 class Layer
 {
   PVector xyz = new PVector();
-  ArrayList<PVector> vectors = new ArrayList<PVector>();
+  //ArrayList<PVector> vectors = new ArrayList<PVector>();
   ArrayList<Gears> gears = new ArrayList<Gears>();
   int numberOfGears;
   color cFill, cStroke;
   float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
   String type;
-  StringList gearProp = new StringList();
-  StringList colorProp = new StringList();
-  StringList layerProperties = new StringList();
+  //StringList gearProp = new StringList();
+  ArrayList<String>gearProp = new ArrayList<String>();
+  //StringList colorProp = new StringList();
+  ArrayList<String>colorProp = new ArrayList<String>();
+  //StringList layerProperties = new StringList();
+  //ArrayList<String>layerProperties = new ArrayList<String>();
 
- private Layer(int gN, float d, int t)
+
+  private Layer(int gN, float d, int t)
   {
     type = layerTypes.get(t);
     numberOfGears = gN;
@@ -22,10 +26,10 @@ class Layer
     strokeWidth = 1;
     cFill = color(random(155, 255), random(155, 255), random(155, 255));
     cStroke = color(random(155, 255), random(155, 255), random(155, 255), 75);
-    gearProp.append("x");
-    gearProp.append("y");
-    colorProp.append("cFill");
-    colorProp.append("cStroke");
+    gearProp.add("x");
+    gearProp.add("y");
+    colorProp.add("cFill");
+    colorProp.add("cStroke");
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

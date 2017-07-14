@@ -4,7 +4,7 @@ class Controller
   ScrollableList newSeg;
   Ani update;
   float mapStart, mapEnd;
-  //FileIO fileio = new FileIO();
+  FileIO fileio = new FileIO();
 
   Controller() 
   {
@@ -14,7 +14,6 @@ class Controller
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    A N I   T R A C K   H A N D L I N G   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 
   //void matchSegmentController(ControlEvent theEvent)
   //{

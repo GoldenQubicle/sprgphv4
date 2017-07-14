@@ -34,7 +34,7 @@ class GUI_trackGroup
    T R A C K   G R O U P   S E T U P 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void addTrackGroup(String groupKey, StringList properties) 
+  void addTrackGroup(String groupKey, ArrayList<String> properties) 
   {
     cp5.addGroup(groupKey)   
       .setId(gui.layerSelected)

@@ -1,7 +1,7 @@
 class Spiro extends Layer  //<>// //<>//
 {
   ArrayList<PVector> circ = new ArrayList<PVector>();
-  IntList petals = new IntList();
+  //IntList petals = new IntList();
 
   Spiro(int type) 
   {
@@ -9,7 +9,7 @@ class Spiro extends Layer  //<>// //<>//
     fill = true;
     stroke = false;
 
-    gearProp.append("petals");
+    gearProp.add("petals");
  
 
     // yeah this is a bit hacky, but thats because lines & mesh extends spiro

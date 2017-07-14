@@ -107,13 +107,13 @@ class GUI extends PApplet
 
   void keyPressed()
   {
-    //if(key == 'p')
-    //{
-    // //controller.fileio.saveLayer();
-    // //controller.fileio.saveAni();
-    // //controller.fileio.saveCP5();
-    // println("saved");
-    //}
+    if(key == 'p')
+    {
+     controller.fileio.saveLayer();
+     //controller.fileio.saveAni();
+     //controller.fileio.saveCP5();
+     println("saved");
+    }
 
     if (key == 'q')
     {

@@ -4,7 +4,9 @@ class Mesh extends Spiro
   ArrayList<PVector> vertexR0ng = new ArrayList<PVector>(); 
   ArrayList<PVector> vertexR1ng = new ArrayList<PVector>(); 
   PVector n0rm, n1rm;
-  StringList meshProp = new StringList();
+  //StringList meshProp = new StringList();
+  ArrayList<String>meshProp = new ArrayList<String>();
+
   // stuff for vertexCirle
   int resolution = 16;
   PVector radius = new PVector(5, 5, 5);
@@ -28,9 +30,9 @@ class Mesh extends Spiro
       xyz = grinding(i)[0]; 
       vectorPath.add(xyz);
     }
-    meshProp.append("x");
-    meshProp.append("y");
-    meshProp.append("z");
+    meshProp.add("x");
+    meshProp.add("y");
+    meshProp.add("z");
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

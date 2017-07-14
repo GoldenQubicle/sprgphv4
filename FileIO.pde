@@ -12,16 +12,16 @@ class FileIO {
   void saveLayer()
   {
 
-    for (Layer myLayer : layers)
-    {
+    //for (Layer myLayer : layers)
+    //{
       try {
 
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("C:\\Users\\Erik\\Documents\\Processing\\sprgphv4\\test.json"), myLayer);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("C:\\Users\\Erik\\Documents\\Processing\\sprgphv4\\test.json"), layers);
       } 
       catch(IOException ie) {
         ie.printStackTrace();
       }
-    }
+    //}
   }
 
   void saveAni()

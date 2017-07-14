@@ -8,7 +8,7 @@ class Spiro3D extends Spiro
     fill = false;
     stroke = true;
     
-    gearProp.append("z");
+    gearProp.add("z");
 
     for (int i = 0; i < numberOfGears; i++) 
     {

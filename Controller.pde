@@ -2,6 +2,7 @@ class Controller
 {
   GUI_trackGroup_Controller tG;
   float mapStart, mapEnd;
+  FloatDict aniValue = new FloatDict();
   FileIO fileio = new FileIO();
 
   Controller() 
@@ -9,53 +10,14 @@ class Controller
     tG = new GUI_trackGroup_Controller();
   }
 
-  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   A N I   T R A C K   H A N D L I N G   
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-  void matchSegmentController(ControlEvent theEvent)
+  void play()
   {
-
-
+    gif.aniSegments.clear();
     for (ScrollableList segment : tG.segments.values())
     {
-      if (segment.getId() == 1)
-      {
-        if (segment.getStringValue().equals(theEvent.getController().getStringValue()))
-        {
-          updateAniEndValue(segment.getName(), theEvent.getController().getValue());
-          break;
-        }
-        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("x"))
-        {
-          updateAniEndValue(segment.getName(), theEvent.getController().getArrayValue(0));
-          break;
-        }
-        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("y"))
-        {
-          updateAniEndValue(segment.getName(), theEvent.getController().getArrayValue(1));
-          break;
-        }
-      }
+      initAni(segment);
     }
-  }
-
-  void updateAniEndValue(String aniKey, float value)
-  {
-    gif.aniSegments.get(aniKey).setEnd(value);
-    println(value);
-  }
-
-  void updateAni(ScrollableList segment)
-  {
-    String segmentKey = segment.getName();
-    float duration = round(map(segment.getWidth(), mapStart, mapEnd, 0, gif.frames));
-    float start = round(map(segment.getPosition()[0], mapStart, mapEnd, 0, gif.frames));
-    int easing = int(segment.getValue());
-
-    gif.aniSegments.get(segmentKey).setDelay(start);
-    gif.aniSegments.get(segmentKey).setDuration(duration);  
-    gif.aniSegments.get(segmentKey).setEasing(gif.easings[easing]);
+    gif.aniPlayPause();
   }
 
   void initAni(ScrollableList segment)
@@ -65,7 +27,48 @@ class Controller
     String field = segment.getParent().getStringValue();
     String controllerKey = segment.getStringValue();
     String segmentKey = segment.getName();
-    gif.createAni(layer, field, gear, controllerKey, segmentKey);
-    updateAni(segment);
+    float duration = round(map(segment.getWidth(), mapStart, mapEnd, 0, gif.frames));
+    float start = round(map(segment.getPosition()[0], mapStart, mapEnd, 0, gif.frames));
+    int easing = int(segment.getValue());
+    float value = 0;
+
+    if (aniValue.hasKey(segmentKey)) {    
+      value = aniValue.get(segmentKey);
+    } else 
+    {
+      value = 150;
+    }
+    gif.createAni(layer, field, gear, controllerKey, segmentKey, start, duration, easing, value);
+  }
+  
+  void setAniValue(ControlEvent theEvent)
+  {
+    for (ScrollableList segment : tG.segments.values())
+    {
+      if (segment.getId() == 1)
+      {
+        if (segment.getStringValue().equals(theEvent.getController().getStringValue()))
+        {
+          aniValue.set(segment.getName(), theEvent.getController().getValue());
+          break;
+        }
+        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("x"))
+        {
+          aniValue.set(segment.getName(), theEvent.getController().getArrayValue(0));
+          break;
+        }
+        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("y"))
+        {
+          aniValue.set(segment.getName(), theEvent.getController().getArrayValue(1));
+          break;
+        }
+         if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("z"))
+        {
+          aniValue.set(segment.getName(), theEvent.getController().getValue());
+          break;
+        }
+        
+      }
+    }
   }
 }

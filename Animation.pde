@@ -26,7 +26,7 @@ class Animation  //<>//
    G E N E R A L   M E T H O D S   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void createAni(int layer, String field, int gear, String controllerKey, String aniKey)
+  void createAni(int layer, String field, int gear, String controllerKey, String aniKey, float delay, float duration, int easing, float value)
 
   {
     Object obj = new Object();
@@ -44,7 +44,7 @@ class Animation  //<>//
       obj = layers.get(layer);
     }
   
-    ani = new Ani(obj, duration, 0, field, 150, easings[0]);
+    ani = new Ani(obj, duration, delay, field, value, easings[easing]);
     ani.setPlayMode(Ani.FORWARD);
     ani.noRepeat();
 

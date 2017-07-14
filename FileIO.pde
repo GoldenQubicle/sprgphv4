@@ -8,7 +8,6 @@ class FileIO {
     mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
   }
 
-
   void saveLayers()
   {
     try 

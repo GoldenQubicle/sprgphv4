@@ -85,18 +85,15 @@ class GUI_trackGroup
         {
           if (controller.tG.edit == true)
           {
+            track = theEvent.getController().getParent().getName(); // note being passed directly into addTrackSegment() below
             group = theEvent.getController().getParent().getParent().getName();
-            track = theEvent.getController().getParent().getName();     
+            int layer = theEvent.getController().getParent().getParent().getId();
 
             String field = theEvent.getController().getParent().getStringValue();
             String property = theEvent.getController().getParent().getStringValue();
-
             int gear = theEvent.getController().getParent().getId(); 
-            int layer = theEvent.getController().getParent().getParent().getId();
 
-            int propertyIndex = theEvent.getController().getId();
-
-            controller.tG.createSegment(layer, property, propertyIndex, gear, group, field);
+            controller.tG.createSegment(property, gear, group, field);
           }
         }
       }
@@ -157,7 +154,6 @@ class GUI_trackGroup
           String segKey = theEvent.getController().getName();
           controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);          
           controller.tG.updateSegmentHandler(gui.mouseX);
-          controller.updateAni(cp5.get(ScrollableList.class, segKey));
         }
 
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)

@@ -15,9 +15,9 @@ int Width = 512;
 int Height = 512;
 boolean lock = false;
 boolean pause = true;
-Spiro layer = new Spiro(0);
+//Spiro layer = new Spiro(0);
 //Lines layer2 = new Lines();
-//Spiro3D layer = new Spiro3D();
+Spiro3D layer = new Spiro3D();
 //Mesh layer2 = new Mesh(3);
 
 void settings()

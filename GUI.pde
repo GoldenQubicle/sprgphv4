@@ -22,7 +22,7 @@ class GUI extends PApplet
   } 
 
   public void controlEvent(ControlEvent theEvent) {
-    controller.matchSegmentController(theEvent);
+    controller.setAniValue(theEvent);
   }
 
   public void setup()
@@ -158,17 +158,10 @@ class GUI extends PApplet
       println("saved");
     }
 
-    if (key == 'q')
-    {
-      //controller.tG.aniUpdate.clear();
-      //println("clear");
-    }
-
     if (key == ' ')
     {
-      //controller.tG.aniUpdate.clear(); 
       ani(pause);
-      gif.aniPlayPause();
+      controller.play();
     }
 
     if (key == 'a')

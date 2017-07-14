@@ -13,19 +13,20 @@ class GUI_trackGroup_Controller
   {
   }
 
-  void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
+  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   S E G M E N T  G E N E R I C S  
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+  void createSegment(String property, int gear, String trackgroup, String field)
   {
     segmentID+=1;
     String segmentKey = trackgroup +  "    gearNo:" + gear +  "    property:" + property + "    segment:" + segmentID;
     String controllerKey = trackgroup.substring(11, 17) + field;
-
     gui.tg.addTrackSegment(segmentKey, controllerKey);
     segments.put(segmentKey, gui.cp5.get(ScrollableList.class, segmentKey));
-    controller.initAni(gui.cp5.get(ScrollableList.class, segmentKey));
   }
 
-
-
+  
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    S E G M E N T  H A N D L E R   
@@ -65,7 +66,8 @@ class GUI_trackGroup_Controller
 
   void updateSegmentHandler(float mousePos)
   {
-    if (!segments.isEmpty()) {
+    if (!segments.isEmpty())
+    {
       segWidth = segmentActive.getWidth();
       segStart = segmentActive.getPosition()[0];
       segMouseEnter = mousePos;

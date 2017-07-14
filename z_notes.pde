@@ -1,10 +1,18 @@
 /*
 
 
-sooo, the ani editting is stable again and thus the question raises it's ugly head once more: 
-how in the actual fuck am I going to pass down new endValues to the appropriate segment?!
+eeeughhh I just realized: with two consequetive ani's, the second one's object is of course still set to the start position of the layer object!!
 
-current thinking: I need to build another, global edit mode on top of the existing one, which allows me to select one segment at a time
+honestly, firing them off dynamically, as I did with the matrix, actually wasnt such a bad idea
+and in fact, I actually probably want to recreate that by firing on delay
+UNLESSS the ani sequence would circumvent this behaviour?!
+
+=================
+
+
+store ani endvalues in seperate map
+then upon play, simply clear the ani map, and construct new ones by iterating over segments for length etc,
+and over aniEndValue for well that
 
 
 ==========================================================================

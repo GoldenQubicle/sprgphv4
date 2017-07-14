@@ -2,36 +2,21 @@ class GUI_trackGroup_Controller
 {
   Map<String, Group> groups = new HashMap<String, Group>();
   Map<String, ScrollableList> segments = new HashMap<String, ScrollableList>();
-  IntDict aniUpdate = new IntDict();
-  int id;
   StringList editModes = new StringList("asOne", "left", "right");
   String editMode = editModes.get(0);
   boolean edit = true;
   float segMouseEnter, segWidth, segStart;
+  int segmentID;
   ScrollableList segmentActive;
 
   GUI_trackGroup_Controller() 
   {
   }
 
-  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   R E F A C T O R   T H I S   S H I T  
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-  //void segmentSelected(String segmentKey, int flag)
-  //{
-
-  //  if (!aniUpdate.hasKey(segmentKey))
-  //  {
-  //    //aniUpdate.clear();
-  //    aniUpdate.add(segmentKey, flag);
-  //  }
-  // }
-
   void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
   {
-    id+=1;
-    String segmentKey = trackgroup +  "    gearNo:" + gear +  "    property:" + property + "    segment:" + id;
+    segmentID+=1;
+    String segmentKey = trackgroup +  "    gearNo:" + gear +  "    property:" + property + "    segment:" + segmentID;
     String controllerKey = trackgroup.substring(11, 17) + field;
 
     gui.tg.addTrackSegment(segmentKey, controllerKey);
@@ -68,11 +53,11 @@ class GUI_trackGroup_Controller
       break;
     }
 
-    //    if (gui.keyPressed == true && gui.key == DELETE)
-    //    {     
-    //      segmentSelected(segmentActive.getName(), 1);
-    //      gui.cp5.getController(segmentActive.getName()).remove();
-    //    }
+    if (gui.keyPressed == true && gui.key == DELETE)
+    {     
+      gif.aniSegments.remove(segmentActive.getName());      
+      gui.cp5.getController(segmentActive.getName()).remove();
+    }
   }
 
   void updateSegmentHandler(float mousePos)
@@ -91,9 +76,7 @@ class GUI_trackGroup_Controller
   void createGroup(String groupType)
   {
     String trackGroup = "trackGroup:" + groupType  + "    layer:" + (gui.layerSelected+1) + "    type:" + layers.get(gui.layerSelected).getType(); 
-    //StringList trackProperties = new StringList();
     ArrayList<String>trackProperties = new ArrayList<String>();
-
 
     if (!groups.containsKey(trackGroup))
     {
@@ -115,17 +98,16 @@ class GUI_trackGroup_Controller
   {
     if (groups.containsKey(trackGroup))
     {
+      for (ScrollableList segment : segments.values())
+      {
+        if (segment.getName().contains(trackGroup))
+        {
+          gif.aniSegments.remove(segment.getName());
+        }
+      }      
       gui.cp5.get(Group.class, trackGroup).remove();
       groups.remove(trackGroup);
     }
-
-    //for (String segKey : segments.keySet())
-    //{
-    //  if (segKey.contains(trackGroup))
-    //  {
-    //    segmentSelected(segKey, 1);
-    //  }
-    //}
   }
 
   void deleteGearTrackGroup(int g)
@@ -134,8 +116,7 @@ class GUI_trackGroup_Controller
 
     if (groups.containsKey(trackGroup))
     {
-      gui.cp5.get(Group.class, trackGroup).remove();
-      groups.remove(trackGroup);
+      deleteGroup(trackGroup);
     }
   }
 }

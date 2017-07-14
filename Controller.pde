@@ -1,8 +1,6 @@
 class Controller
 {
   GUI_trackGroup_Controller tG;
-  ScrollableList newSeg;
-  Ani update;
   float mapStart, mapEnd;
   FileIO fileio = new FileIO();
 

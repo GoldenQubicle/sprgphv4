@@ -14,7 +14,7 @@ class GUI_trackGroup
   int buttonPressed; // used to retrieve gearNo for controller, -1 when not applicable
   String track, group;
   boolean segmentHoover = false;
-  
+
   GUI_trackGroup(ControlP5 tg)  
   {    
     cp5 = tg;
@@ -126,10 +126,17 @@ class GUI_trackGroup
     {
       public void controlEvent(CallbackEvent theEvent) 
       {       
+        //if (theEvent.getAction() == ControlP5.ACTION_CLICK)
+        //{
+        //  theEvent.getController().bringToFront();
+        //}    
+
         if (theEvent.getAction() == ControlP5.ACTION_CLICK)
         {
-          theEvent.getController().bringToFront();
-        }    
+          println("pressed"); 
+          cp5.get(ScrollableList.class, theEvent.getController().getName()).setOpen(false);     
+          theEvent.getController().setColorForeground(ControlP5.RED);
+        }
 
         if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.tG.edit == true)
         {                             
@@ -139,7 +146,6 @@ class GUI_trackGroup
           String segKey = theEvent.getController().getName();
           controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);          
           controller.tG.updateSegmentHandler(gui.mouseX);
-          //controller.tG.segmentSelected(segKey, 0);
           controller.updateAni(cp5.get(ScrollableList.class, segKey));
         }
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)

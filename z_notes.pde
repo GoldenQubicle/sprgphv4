@@ -1,28 +1,11 @@
 /*
 
 
+sooo, the ani editting is stable again and thus the question raises it's ugly head once more: 
+how in the actual fuck am I going to pass down new endValues to the appropriate segment?!
 
-==========================================================================
+current thinking: I need to build another, global edit mode on top of the existing one, which allows me to select one segment at a time
 
-ok some quick thoughts how to handle updating aniSegments
-
-basically, keep track of which segments have been added, deleted or possibly changed by flagging them as such in a separate segmentChanged dictionary which clears upon play
-
-onMouseEnter the segmentKey gets added to dictionary and the 'changed' flag is set
-on added the segmentKey gets added to dictionary and the 'new' flag is set
-on deleted the segmentKey gets added to dictionary and the 'removed' flag is set
-
-then upon play, the controller goes over the segmentChanged dictionary
-when it encounters the changed flag, it retrieves the actual segment by key, constructs a new ani from the values and compares it against the ani already present in the AniList
-if it's the same (which is possible since the changed flag is set by virtue of entering the segment) it discards the new ani, otherwise it replaces the one in the AniList
-
-when it encounters the added flag, it retrieves the segment by key, constructs a new ani and adds it to the AniList (which implies the addSegment button does nothing more than add a gui element, and as such is NOT responsible for actually creating ani!!)
-
-when it encounters the deleted flag, it deletes the ani by key from het AniList
-
-finally, in all 3 cases the controller somehow keeps track of changed frame ranges and lastly clears the segmentChanged dictionary
-
-so, this means the trackGroup gui simply has no direct relation anymore with the ani, and as such, the scrollableList should not send anything down directly to the gif / ani class in terms of easingstyle
 
 ==========================================================================
 
@@ -38,7 +21,7 @@ if(trackSegment.get(track).getPosition()[0] > currentsegmentEndPos)
 {
    if(trackSegment.get(track).getPosition()[0] - currentsegmentEndPos < delta)
 {
-deltta = trackSegment.get(track).getPosition()[0] - currentsegmentEndPos;
+delta = trackSegment.get(track).getPosition()[0] - currentsegmentEndPos;
 endConstrain = trackSegment.get(track).getPosition()[0];
 }
 }

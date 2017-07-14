@@ -115,6 +115,7 @@ class GUI_trackGroup
     cp5.addScrollableList(segmentKey)
       .setStringValue(controllerKey)
       .setGroup(track)
+      .setId(0)
       .setItems(gif.EasingNames)
       .setPosition(150, 0)
       .setBarHeight(trackHeight)
@@ -126,16 +127,26 @@ class GUI_trackGroup
     {
       public void controlEvent(CallbackEvent theEvent) 
       {       
-        //if (theEvent.getAction() == ControlP5.ACTION_CLICK)
-        //{
-        //  theEvent.getController().bringToFront();
-        //}    
-
-        if (theEvent.getAction() == ControlP5.ACTION_CLICK)
+        if (theEvent.getAction() == ControlP5.ACTION_CLICK && controller.tG.edit == true)
         {
-          println("pressed"); 
-          cp5.get(ScrollableList.class, theEvent.getController().getName()).setOpen(false);     
-          theEvent.getController().setColorForeground(ControlP5.RED);
+          theEvent.getController().bringToFront();
+        }  
+
+        if (theEvent.getAction() == ControlP5.ACTION_CLICK && controller.tG.edit == false)
+        {
+          ScrollableList segment = cp5.get(ScrollableList.class, theEvent.getController().getName());
+          segment.setOpen(false);
+
+          if (segment.getId() == 0)
+          {
+            segment.setId(1);
+            segment.setColorForeground(ControlP5.RED); 
+            segment.setColorBackground(ControlP5.RED);
+          } else {
+            segment.setId(0);
+            segment.setColorForeground(ControlP5.BLUE); 
+            segment.setColorBackground(ControlP5.BLUE);
+          }
         }
 
         if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.tG.edit == true)
@@ -148,6 +159,7 @@ class GUI_trackGroup
           controller.tG.updateSegmentHandler(gui.mouseX);
           controller.updateAni(cp5.get(ScrollableList.class, segKey));
         }
+
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)
         {
           segmentHoover = false;
@@ -155,7 +167,6 @@ class GUI_trackGroup
       }
     }
     );
-    controller.tG.segmentActive = cp5.get(ScrollableList.class, segmentKey);
   }
 
 

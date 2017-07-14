@@ -4,7 +4,7 @@ class GUI_trackGroup_Controller
   Map<String, ScrollableList> segments = new HashMap<String, ScrollableList>();
   StringList editModes = new StringList("asOne", "left", "right");
   String editMode = editModes.get(0);
-  boolean edit = true;
+  boolean edit = false;
   float segMouseEnter, segWidth, segStart;
   int segmentID;
   ScrollableList segmentActive;
@@ -23,6 +23,9 @@ class GUI_trackGroup_Controller
     segments.put(segmentKey, gui.cp5.get(ScrollableList.class, segmentKey));
     controller.initAni(gui.cp5.get(ScrollableList.class, segmentKey));
   }
+
+
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    S E G M E N T  H A N D L E R   

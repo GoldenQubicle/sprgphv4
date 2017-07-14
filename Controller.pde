@@ -13,35 +13,37 @@ class Controller
    A N I   T R A C K   H A N D L I N G   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  //void matchSegmentController(ControlEvent theEvent)
-  //{
+  void matchSegmentController(ControlEvent theEvent)
+  {
 
-  //  if (tG.aniUpdate.size() > 0)
-  //  {
-  //    for (String aniSegmentKey : tG.aniUpdate.keyArray())
-  //    {
-  //      //String aniSegmentKey = tG.aniUpdate.key(0); // wut what is this hardcoded value doing here?!
-  //      String segmentControllerKey = tG.segments.get(aniSegmentKey).getStringValue();
-  //      if (segmentControllerKey.contains(theEvent.getController().getStringValue()))      
-  //      {
-  //        updateAniEndValue(aniSegmentKey, theEvent.getController().getValue());
-  //      }
-  //      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("x"))
-  //      {
-  //        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(0));
-  //      }
-  //      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("y"))
-  //      {
-  //        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(1));
-  //      }
-  //    }
-  //  }
-  //}
 
+    for (ScrollableList segment : tG.segments.values())
+    {
+      if (segment.getId() == 1)
+      {
+        if (segment.getStringValue().equals(theEvent.getController().getStringValue()))
+        {
+          updateAniEndValue(segment.getName(), theEvent.getController().getValue());
+          break;
+        }
+        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("x"))
+        {
+          updateAniEndValue(segment.getName(), theEvent.getController().getArrayValue(0));
+          break;
+        }
+        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("y"))
+        {
+          updateAniEndValue(segment.getName(), theEvent.getController().getArrayValue(1));
+          break;
+        }
+      }
+    }
+  }
 
   void updateAniEndValue(String aniKey, float value)
   {
     gif.aniSegments.get(aniKey).setEnd(value);
+    println(value);
   }
 
   void updateAni(ScrollableList segment)

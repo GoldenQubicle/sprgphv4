@@ -22,25 +22,69 @@ class GUI extends PApplet
   } 
 
   public void controlEvent(ControlEvent theEvent) {
-    //controller.matchSegmentController(theEvent);
+    controller.matchSegmentController(theEvent);
   }
 
   public void setup()
   {
     cp5 = new ControlP5(this);
     cp5.disableShortcuts();
+
     cp5.setColorActive(ControlP5.GREEN);
     cp5.setColorForeground(ControlP5.ORANGE);
+
     gg = new GUI_gearGroup(cp5);
     tg = new GUI_trackGroup(cp5);
 
     layersGroup();    
+    toggleEditMode();
 
     for (int i = 0; i < layers.size(); i++)
     { 
       addLayer(i);
     }
+
+    cp5.mapKeyFor(new ControlKey() {
+      public void keyEvent() { 
+        if (controller.tG.edit == false)
+        {
+          controller.tG.edit = true;
+          cp5.get(Toggle.class, "edit").setState(controller.tG.edit);
+        } else {
+          controller.tG.edit = false; 
+          cp5.get(Toggle.class, "edit").setState(controller.tG.edit);
+        }
+      }
+    }
+    , 'e');
   }
+
+
+  void toggleEditMode()
+  {
+    cp5.addToggle("edit")
+      .setPosition(740, 256)
+      .setSize(30, 15)
+      .setValue(controller.tG.edit)
+      .onClick(new CallbackListener() 
+    {
+      public void controlEvent(CallbackEvent theEvent) 
+      {
+        String edit = theEvent.getController().getName();
+         if (controller.tG.edit == false)        {
+          controller.tG.edit = true;
+          cp5.get(Toggle.class, edit).setState(controller.tG.edit);
+        } else {
+          controller.tG.edit = false; 
+          cp5.get(Toggle.class, edit).setState(controller.tG.edit);
+        }
+      }
+    }
+    );
+
+    cp5.getController("edit").getCaptionLabel().align(CENTER, CENTER);
+  }
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    L A Y E R   M E T H O D S
@@ -91,11 +135,11 @@ class GUI extends PApplet
   { 
     background(100);
     strokeWeight(3);
+
     line(gui.tg.trackStart, 270, gui.tg.trackEnd, 270);  
 
-    if (tg.segmentHoover == true)
+    if (tg.segmentHoover == true)   
     {
-
       controller.tG.segmentHandler();
       cursor(HAND);
     } else 
@@ -107,11 +151,11 @@ class GUI extends PApplet
 
   void keyPressed()
   {
-    if(key == 'p')
+    if (key == 'p')
     {
-     controller.fileio.saveLayers();
-     //controller.fileio.saveAni();
-     println("saved");
+      controller.fileio.saveLayers();
+      //controller.fileio.saveAni();
+      println("saved");
     }
 
     if (key == 'q')

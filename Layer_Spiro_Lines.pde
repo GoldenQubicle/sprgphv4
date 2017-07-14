@@ -1,6 +1,5 @@
 class Lines extends Spiro
 { 
-  //IntList connect = new IntList();
   ArrayList<PVector> circ2 = new ArrayList<PVector>();
   PVector xy2 = new PVector();
 

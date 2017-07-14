@@ -1,7 +1,6 @@
-class Spiro extends Layer  //<>// //<>//
+class Spiro extends Layer   //<>//
 {
   ArrayList<PVector> circ = new ArrayList<PVector>();
-  //IntList petals = new IntList();
 
   Spiro(int type) 
   {
@@ -9,8 +8,7 @@ class Spiro extends Layer  //<>// //<>//
     fill = true;
     stroke = false;
 
-    gearProp.add("petals");
- 
+    gearProp.add("petals"); 
 
     // yeah this is a bit hacky, but thats because lines & mesh extends spiro
     // hence need to perform a check to disable this call for those layerTypes

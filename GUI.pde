@@ -109,9 +109,8 @@ class GUI extends PApplet
   {
     if(key == 'p')
     {
-     controller.fileio.saveLayer();
+     controller.fileio.saveLayers();
      //controller.fileio.saveAni();
-     //controller.fileio.saveCP5();
      println("saved");
     }
 

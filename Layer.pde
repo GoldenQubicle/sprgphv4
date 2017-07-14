@@ -1,19 +1,14 @@
 class Layer
 {
   PVector xyz = new PVector();
-  //ArrayList<PVector> vectors = new ArrayList<PVector>();
   ArrayList<Gears> gears = new ArrayList<Gears>();
   int numberOfGears;
   color cFill, cStroke;
   float density, lineX, lineY, strokeWidth, theta, phi, ratio;  
   boolean stroke, fill;
   String type;
-  //StringList gearProp = new StringList();
   ArrayList<String>gearProp = new ArrayList<String>();
-  //StringList colorProp = new StringList();
   ArrayList<String>colorProp = new ArrayList<String>();
-  //StringList layerProperties = new StringList();
-  //ArrayList<String>layerProperties = new ArrayList<String>();
 
 
   private Layer(int gN, float d, int t)

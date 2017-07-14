@@ -4,7 +4,6 @@ class Mesh extends Spiro
   ArrayList<PVector> vertexR0ng = new ArrayList<PVector>(); 
   ArrayList<PVector> vertexR1ng = new ArrayList<PVector>(); 
   PVector n0rm, n1rm;
-  //StringList meshProp = new StringList();
   ArrayList<String>meshProp = new ArrayList<String>();
 
   // stuff for vertexCirle

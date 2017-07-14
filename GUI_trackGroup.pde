@@ -136,10 +136,10 @@ class GUI_trackGroup
           segmentHoover = true;
           theEvent.getController().setColorForeground(ControlP5.ORANGE);
           theEvent.getController().setColorActive(ControlP5.GREEN);
-          String segKey = theEvent.getController().getName().toString();
+          String segKey = theEvent.getController().getName();
           controller.tG.segmentActive = cp5.get(ScrollableList.class, segKey);          
           controller.tG.updateSegmentHandler(gui.mouseX);
-          controller.tG.segmentSelected(segKey, 0);
+          //controller.tG.segmentSelected(segKey, 0);
           controller.updateAni(cp5.get(ScrollableList.class, segKey));
         }
         if (theEvent.getAction() == ControlP5.ACTION_LEAVE)

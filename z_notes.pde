@@ -1,5 +1,9 @@
 /*
 
+ok so make stringValue match EXACTLY, AND set them at layer level
+then to differentiate between x,y,z for vectors, use the Id of segments or something
+thats why I had the buttonpressed var in the first place, wasnt it?!
+
 yeeeahhh so thing is:
 when I delete a trackGroup and want to remove the corresponding segments
 I cannot iterate over segmentsMap and remove them from said map at the same

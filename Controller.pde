@@ -4,13 +4,11 @@ class Controller
   ScrollableList newSeg;
   Ani update;
   float mapStart, mapEnd;
-  ArrayList<Layer> layerInit = new ArrayList<Layer>();
-  FileIO fileio = new FileIO();
-  
+  //FileIO fileio = new FileIO();
+
   Controller() 
   {
     tG = new GUI_trackGroup_Controller();
-
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -18,27 +16,30 @@ class Controller
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-  void matchSegmentController(ControlEvent theEvent)
-  {
+  //void matchSegmentController(ControlEvent theEvent)
+  //{
 
-    if (tG.aniUpdate.size() > 0)
-    {
-      String aniSegmentKey = tG.aniUpdate.key(0);
-      String segmentControllerKey = tG.segments.get(aniSegmentKey).getStringValue();
-      if (segmentControllerKey.contains(theEvent.getController().getStringValue()))      
-      {
-        updateAniEndValue(aniSegmentKey, theEvent.getController().getValue());
-      }
-      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("x"))
-      {
-        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(0));
-      }
-      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("y"))
-      {
-        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(1));
-      }
-    }
-  }
+  //  if (tG.aniUpdate.size() > 0)
+  //  {
+  //    for (String aniSegmentKey : tG.aniUpdate.keyArray())
+  //    {
+  //      //String aniSegmentKey = tG.aniUpdate.key(0); // wut what is this hardcoded value doing here?!
+  //      String segmentControllerKey = tG.segments.get(aniSegmentKey).getStringValue();
+  //      if (segmentControllerKey.contains(theEvent.getController().getStringValue()))      
+  //      {
+  //        updateAniEndValue(aniSegmentKey, theEvent.getController().getValue());
+  //      }
+  //      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("x"))
+  //      {
+  //        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(0));
+  //      }
+  //      if (segmentControllerKey.contains(theEvent.getController().getStringValue()) && segmentControllerKey.contains("y"))
+  //      {
+  //        updateAniEndValue(aniSegmentKey, theEvent.getController().getArrayValue(1));
+  //      }
+  //    }
+  //  }
+  //}
 
 
   void updateAniEndValue(String aniKey, float value)
@@ -66,5 +67,6 @@ class Controller
     String controllerKey = segment.getStringValue();
     String segmentKey = segment.getName();
     gif.createAni(layer, field, gear, controllerKey, segmentKey);
+    updateAni(segment);
   }
 }

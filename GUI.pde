@@ -22,8 +22,7 @@ class GUI extends PApplet
   } 
 
   public void controlEvent(ControlEvent theEvent) {
-  controller.matchSegmentController(theEvent);
-
+    //controller.matchSegmentController(theEvent);
   }
 
   public void setup()
@@ -96,7 +95,7 @@ class GUI extends PApplet
 
     if (tg.segmentHoover == true)
     {
-      
+
       controller.tG.segmentHandler();
       cursor(HAND);
     } else 
@@ -108,19 +107,23 @@ class GUI extends PApplet
 
   void keyPressed()
   {
-    if(key == 'p')
+    //if(key == 'p')
+    //{
+    // //controller.fileio.saveLayer();
+    // //controller.fileio.saveAni();
+    // //controller.fileio.saveCP5();
+    // println("saved");
+    //}
+
+    if (key == 'q')
     {
-     controller.fileio.saveLayer();
-     println("saved");
+      //controller.tG.aniUpdate.clear();
+      //println("clear");
     }
-    
-    if(key == 'q')
-    {
-     controller.tG.aniUpdate.clear(); 
-    }
-    
+
     if (key == ' ')
     {
+      //controller.tG.aniUpdate.clear(); 
       ani(pause);
       gif.aniPlayPause();
     }

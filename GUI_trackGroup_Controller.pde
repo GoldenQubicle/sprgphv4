@@ -18,15 +18,15 @@ class GUI_trackGroup_Controller
    R E F A C T O R   T H I S   S H I T  
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void segmentSelected(String segmentKey, int flag)
-  {
+  //void segmentSelected(String segmentKey, int flag)
+  //{
     
-    if (!aniUpdate.hasKey(segmentKey))
-    {
-      aniUpdate.clear();
-      aniUpdate.add(segmentKey, flag);
-    }
-   }
+  //  if (!aniUpdate.hasKey(segmentKey))
+  //  {
+  //    //aniUpdate.clear();
+  //    aniUpdate.add(segmentKey, flag);
+  //  }
+  // }
 
   void createSegment(int layer, String property, int propertyIndex, int gear, String trackgroup, String field)
   {
@@ -69,11 +69,11 @@ class GUI_trackGroup_Controller
       break;
     }
 
-    if (gui.keyPressed == true && gui.key == DELETE)
-    {     
-      segmentSelected(segmentActive.getName(), 1);
-      gui.cp5.getController(segmentActive.getName()).remove();
-    }
+//    if (gui.keyPressed == true && gui.key == DELETE)
+//    {     
+//      segmentSelected(segmentActive.getName(), 1);
+//      gui.cp5.getController(segmentActive.getName()).remove();
+//    }
   }
 
   void updateSegmentHandler(float mousePos)
@@ -118,13 +118,13 @@ class GUI_trackGroup_Controller
       groups.remove(trackGroup);
     }
 
-    for (String segKey : segments.keySet())
-    {
-      if (segKey.contains(trackGroup))
-      {
-        segmentSelected(segKey, 1);
-      }
-    }
+    //for (String segKey : segments.keySet())
+    //{
+    //  if (segKey.contains(trackGroup))
+    //  {
+    //    segmentSelected(segKey, 1);
+    //  }
+    //}
   }
 
   void deleteGearTrackGroup(int g)

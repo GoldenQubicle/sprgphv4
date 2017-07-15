@@ -12,11 +12,7 @@ class Controller
 
   void play()
   {
-    gif.aniSegments.clear();
-    for (ScrollableList segment : tG.segments.values())
-    {
-      initAni(segment);
-    }
+    gif.createSeq();
     gif.aniPlayPause();
   }
 
@@ -38,9 +34,10 @@ class Controller
     {
       value = 150;
     }
-    gif.createAni(layer, field, gear, controllerKey, segmentKey, start, duration, easing, value);
+    
+    gif.createAni(layer, field, gear, controllerKey, start, duration, easing, value);
   }
-  
+
   void setAniValue(ControlEvent theEvent)
   {
     for (ScrollableList segment : tG.segments.values())
@@ -55,19 +52,18 @@ class Controller
         if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("x"))
         {
           aniValue.set(segment.getName(), theEvent.getController().getArrayValue(0));
-          break;
+          //break;
         }
         if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("y"))
         {
           aniValue.set(segment.getName(), theEvent.getController().getArrayValue(1));
           break;
         }
-         if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("z"))
+        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("z"))
         {
           aniValue.set(segment.getName(), theEvent.getController().getValue());
           break;
         }
-        
       }
     }
   }

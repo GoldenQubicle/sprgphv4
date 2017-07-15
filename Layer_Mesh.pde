@@ -15,7 +15,7 @@ class Mesh extends Spiro
     super(type);
     density = 500;
     fill = true;
-    stroke = true;
+    stroke = false;
 
     for (int i = 0; i < numberOfGears; i++) 
     {

@@ -21,16 +21,12 @@ class FileIO {
 
   void saveAni()
   {
-    for (Ani myAni : gif.aniSegments.values())
+    try 
     {
-      try 
-      {
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("C:\\Users\\Erik\\Documents\\Processing\\sprgphv4\\test.json"), myAni);
-      } 
-      catch(IOException ie) {
-        ie.printStackTrace();
-      }
+      mapper.writerWithDefaultPrettyPrinter().writeValue(new File("C:\\Users\\Erik\\Documents\\Processing\\sprgphv4\\test.json"), " ");
+    } 
+    catch(IOException ie) {
+      ie.printStackTrace();
     }
   }
-
 }

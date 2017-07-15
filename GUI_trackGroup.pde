@@ -87,8 +87,6 @@ class GUI_trackGroup
           {
             track = theEvent.getController().getParent().getName(); // note being passed directly into addTrackSegment() below
             group = theEvent.getController().getParent().getParent().getName();
-            int layer = theEvent.getController().getParent().getParent().getId();
-
             String field = theEvent.getController().getParent().getStringValue();
             String property = theEvent.getController().getParent().getStringValue();
             int gear = theEvent.getController().getParent().getId(); 
@@ -119,7 +117,7 @@ class GUI_trackGroup
       .setWidth(500)
       .setCaptionLabel("easings")
       .setOpen(false)     
-      .setColorForeground(ControlP5.TEAL)
+      .setColorForeground(ControlP5.BLUE)
       .addCallback(new CallbackListener() 
     {
       public void controlEvent(CallbackEvent theEvent) 
@@ -141,9 +139,8 @@ class GUI_trackGroup
             segment.setColorBackground(ControlP5.RED);
           } else {
             segment.setId(0);
-            segment.setColorForeground(ControlP5.BLUE); 
-            segment.setColorBackground(ControlP5.BLUE);
-          }
+            segment.setColor(ControlP5.THEME_CP52014);
+            }
         }
 
         if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.tG.edit == true)

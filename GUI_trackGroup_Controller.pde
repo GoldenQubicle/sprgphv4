@@ -26,7 +26,7 @@ class GUI_trackGroup_Controller
     segments.put(segmentKey, gui.cp5.get(ScrollableList.class, segmentKey));
   }
 
-  
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    S E G M E N T  H A N D L E R   
@@ -37,6 +37,7 @@ class GUI_trackGroup_Controller
     float delta = segMouseEnter-gui.mouseX;
     switch(editMode) 
     {  
+
     case "asOne" :
       float newStart = constrain((segStart-delta), gui.tg.trackAddSegmentButtonWidth, gui.tg.groupWidth-segmentActive.getWidth());
       segmentActive.setPosition(newStart, segmentActive.getPosition()[1]); 
@@ -59,7 +60,7 @@ class GUI_trackGroup_Controller
 
     if (gui.keyPressed == true && gui.key == DELETE)
     {     
-      gif.aniSegments.remove(segmentActive.getName());      
+      segments.remove(segmentActive.getName());
       gui.cp5.getController(segmentActive.getName()).remove();
     }
   }
@@ -103,13 +104,20 @@ class GUI_trackGroup_Controller
   {
     if (groups.containsKey(trackGroup))
     {
-      for (ScrollableList segment : segments.values())
+      ArrayList<String> segmentKeys = new ArrayList<String>();
+
+      for (String aniKey : segments.keySet())
       {
-        if (segment.getName().contains(trackGroup))
+        segmentKeys.add(aniKey);
+      }
+
+      for (String segmentKey : segmentKeys)
+      {
+        if (segmentKey.contains(trackGroup))
         {
-          gif.aniSegments.remove(segment.getName());
+          segments.remove(segmentKey);
         }
-      }      
+      }   
       gui.cp5.get(Group.class, trackGroup).remove();
       groups.remove(trackGroup);
     }

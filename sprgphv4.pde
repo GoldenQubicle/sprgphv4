@@ -42,14 +42,14 @@ void setup()
 
 void draw() 
 {
-  background(128);
+  background(0);
   translate(width/2, height/2);
 
   for (Layer myLayer : layers)
   {
     myLayer.display();
   }
-  gif.aniCheckForEnd();
+  gif.aniCheckForEnd();  
 }  
 
 void layer(boolean locked)

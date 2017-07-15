@@ -59,7 +59,6 @@ class GUI extends PApplet
     , 'e');
   }
 
-
   void toggleEditMode()
   {
     cp5.addToggle("edit")
@@ -71,7 +70,7 @@ class GUI extends PApplet
       public void controlEvent(CallbackEvent theEvent) 
       {
         String edit = theEvent.getController().getName();
-         if (controller.tG.edit == false)        {
+        if (controller.tG.edit == false) {
           controller.tG.edit = true;
           cp5.get(Toggle.class, edit).setState(controller.tG.edit);
         } else {
@@ -154,8 +153,6 @@ class GUI extends PApplet
     if (key == 'p')
     {
       controller.fileio.saveLayers();
-      //controller.fileio.saveAni();
-      println("saved");
     }
 
     if (key == ' ')
@@ -169,11 +166,13 @@ class GUI extends PApplet
       controller.tG.editMode = controller.tG.editModes.get(1);
       controller.tG.updateSegmentHandler(mouseX);
     }
+
     if (key == 's')
     {
       controller.tG.editMode = controller.tG.editModes.get(0);
       controller.tG.updateSegmentHandler(mouseX);
     }
+
     if (key == 'd')
     {
       controller.tG.editMode = controller.tG.editModes.get(2);

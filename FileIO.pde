@@ -8,6 +8,20 @@ class FileIO {
     mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
   }
 
+
+  void loadLayers()
+  {
+    //try 
+    //{
+    //  Layer lImport = new Layer();
+    //  lImport = mapper.readValue(new File("C:\\Users\\Erik\\Documents\\Processing\\sprgphv4\\layerImport.json"), Layer.class);
+    //  println(lImport.type, lImport.getNumberOfGears());
+    //} 
+    //catch(IOException ie) {
+    //  ie.printStackTrace();
+    //}
+  }
+
   void saveLayers()
   {
     try 

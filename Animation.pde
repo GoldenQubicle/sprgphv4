@@ -33,6 +33,7 @@ class Animation   //<>//
     
     for (ScrollableList segment : controller.tG.segments.values())
     {
+      // so here, grab data from segments and call createAni
       controller.initAni(segment);
       seq.add(ani);
     }
@@ -58,7 +59,7 @@ class Animation   //<>//
     {
       obj = layers.get(layer);
     }
-    
+     println(obj, duration, delay, field, value, easings[easing]); 
     ani =  new Ani(obj, duration, delay, field, value, easings[easing]);
     ani.setPlayMode(Ani.FORWARD);
     ani.noRepeat();    
@@ -78,10 +79,12 @@ class Animation   //<>//
   {
     if (seq != null)
     {
-      //println(seq.getSeek());
       if (seq.isEnded())
       {
-        seq.seek(0);
+        if(pause == false )
+        {
+          println("sequence has ended");
+        }
         pause = true;
       }
     }

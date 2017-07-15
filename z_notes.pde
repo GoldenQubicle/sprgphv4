@@ -1,18 +1,15 @@
 /*
 
 
-eeeughhh I just realized: with two consequetive ani's, the second one's object is of course still set to the start position of the layer object!!
+so currently the setAniValue is not working properly, as in, the x & y values of slider2d interferring
+besides, I still don't quite like the setup any way
 
-honestly, firing them off dynamically, as I did with the matrix, actually wasnt such a bad idea
-and in fact, I actually probably want to recreate that by firing on delay
-UNLESSS the ani sequence would circumvent this behaviour?!
-
-=================
-
-
-store ani endvalues in seperate map
-then upon play, simply clear the ani map, and construct new ones by iterating over segments for length etc,
-and over aniEndValue for well that
+going forward, once Im able to get basic animation working and screencap it this project will be on the backburner
+that said, there're definitly things to consider in the meanwhile, especially with regard to saving & loading
+for example, upon load entire new GUI needs to be setup, and with regard to trackSegments, I need to get the data from somewhere
+SO it probably is best to have the controller grab all the relevant data from the segments, and store it
+then, have to animation use that data to construct the ani from it
+that will make a lot more sense than the bouncing around which its doing now
 
 
 ==========================================================================

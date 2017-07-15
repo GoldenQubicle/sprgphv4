@@ -153,6 +153,13 @@ class GUI extends PApplet
     if (key == 'p')
     {
       controller.fileio.saveLayers();
+      println("saved file");
+    }
+
+    if (key == 'l')
+    {
+      controller.fileio.loadLayers();
+      println("loaded file");
     }
 
     if (key == ' ')

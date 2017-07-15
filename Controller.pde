@@ -18,6 +18,7 @@ class Controller
 
   void initAni(ScrollableList segment)
   {
+    // in here, grab data from segments and store it somewhere
     int layer = segment.getParent().getParent().getId();
     int gear = segment.getParent().getId(); 
     String field = segment.getParent().getStringValue();
@@ -30,6 +31,7 @@ class Controller
 
     if (aniValue.hasKey(segmentKey)) {    
       value = aniValue.get(segmentKey);
+      println(value);
     } else 
     {
       value = 150;
@@ -44,6 +46,7 @@ class Controller
     {
       if (segment.getId() == 1)
       {
+        //println("check segment toggle");
         if (segment.getStringValue().equals(theEvent.getController().getStringValue()))
         {
           aniValue.set(segment.getName(), theEvent.getController().getValue());
@@ -52,7 +55,7 @@ class Controller
         if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("x"))
         {
           aniValue.set(segment.getName(), theEvent.getController().getArrayValue(0));
-          //break;
+          break;
         }
         if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("y"))
         {
@@ -66,5 +69,6 @@ class Controller
         }
       }
     }
+    println("size of ani value = " + aniValue.size() + "value = x " +  aniValue.value(0),"value = y " +  aniValue.value(1));
   }
 }

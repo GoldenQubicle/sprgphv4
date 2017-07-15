@@ -141,7 +141,8 @@ class GUI_trackGroup
             segment.setId(0);
             segment.setColor(ControlP5.THEME_CP52014);
             }
-        }
+            //println("id on callback = " + segment.getId());
+          }
 
         if (theEvent.getAction() == ControlP5.ACTION_ENTER && controller.tG.edit == true)
         {                             

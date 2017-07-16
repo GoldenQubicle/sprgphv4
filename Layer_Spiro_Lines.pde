@@ -6,10 +6,8 @@ class Lines extends Spiro
   Lines()
   {       
     super(1);
-
     fill = false;
     stroke = true;
-
     gearProp.add("connect");
 
     for (int i = 0; i < numberOfGears; i++) 
@@ -18,6 +16,23 @@ class Lines extends Spiro
     }
   }
 
+  Lines(Layer copy)
+  {
+    super(copy);    
+    fill = copy.fill;
+    stroke = copy.stroke;    
+    gearProp.add("connect");
+    
+    for (int i = 0; i < copy.numberOfGears; i++) 
+    {
+      addGears();
+      gears.get(i).vector.x = copy.gears.get(i).vector.x;
+      gears.get(i).vector.y = copy.gears.get(i).vector.y;
+      gears.get(i).vector.z = copy.gears.get(i).vector.z;
+      gears.get(i).petals = copy.gears.get(i).petals;
+      gears.get(i).connect = copy.gears.get(i).connect;
+    }
+  }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D E F A U L T   M E T H O D S
@@ -35,7 +50,6 @@ class Lines extends Spiro
         {
           theta = (TAU/getPetals(i))*j;      
           phi = (TAU/getPetals(i))*(j+getConnect(i));       
-
 
           xyz =  grinding()[0];
           xy2 =  grinding()[1];

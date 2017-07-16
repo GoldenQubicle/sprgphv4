@@ -13,25 +13,43 @@ class Mesh extends Spiro
   Mesh(int type)
   {
     super(type);
-    density = 500;
     fill = true;
     stroke = false;
+    density = 500;
+    meshProp.add("x");
+    meshProp.add("y");
+    meshProp.add("z");
 
     for (int i = 0; i < numberOfGears; i++) 
     {
       addGears();
     }
+    
+    vectorPathSetUp();
+  }
 
-    // setting up first 3 vector path points
-    for (int i = 0; i < 3; i++)
-    {
-      PVector xyz = new PVector();
-      xyz = grinding(i)[0]; 
-      vectorPath.add(xyz);
-    }
+  Mesh(Mesh copy)
+  {
+    super(copy);
+    fill = copy.fill;
+    stroke = copy.stroke;
+    density = copy.density;
     meshProp.add("x");
     meshProp.add("y");
-    meshProp.add("z");
+    meshProp.add("z");  
+    radius.x = copy.radius.x;
+    radius.y = copy.radius.y;
+    radius.z = copy.radius.z;
+
+    for (int i = 0; i < copy.numberOfGears; i++) 
+    {
+      addGears();
+      gears.get(i).vector.x = copy.gears.get(i).vector.x;
+      gears.get(i).vector.y = copy.gears.get(i).vector.y;
+      gears.get(i).vector.z = copy.gears.get(i).vector.z;
+      gears.get(i).petals = copy.gears.get(i).petals;
+    }
+    vectorPathSetUp();
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -141,6 +159,16 @@ class Mesh extends Spiro
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
    P R O P E R T I E S ~~~~  L T Y P E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+  void vectorPathSetUp()
+  {
+    for (int i = 0; i < 3; i++)
+    {
+      PVector xyz = new PVector();
+      xyz = grinding(i)[0]; 
+      vectorPath.add(xyz);
+    }
+  }
 
   PVector getMeshRadius()
   {

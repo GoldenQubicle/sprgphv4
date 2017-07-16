@@ -49,7 +49,7 @@ class Animation   //<>//
     if (controllerKey.contains("GEAR"))
     {
       obj = layers.get(layer).gears.get(gear).vector;
-      if (field == "petals")
+      if (field == "petals" || field == "connect")
       {
         obj = layers.get(layer).gears.get(gear);
       }
@@ -59,7 +59,7 @@ class Animation   //<>//
     {
       obj = layers.get(layer);
     }
-     println(obj, duration, delay, field, value, easings[easing]); 
+    
     ani =  new Ani(obj, duration, delay, field, value, easings[easing]);
     ani.setPlayMode(Ani.FORWARD);
     ani.noRepeat();    
@@ -70,11 +70,6 @@ class Animation   //<>//
    P L A Y  M E T H O D S   
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-  void aniPlayPause()
-  {
-    seq.start();
-  }
-
   void aniCheckForEnd()
   {
     if (seq != null)
@@ -83,6 +78,7 @@ class Animation   //<>//
       {
         if(pause == false )
         {
+          controller.getInitialLayerState();
           println("sequence has ended");
         }
         pause = true;

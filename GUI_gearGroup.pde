@@ -184,7 +184,7 @@ class GUI_gearGroup
     cp5.addSlider("connect " + gear)
       .setGroup( "gear " + gear)
       .setId(gear)
-      .setStringValue("GEAR"+(gear+1))
+      .setStringValue("GEAR"+(gear+1) + " connect")
       .setPosition(10, 185)
       .setSize(size2d, 8)
       .setValue(line.getConnect(gear))

@@ -12,9 +12,10 @@ class GUI_trackGroup_Controller
   GUI_trackGroup_Controller() 
   {
   }
+  
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   S E G M E N T  G E N E R I C S  
+   S E G M E N T  C R E A T E 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void createSegment(String property, int gear, String trackgroup, String field)
@@ -25,8 +26,7 @@ class GUI_trackGroup_Controller
     gui.tg.addTrackSegment(segmentKey, controllerKey);
     segments.put(segmentKey, gui.cp5.get(ScrollableList.class, segmentKey));
   }
-
-
+  
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    S E G M E N T  H A N D L E R   
@@ -76,7 +76,7 @@ class GUI_trackGroup_Controller
   }
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   T R A C K   G R O U P   S E T U P 
+   T R A C K   G R O U P   M E T H O D S 
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   void createGroup(String groupType)

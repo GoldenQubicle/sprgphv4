@@ -4,10 +4,9 @@ class Spiro extends Layer   //<>//
 
   Spiro(int type) 
   {
-    super(1, 2000, type);
+    super(2, 2000, type);
     fill = true;
     stroke = false;
-
     gearProp.add("petals"); 
 
     // yeah this is a bit hacky, but thats because lines & mesh extends spiro
@@ -17,6 +16,26 @@ class Spiro extends Layer   //<>//
       for (int i = 0; i < numberOfGears; i++) 
       {
         addGears();
+      }
+    }
+  }
+
+  Spiro(Layer copy)
+  {
+    super(copy);    
+    fill = copy.fill;
+    stroke = copy.stroke;
+    gearProp.add("petals");
+
+    if (copy.getType() == "SPIRO" ) 
+    {
+      for (int i = 0; i < copy.numberOfGears; i++) 
+      {
+        addGears();
+        gears.get(i).vector.x = copy.gears.get(i).vector.x;
+        gears.get(i).vector.y = copy.gears.get(i).vector.y;
+        gears.get(i).vector.z = copy.gears.get(i).vector.z;
+        gears.get(i).petals = copy.gears.get(i).petals;
       }
     }
   }
@@ -52,7 +71,7 @@ class Spiro extends Layer   //<>//
       ratio = 1/(getPetals(i)-1);
       circ.get(i).x = cos(theta/ratio)*getGearVectors(i).x; 
       circ.get(i).y = sin(theta/ratio)*getGearVectors(i).y;
-      location[0] = loc.add(circ.get(i));      
+      location[0] = loc.add(circ.get(i));
     }
     return location;
   }
@@ -85,5 +104,5 @@ class Spiro extends Layer   //<>//
   {
     super.deleteGears(del);
     circ.remove(del);
-  } 
+  }
 }

@@ -133,8 +133,8 @@ class GUI extends PApplet
   public void draw() 
   { 
     background(100);
+    
     strokeWeight(3);
-
     line(gui.tg.trackStart, 270, gui.tg.trackEnd, 270);  
 
     if (tg.segmentHoover == true)   
@@ -145,7 +145,6 @@ class GUI extends PApplet
     {
       cursor(ARROW);
     }
-    //gif.aniPlay();
   }
 
   void keyPressed()

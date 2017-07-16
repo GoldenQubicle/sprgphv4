@@ -7,16 +7,33 @@ class Spiro3D extends Spiro
     super(2);
     fill = false;
     stroke = true;
-    
+    density = 200;
     gearProp.add("z");
 
     for (int i = 0; i < numberOfGears; i++) 
     {
       addGears();
     }
-    density = 200;
   }
-  
+
+  Spiro3D(Layer copy)
+  {
+    super(copy);    
+    fill = copy.fill;
+    stroke = copy.stroke;
+    density = copy.density;
+    gearProp.add("z");
+
+    for (int i = 0; i < copy.numberOfGears; i++) 
+    {
+      addGears();
+      gears.get(i).vector.x = copy.gears.get(i).vector.x;
+      gears.get(i).vector.y = copy.gears.get(i).vector.y;
+      gears.get(i).vector.z = copy.gears.get(i).vector.z;
+      gears.get(i).petals = copy.gears.get(i).petals;
+    }
+  }
+
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D E F A U L T   M E T H O D S
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -67,13 +84,13 @@ class Spiro3D extends Spiro
     return location;
   }
 
- void lighting()
+  void lighting()
   {
     directionalLight(204, 204, 204, .5, 0, -1);
     //ambientLight(50, 102, 102);
     emissive(128, 26, 51);
   }
-  
+
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
    P R O P E R T I E S ~~~~  L T Y P E      
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

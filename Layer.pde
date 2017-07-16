@@ -27,6 +27,23 @@ class Layer
     colorProp.add("cStroke");
   }
 
+  private Layer(Layer copy)
+  {
+    type = copy.type;
+    numberOfGears =  copy.numberOfGears;
+    density = copy.density;
+    lineX = copy.lineX;
+    lineY = copy.lineY;
+    strokeWidth = copy.strokeWidth;
+    cFill = copy.cFill;
+    cStroke = copy.cStroke;
+    gearProp.add("x");
+    gearProp.add("y");
+    colorProp.add("cFill");
+    colorProp.add("cStroke");    
+
+  }
+
 
   /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    D E F A U L T   M E T H O D S

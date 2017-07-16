@@ -4,6 +4,7 @@ class Controller
   float mapStart, mapEnd;
   FloatDict aniValue = new FloatDict();
   FileIO fileio = new FileIO();
+  ArrayList<Layer> initialState = new ArrayList<Layer>();
 
   Controller() 
   {
@@ -12,8 +13,58 @@ class Controller
 
   void play()
   {
+    setInitialLayerState();
     gif.createSeq();
-    gif.aniPlayPause();
+    gif.seq.start();
+  }
+
+  void setInitialLayerState()
+  {
+    initialState.clear();
+
+    for (Layer toCopy : layers)
+    {
+
+      switch(toCopy.getType())
+      {
+
+      case "SPIRO":
+
+        Spiro initSpiro = new Spiro(toCopy);
+        initialState.add(initSpiro);
+
+        break;
+
+      case "LINES":
+
+        Lines initLines = new Lines(toCopy);
+        initialState.add(initLines);
+
+        break;
+
+      case "SPIRO3D":
+
+        Spiro3D initSpiro3D = new Spiro3D(toCopy);
+        initialState.add(initSpiro3D);
+
+        break;
+
+      case "MESH":
+        
+        Mesh initMesh = new Mesh((Mesh)toCopy);
+        initialState.add(initMesh);
+
+        break;
+      }
+    }
+  }
+
+  void getInitialLayerState()
+  {
+    for (int i = 0; i < initialState.size(); i++)
+    {
+      layers.set(i, initialState.get(i));
+    }
   }
 
   void initAni(ScrollableList segment)
@@ -31,12 +82,11 @@ class Controller
 
     if (aniValue.hasKey(segmentKey)) {    
       value = aniValue.get(segmentKey);
-      println(value);
     } else 
     {
       value = 150;
     }
-    
+
     gif.createAni(layer, field, gear, controllerKey, start, duration, easing, value);
   }
 
@@ -45,30 +95,24 @@ class Controller
     for (ScrollableList segment : tG.segments.values())
     {
       if (segment.getId() == 1)
-      {
-        //println("check segment toggle");
+      {  
+        //println(segment.getStringValue() + " " + theEvent.getController().getStringValue());
+
+        if (segment.getStringValue().contains("x"))
+        {
+          aniValue.set(segment.getName(), theEvent.getController().getArrayValue(0));
+        }       
+
+        if (segment.getStringValue().contains("y"))
+        {
+          aniValue.set(segment.getName(), theEvent.getController().getArrayValue(1));
+        }      
+
         if (segment.getStringValue().equals(theEvent.getController().getStringValue()))
         {
           aniValue.set(segment.getName(), theEvent.getController().getValue());
-          break;
-        }
-        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("x"))
-        {
-          aniValue.set(segment.getName(), theEvent.getController().getArrayValue(0));
-          break;
-        }
-        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("y"))
-        {
-          aniValue.set(segment.getName(), theEvent.getController().getArrayValue(1));
-          break;
-        }
-        if (segment.getStringValue().contains(theEvent.getController().getStringValue()) && segment.getName().contains("z"))
-        {
-          aniValue.set(segment.getName(), theEvent.getController().getValue());
-          break;
         }
       }
     }
-    println("size of ani value = " + aniValue.size() + "value = x " +  aniValue.value(0),"value = y " +  aniValue.value(1));
   }
 }

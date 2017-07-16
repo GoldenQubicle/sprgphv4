@@ -67,7 +67,7 @@ class GUI_trackGroup_Controller
 
   void updateSegmentHandler(float mousePos)
   {
-    if (!segments.isEmpty())
+    if (!segments.isEmpty() && segmentActive != null)
     {
       segWidth = segmentActive.getWidth();
       segStart = segmentActive.getPosition()[0];

@@ -5,10 +5,23 @@ class Controller
   FloatDict aniValue = new FloatDict();
   FileIO fileio = new FileIO();
   ArrayList<Layer> initialState = new ArrayList<Layer>();
-
+  PImage watermark = loadImage("C:\\Users\\Erik\\Documents\\Processing\\sprgphv4\\gqlogo_watermark.png");
+  PGraphics wm = createGraphics(watermark.width, watermark.height);
+ 
   Controller() 
   {
     tG = new GUI_trackGroup_Controller();
+  }
+
+  void wm()  
+  {
+    wm.beginDraw();
+    pushMatrix();
+    translate(width/2-(watermark.width/2), height/2-(watermark.height/2));
+    imageMode(CENTER);
+    image(watermark, 0, 0);
+    popMatrix();
+    wm.endDraw();
   }
 
   void play()
@@ -50,7 +63,7 @@ class Controller
         break;
 
       case "MESH":
-        
+
         Mesh initMesh = new Mesh((Mesh)toCopy);
         initialState.add(initMesh);
 

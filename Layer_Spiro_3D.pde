@@ -2,11 +2,12 @@ class Spiro3D extends Spiro
 {
   ArrayList<PVector> sphere = new ArrayList<PVector>();
 
+  
   Spiro3D()
   {
     super(2);
-    fill = false;
-    stroke = true;
+    fill = true;
+    stroke = false;
     density = 200;
     gearProp.add("z");
 
@@ -86,8 +87,8 @@ class Spiro3D extends Spiro
 
   void lighting()
   {
-    directionalLight(204, 204, 204, .5, 0, -1);
-    //ambientLight(50, 102, 102);
+    //directionalLight(204, 204, 204, .5, 0, -1);
+    ambientLight(50, 102, 102);
     emissive(128, 26, 51);
   }
 
